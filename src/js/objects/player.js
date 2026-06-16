@@ -30,10 +30,12 @@ export class Player extends Actor {
 
         if (engine.input.keyboard.isHeld(Keys.A)) {
             xVel  -= 300
+            this.graphics.flipHorizontal = true
         }
 
         if (engine.input.keyboard.isHeld(Keys.D)) {
             xVel  += 300
+            this.graphics.flipHorizontal = false
         }
 
         if (engine.input.keyboard.wasPressed(Keys.Space)) {
@@ -53,7 +55,7 @@ export class Player extends Actor {
     }
 
     hitSomething(e){
-        
+
     }
     inventory
 }

@@ -1,11 +1,11 @@
 import { Actor, Engine, Vector, Keys, DegreeOfFreedom, CollisionType } from "excalibur"
 import { Resources, ResourceLoader } from '../resources.js'
-//import { Bullet } from './bullet.js'
+import { Zombie } from './zombie.js'
 
 export class Bullet extends Actor {
     xPos
     yPos
-    xSpeed = 2000
+    xSpeed = -2000
     ySpeed = 0
 
     constructor(givenX, givenY) {
@@ -25,5 +25,13 @@ export class Bullet extends Actor {
         this.graphics.use(sprite)
         this.pos = new Vector(this.xPos, this.yPos)
         this.vel = new Vector(this.xSpeed, this.ySpeed)
+        this.on('collisionstart', (e) => this.hitSomething(e))
+    }
+
+    hitSomething(e) {
+        if (e.other.owner instanceof Zombie) {
+            e.other.owner.health -= 50
+            this.kill()
+        }
     }
 }
