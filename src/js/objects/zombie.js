@@ -13,7 +13,7 @@ export class Zombie extends Actor {
             height: Resources.Zombie.height / 3
         })
         this.player = player
-        // this.body.collisionType = CollisionType.Active
+        this.body.collisionType = CollisionType.Active
         this.body.limitDegreeOfFreedom.push(DegreeOfFreedom.Rotation)
     }
 
