@@ -3,13 +3,13 @@ import { Resources, ResourceLoader } from '../resources.js'
 import { Player } from "./player.js"
 
 export class Zombie extends Actor {
-
+    health = 100
 
 
     constructor(player) {
         super({
-            width: Resources.Zombie.width,
-            height: Resources.Zombie.height
+            width: Resources.Zombie.width / 3,
+            height: Resources.Zombie.height / 3
         })
         this.player = player
         // this.body.collisionType = CollisionType.Active
