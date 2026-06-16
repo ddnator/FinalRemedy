@@ -16,6 +16,7 @@ export class Player extends Actor {
         const sprite = Resources.Player.toSprite()
         sprite.scale = new Vector(0.5, 0.5)
         this.graphics.use(sprite)
-        this.pos = new Vector(150, engine.drawHeight - 120 - (this.height / 2) - 2)
+        this.pos = new Vector(engine.drawWidth / 3, engine.drawHeight / 3)
+
     }
 }

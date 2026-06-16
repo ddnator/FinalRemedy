@@ -1,6 +1,8 @@
 import '../css/style.css'
 import { Actor, Engine, Vector, DisplayMode, SolverStrategy } from "excalibur"
 import { Resources, ResourceLoader } from './resources.js'
+import { Zombie } from './objects/zombie.js'
+import { Player } from './objects/player.js'
 
 export class Game extends Engine {
 
@@ -16,6 +18,12 @@ export class Game extends Engine {
 
     startGame() {
 
+
+        const player = new Player()
+        this.add(player)
+
+        const zombie = new Zombie(player)
+        this.add(zombie)
     }
 }
 
