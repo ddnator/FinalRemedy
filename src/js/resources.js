@@ -2,6 +2,8 @@ import { ImageSource, Sound, Resource, Loader } from 'excalibur'
 
 // voeg hier jouw eigen resources toe
 const Resources = {
+    Player: new ImageSource('images/player_placeholder.png'),
+    Bullet: new ImageSource('images/bullet_placeholder.png')
 }
 
 

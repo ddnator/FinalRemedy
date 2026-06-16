@@ -1,7 +1,13 @@
 import { Actor, Engine, Vector, Keys, DegreeOfFreedom, CollisionType } from "excalibur"
 import { Resources, ResourceLoader } from '../resources.js'
+//import { Bullet } from './bullet.js'
 
 export class Player extends Actor {
+    health = 100
+    sanity = 100
+
+    inventory = []
+
     constructor() {
         super({
             width: Resources.Player.width,
@@ -14,8 +20,30 @@ export class Player extends Actor {
 
     onInitialize(engine) {
         const sprite = Resources.Player.toSprite()
-        sprite.scale = new Vector(0.5, 0.5)
         this.graphics.use(sprite)
-        this.pos = new Vector(150, engine.drawHeight - 120 - (this.height / 2) - 2)
+        this.pos = new Vector(engine.drawWidth/2, engine.drawHeight/2)
     }
+
+    onPreUpdate(engine, delta){
+        let yVel = 0
+        let xVel = 0
+
+        if (engine.input.keyboard.isHeld(Keys.A)) {
+            xVel  -= 300
+        }
+
+        if (engine.input.keyboard.isHeld(Keys.D)) {
+            xVel  += 300
+        }
+
+        if (engine.input.keyboard.wasPressed(Keys.Space)) {
+            this.shoot()
+        }
+
+        this.vel = new Vector(xVel, yVel)
+    }
+
+    shoot(){}
+
+    inventory
 }
