@@ -1,6 +1,6 @@
 import { Actor, Engine, Vector, Keys, DegreeOfFreedom, CollisionType } from "excalibur"
 import { Resources, ResourceLoader } from '../resources.js'
-//import { Bullet } from './bullet.js'
+import { Bullet } from './bullet.js'
 
 export class Player extends Actor {
     health = 100
@@ -42,8 +42,18 @@ export class Player extends Actor {
 
         this.vel = new Vector(xVel, yVel)
     }
+    
+    shoot(){
+        const bullet = new Bullet(this.pos.x, this.pos.y)
+        this.on('collisionstart', (e) => this.hitSomething(e))
+        this.events.on("exitviewport", (e) => this.kill())
+        this.scene.add(bullet)
+        console.log('shoot')
 
-    shoot(){}
+    }
 
+    hitSomething(e){
+        
+    }
     inventory
 }
