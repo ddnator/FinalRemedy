@@ -2,15 +2,17 @@ import { Actor, Engine, Vector, Keys, DegreeOfFreedom, CollisionType, linear } f
 import { Resources, ResourceLoader } from '../resources.js'
 import { Bullet } from './bullet.js'
 import { Zombie } from './zombie.js'
+import { Injection } from "./injection.js"
 
 export class Player extends Actor {
     health = 100
     sanity = 100
     bulletReady = true
-    inventory = []
+    inventory = ['feef']
     hitOnCooldown = false
     knockbackspeed = 0
     delta
+    
     constructor() {
         super({
             width: Resources.Player.width,
@@ -28,27 +30,7 @@ export class Player extends Actor {
         this.on('collisionstart', (e) => this.hitSomething(e))
     }
 
-    shoot() {
-        let flip
-        if (this.graphics.flipHorizontal) {
-            flip = true
-        }
-        const bullet = new Bullet(this.pos.x, this.pos.y, flip)
-
-        if (flip) {
-            bullet.graphics.flipHorizontal = true
-        }
-
-        bullet.events.on("exitviewport", (e) => bullet.kill())
-        this.scene.add(bullet)
-
-        this.bulletReady = false
-
-        this.scene.engine.clock.schedule(() => {
-            this.bulletReady = true
-        }, 200)
-
-    }
+    
     onPostUpdate(engine, delta) {
         let yVel = 0
         let xVel = 0
@@ -82,9 +64,10 @@ export class Player extends Actor {
             flip = true
         }
         const bullet = new Bullet(this.pos.x, this.pos.y, flip)
-
+        
         if (flip) {
             bullet.graphics.flipHorizontal = true
+            this.knockbackspeed = 200
         }
 
         bullet.events.on("exitviewport", (e) => bullet.kill())
@@ -103,8 +86,6 @@ export class Player extends Actor {
 
             this.hitOnCooldown = true
 
-
-
             this.knockbackspeed = 400
 
             this.scene.engine.clock.schedule(() => {
@@ -112,5 +93,11 @@ export class Player extends Actor {
             }, 1000)
 
         }
+
+        if (this.inventory.length){
+            
+        }
     }
+
+
 }
