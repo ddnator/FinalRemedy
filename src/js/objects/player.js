@@ -15,7 +15,7 @@ export class Player extends Actor {
             width: Resources.Player.width,
             height: Resources.Player.height,
         })
-        //this.body.collisionType = CollisionType.Active
+        this.body.collisionType = CollisionType.Active
         this.body.bounciness = 0
         this.body.limitDegreeOfFreedom.push(DegreeOfFreedom.Rotation)
     }
@@ -26,7 +26,7 @@ export class Player extends Actor {
         this.pos = new Vector(engine.drawWidth, engine.drawHeight / 2)
         this.on('collisionstart', (e) => this.hitSomething(e))
     }
-collis
+    collis
     onPreUpdate(engine, delta) {
         let yVel = 0
         let xVel = 0
@@ -75,8 +75,8 @@ collis
             console.log('hit')
             this.health -= 25
             this.hitOnCooldown = true
-            
-           
+
+
             this.scene.engine.clock.schedule(() => {
                 this.hitOnCooldown = false
             }, 1000)

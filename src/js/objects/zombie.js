@@ -13,7 +13,7 @@ export class Zombie extends Actor {
             height: Resources.Zombie.height / 3
         })
         this.player = player
-        // this.body.collisionType = CollisionType.Active
+        this.body.collisionType = CollisionType.Active
         this.body.limitDegreeOfFreedom.push(DegreeOfFreedom.Rotation)
     }
 
@@ -43,8 +43,11 @@ export class Zombie extends Actor {
             const sprite = Resources.Player.toSprite()
             sprite.scale = new Vector(0.5, 0.5)
             this.graphics.use(sprite)
+            this.body.collisionType = CollisionType.Passive
 
             this.vel = new Vector(300, 0)
+
+            this.events.on("exitviewport", (e) => this.kill())
 
         }
     }
