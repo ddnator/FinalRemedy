@@ -69,7 +69,7 @@ export class Player extends Actor {
 
         this.vel = new Vector(xVel + this.knockbackspeed, this.vel.y)
         this.delta = delta
-        console.log(this.knockbackspeed)
+
 
         if (this.knockbackspeed >= 10) {
             this.knockbackspeed -= 10
@@ -100,12 +100,11 @@ export class Player extends Actor {
 
     hitSomething(e) {
         if (e.other.owner instanceof Zombie && !this.hitOnCooldown) {
-            console.log('hit')
-            this.health -= 25
+
             this.hitOnCooldown = true
             e.other.owner.kill()
 
-            console.log("apply knockback")
+
             this.knockbackspeed = 400
 
             this.scene.engine.clock.schedule(() => {
