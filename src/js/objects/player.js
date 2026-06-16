@@ -5,7 +5,7 @@ import { Bullet } from './bullet.js'
 export class Player extends Actor {
     health = 100
     sanity = 100
-
+    bulletReady = true
     inventory = []
 
     constructor() {
@@ -21,40 +21,54 @@ export class Player extends Actor {
     onInitialize(engine) {
         const sprite = Resources.Player.toSprite()
         this.graphics.use(sprite)
-        this.pos = new Vector(engine.drawWidth/2, engine.drawHeight/2)
+        this.pos = new Vector(engine.drawWidth / 2, engine.drawHeight / 2)
     }
 
-    onPreUpdate(engine, delta){
+    onPreUpdate(engine, delta) {
         let yVel = 0
         let xVel = 0
 
         if (engine.input.keyboard.isHeld(Keys.A)) {
-            xVel  -= 300
+            xVel -= 300
             this.graphics.flipHorizontal = true
         }
 
         if (engine.input.keyboard.isHeld(Keys.D)) {
-            xVel  += 300
+            xVel += 300
             this.graphics.flipHorizontal = false
         }
 
-        if (engine.input.keyboard.wasPressed(Keys.Space)) {
+        if (engine.input.keyboard.wasPressed(Keys.Space) && this.bulletReady) {
             this.shoot()
         }
 
         this.vel = new Vector(xVel, yVel)
     }
-    
-    shoot(){
-        const bullet = new Bullet(this.pos.x, this.pos.y)
+
+    shoot() {
+        let flip
+        if (this.graphics.flipHorizontal) {
+            flip = true
+        }
+        const bullet = new Bullet(this.pos.x, this.pos.y, flip)
+
+        if (flip) {
+            bullet.graphics.flipHorizontal = true
+        }
+
         this.on('collisionstart', (e) => this.hitSomething(e))
         this.events.on("exitviewport", (e) => this.kill())
         this.scene.add(bullet)
-        console.log('shoot')
+
+        this.bulletReady = false
+        
+        this.scene.engine.clock.schedule(() => {
+            this.bulletReady = true
+        }, 200)
 
     }
 
-    hitSomething(e){
+    hitSomething(e) {
 
     }
     inventory
