@@ -15,7 +15,7 @@ export class Player extends Actor {
             width: Resources.Player.width,
             height: Resources.Player.height,
         })
-        //this.body.collisionType = CollisionType.Active
+        this.body.collisionType = CollisionType.Active
         this.body.bounciness = 0
         this.body.limitDegreeOfFreedom.push(DegreeOfFreedom.Rotation)
     }
@@ -59,7 +59,7 @@ collis
             bullet.graphics.flipHorizontal = true
         }
 
-        bullet.events.on("exitviewport", (e) => this.kill())
+        bullet.events.on("exitviewport", (e) => bullet.kill())
         this.scene.add(bullet)
 
         this.bulletReady = false
