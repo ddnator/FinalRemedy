@@ -59,7 +59,7 @@ export class Player extends Actor {
             bullet.graphics.flipHorizontal = true
         }
 
-        bullet.events.on("exitviewport", (e) => this.kill())
+        bullet.events.on("exitviewport", (e) => bullet.kill())
         this.scene.add(bullet)
 
         this.bulletReady = false
