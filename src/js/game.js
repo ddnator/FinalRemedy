@@ -6,8 +6,8 @@ export class Game extends Engine {
 
     constructor() {
         super({ 
-            width: 1280,
-            height: 720,
+            width: 1980,
+            height: 1080,
             maxFps: 60,
             displayMode: DisplayMode.FitScreen
          })
