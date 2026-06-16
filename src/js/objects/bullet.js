@@ -5,10 +5,11 @@ import { Zombie } from './zombie.js'
 export class Bullet extends Actor {
     xPos
     yPos
-    xSpeed = -2000
+    xSpeed = 2000
     ySpeed = 0
+    flipped = false
 
-    constructor(givenX, givenY) {
+    constructor(givenX, givenY, flipped) {
         super({
             width: Resources.Bullet.width,
             height: Resources.Bullet.height,
@@ -18,6 +19,9 @@ export class Bullet extends Actor {
         //this.body.collisionType = CollisionType.Active
         this.body.bounciness = 0
         this.body.limitDegreeOfFreedom.push(DegreeOfFreedom.Rotation)
+        if (flipped) {
+            this.xSpeed *= -1
+        }
     }
 
     onInitialize(engine) {
