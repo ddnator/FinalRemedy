@@ -25,7 +25,9 @@ export class Zombie extends Actor {
     }
 
     onPostUpdate(engine) {
-        this.AttackPlayer()
+        if (this.health === 0) {
+            this.kill()
+        }
         this.WalkToPlayer()
     }
 
@@ -44,9 +46,7 @@ export class Zombie extends Actor {
     GetHit() {
         this.health = this.health - 50
 
-        if (this.health === 0) {
-            this.kill()
-        }
+
     }
 
     WalkToPlayer() {
