@@ -4,7 +4,7 @@ import { Player } from "./player.js"
 
 export class Zombie extends Actor {
     health = 100
-
+    
 
     constructor(player) {
         super({
