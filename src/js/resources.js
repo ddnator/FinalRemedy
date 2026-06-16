@@ -2,7 +2,6 @@ import { ImageSource, Sound, Resource, Loader } from 'excalibur'
 
 // voeg hier jouw eigen resources toe
 const Resources = {
-    ZombiePlaceholder: new ImageSource('/images/zombie.png'),
 }
 
 
