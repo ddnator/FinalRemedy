@@ -33,9 +33,6 @@ export class Game extends Engine {
 
         const zombie = new Zombie(player)
         this.add(zombie)
-
-        const injection = new Injection()
-        this.add(injection)
     }
 }
 
