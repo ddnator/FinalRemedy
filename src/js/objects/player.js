@@ -1,4 +1,9 @@
-import { Actor, Engine, Vector } from "excalibur"
+import { Actor, Engine, Vector, Keys, Collissio } from "excalibur"
 import { Resources, ResourceLoader } from './resources.js'
 
-export Player extends actor
+export class Player extends actor {
+    constructor{
+        super()
+    }
+
+}
