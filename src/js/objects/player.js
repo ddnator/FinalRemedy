@@ -21,7 +21,7 @@ export class Player extends Actor {
     onInitialize(engine) {
         const sprite = Resources.Player.toSprite()
         this.graphics.use(sprite)
-        this.pos = new Vector(150, engine.drawHeight - 120 - (this.height / 2) - 2)
+        this.pos = new Vector(engine.drawWidth / 3, engine.drawHeight / 3)
     }
 
     shoot() { }

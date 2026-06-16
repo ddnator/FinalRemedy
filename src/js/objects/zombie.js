@@ -29,9 +29,16 @@ export class Zombie extends Actor {
         this.WalkToPlayer()
     }
 
+    onCollisionStart(event, other) {
+        if (other.owner instanceof Player) {
+            this.AttackPlayer()
+        }
+    }
 
     AttackPlayer() {
-
+        // hier de image van hit player
+        this.player.health = this.player.health - 25
+        console.log(this.player.health)
     }
 
     GetHit() {
@@ -50,4 +57,5 @@ export class Zombie extends Actor {
         this.vel = direction.scale(110)
 
     }
+
 }
