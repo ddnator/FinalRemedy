@@ -4,6 +4,7 @@ import { Resources, ResourceLoader } from './resources.js'
 import { Player } from './objects/player.js'
 import { Zombie } from './objects/zombie.js'
 import { Injection } from './objects/injection.js'
+import { Floor } from './objects/floor.js'
 
 export class Game extends Engine {
 
@@ -33,6 +34,8 @@ export class Game extends Engine {
 
         const zombie = new Zombie(player)
         this.add(zombie)
+        const floor = new Floor()
+        this.add(floor)
     }
 }
 
