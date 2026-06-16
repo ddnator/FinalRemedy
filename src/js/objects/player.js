@@ -1,7 +1,13 @@
 import { Actor, Engine, Vector, Keys, DegreeOfFreedom, CollisionType } from "excalibur"
 import { Resources, ResourceLoader } from '../resources.js'
+//import { Bullet } from './bullet.js'
 
 export class Player extends Actor {
+    health = 100
+    sanity = 100
+
+    inventory = []
+
     constructor() {
         super({
             width: Resources.Player.width,
@@ -14,9 +20,11 @@ export class Player extends Actor {
 
     onInitialize(engine) {
         const sprite = Resources.Player.toSprite()
-        sprite.scale = new Vector(0.5, 0.5)
         this.graphics.use(sprite)
-        this.pos = new Vector(engine.drawWidth / 3, engine.drawHeight / 3)
-
+        this.pos = new Vector(150, engine.drawHeight - 120 - (this.height / 2) - 2)
     }
+
+    shoot() { }
+
+    inventory
 }
