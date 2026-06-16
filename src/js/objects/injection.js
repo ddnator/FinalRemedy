@@ -12,7 +12,7 @@ export class Injection extends Actor {
             height: Resources.Injection.height / 3
         })
 
-        // this.body.collisionType = CollisionType.Active
+        this.body.collisionType = CollisionType.Passive
         this.body.limitDegreeOfFreedom.push(DegreeOfFreedom.Rotation)
     }
 
