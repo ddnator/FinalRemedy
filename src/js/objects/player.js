@@ -1,12 +1,14 @@
 import { Actor, Engine, Vector, Keys, DegreeOfFreedom, CollisionType } from "excalibur"
 import { Resources, ResourceLoader } from '../resources.js'
 import { Bullet } from './bullet.js'
+import { Zombie } from './zombie.js'
 
 export class Player extends Actor {
     health = 100
     sanity = 100
     bulletReady = true
     inventory = []
+    hitOnCooldown = false
 
     constructor() {
         super({
@@ -21,20 +23,21 @@ export class Player extends Actor {
     onInitialize(engine) {
         const sprite = Resources.Player.toSprite()
         this.graphics.use(sprite)
-        this.pos = new Vector(engine.drawWidth / 2, engine.drawHeight / 2)
+        this.pos = new Vector(engine.drawWidth, engine.drawHeight / 2)
+        this.on('collisionstart', (e) => this.hitSomething(e))
     }
-
+collis
     onPreUpdate(engine, delta) {
         let yVel = 0
         let xVel = 0
 
         if (engine.input.keyboard.isHeld(Keys.A)) {
-            xVel -= 300
+            xVel -= 600
             this.graphics.flipHorizontal = true
         }
 
         if (engine.input.keyboard.isHeld(Keys.D)) {
-            xVel += 300
+            xVel += 600
             this.graphics.flipHorizontal = false
         }
 
@@ -56,12 +59,11 @@ export class Player extends Actor {
             bullet.graphics.flipHorizontal = true
         }
 
-        this.on('collisionstart', (e) => this.hitSomething(e))
-        this.events.on("exitviewport", (e) => this.kill())
+        bullet.events.on("exitviewport", (e) => this.kill())
         this.scene.add(bullet)
 
         this.bulletReady = false
-        
+
         this.scene.engine.clock.schedule(() => {
             this.bulletReady = true
         }, 200)
@@ -69,7 +71,18 @@ export class Player extends Actor {
     }
 
     hitSomething(e) {
+        if (e.other.owner instanceof Zombie && !this.hitOnCooldown) {
+            console.log('hit')
+            this.health -= 25
+            this.hitOnCooldown = true
+            
+           
+            this.scene.engine.clock.schedule(() => {
+                this.hitOnCooldown = false
+            }, 1000)
 
+        }
     }
+
     inventory
 }
