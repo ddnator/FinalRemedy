@@ -13,8 +13,8 @@ export class Game extends Engine {
             maxFps: 60,
             displayMode: DisplayMode.FitScreen,
             physics: {
-                    solver: SolverStrategy.Realistic,
-                    gravity: new Vector(0, 800),
+                solver: SolverStrategy.Realistic,
+                gravity: new Vector(0, 800),
             }
         })
 
@@ -22,10 +22,11 @@ export class Game extends Engine {
     }
 
     startGame() {
+
+
         const player = new Player()
         this.add(player)
-        const zombie = new Zombie()
-        this.add(zombie)
+
     }
 }
 
