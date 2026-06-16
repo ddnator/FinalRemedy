@@ -22,6 +22,7 @@ export class Bullet extends Actor {
         if (flipped) {
             this.xSpeed *= -1
         }
+        this.body.useGravity = false
     }
 
     onInitialize(engine) {
