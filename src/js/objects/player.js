@@ -102,7 +102,7 @@ export class Player extends Actor {
         if (e.other.owner instanceof Zombie && !this.hitOnCooldown) {
 
             this.hitOnCooldown = true
-            e.other.owner.kill()
+
 
 
             this.knockbackspeed = 400
