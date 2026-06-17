@@ -36,6 +36,7 @@ export class Zombie extends Actor {
             this.walkToPlayer()
 
             const sprite = Resources.Zombie.toSprite()
+            this.scale = new Vector(0.55, 0.55)
 
             this.graphics.use(sprite)
 
