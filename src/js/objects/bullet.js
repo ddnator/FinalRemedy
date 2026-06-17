@@ -16,7 +16,7 @@ export class Bullet extends Actor {
         })
         this.xPos = givenX
         this.yPos = givenY
-        //this.body.collisionType = CollisionType.Active
+        this.body.collisionType = CollisionType.Active
         this.body.bounciness = 0
         this.body.limitDegreeOfFreedom.push(DegreeOfFreedom.Rotation)
         if (flipped) {
