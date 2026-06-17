@@ -14,7 +14,7 @@ export class Floor extends Actor {
 
     onInitialize(engine) {
 
-        this.pos = new Vector(engine.drawWidth / 2, 850)
+        this.pos = new Vector(engine.drawWidth / 2, 1100)
         console.log(this.pos.y)
     }
 

@@ -1,10 +1,11 @@
 import '../css/style.css'
-import { Actor, Engine, Vector, DisplayMode, SolverStrategy } from "excalibur"
+import { Actor, Engine, Vector, DisplayMode, SolverStrategy, Scene } from "excalibur"
 import { Resources, ResourceLoader } from './resources.js'
 import { Player } from './objects/player.js'
 import { Zombie } from './objects/zombie.js'
 import { Injection } from './objects/injection.js'
 import { Floor } from './objects/floor.js'
+import { SceneOne } from './scenes/sceneone.js'
 
 export class Game extends Engine {
 
@@ -23,19 +24,16 @@ export class Game extends Engine {
         this.start(ResourceLoader).then(() => this.startGame())
     }
 
+
+
     startGame() {
 
 
-        const player = new Player()
-        this.add(player)
+        const sceneOne = new SceneOne()
+        this.add('sceneone', SceneOne)
+        this.goToScene('sceneone')
 
 
-
-
-        const zombie = new Zombie(player)
-        this.add(zombie)
-        const floor = new Floor()
-        this.add(floor)
     }
 }
 
