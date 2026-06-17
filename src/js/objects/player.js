@@ -32,7 +32,7 @@ export class Player extends Actor {
         this.pos = new Vector(engine.drawWidth - 1600, 850)
         this.on('collisionstart', (e) => this.hitSomething(e))
         this.scale = new Vector(0.6, 0.6)
-        this.injection.pos = new Vector(300, 0)
+        this.injection.pos = new Vector(80, 0)
     }
 
 
@@ -65,7 +65,6 @@ export class Player extends Actor {
             this.injectionHeld = true
             this.selectedItem = 'injection'
 
-            console.log(this.injection)
             this.addChild(this.injection)
             console.log(`selected item is ${this.selectedItem}`)
         }
@@ -94,6 +93,14 @@ export class Player extends Actor {
 
         if (this.health <= 0) {
             this.kill()
+        }
+
+        if (this.graphics.flipHorizontal) {
+            this.injection.pos.x = -80
+            this.injection.graphics.flipHorizontal = true
+        } else {
+            this.injection.pos.x = 80
+            this.injection.graphics.flipHorizontal = false
         }
     }
 
