@@ -23,7 +23,7 @@ export class Zombie extends Actor {
     }
 
     onPostUpdate(engine) {
-        if (this.health === 0) {
+        if (this.health == 0) {
             this.kill()
         }
         this.healChecker()
