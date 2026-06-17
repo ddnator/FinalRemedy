@@ -47,7 +47,7 @@ export class Zombie extends Actor {
             this.body.collisionType = CollisionType.Passive
             this.graphics.flipHorizontal = false
             this.vel = new Vector(300, 0)
-
+            this.health = 500
             this.events.on("exitviewport", (e) => this.kill())
 
         }
