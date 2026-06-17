@@ -25,10 +25,16 @@ export class Zombie extends Actor {
     onPostUpdate(engine) {
         if (this.health == 0) {
             this.kill()
+            this.lowerSanity()
         }
         this.healChecker()
+    }
 
+    lowerSanity() {
+        const entityList = this.scene.world.entityManager.entities
 
+        const player = entityList.find((entity) => entity instanceof Player)
+        player.sanity -= 25
     }
 
     healChecker() {

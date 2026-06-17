@@ -73,9 +73,11 @@ export class Player extends Actor {
             this.selectedItem = 'key'
             console.log(`selected item is ${this.selectedItem}`)
             this.injectionHeld = false
+            this.removeChild(this.injection)
         }
 
         if (engine.input.keyboard.isHeld(Keys.Space)) {
+
             if (this.bulletReady && this.selectedItem === 'bullet') {
                 this.shoot()
             }
@@ -149,14 +151,6 @@ export class Player extends Actor {
             }, 400)
 
         }
-
-        if (!this.inventory.length < 6) {
-            console.log('inventory is full')
-            console.log(this.inventory)
-        } else {
-            console.log(this.inventory)
-            this.inventory.add('gvergoo')
-        }
     }
 
     pickUpItem() {
@@ -171,7 +165,5 @@ export class Player extends Actor {
 
     knockback(direction) {
         this.knockbackspeed = -400 * direction
-        console.log('knockback')
     }
-
 }
