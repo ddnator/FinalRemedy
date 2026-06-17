@@ -8,9 +8,12 @@ export class Player extends Actor {
     health = 100
     sanity = 100
     bulletReady = true
-    inventory = ['feef']
+    injectionReady = true
+    inventory = ['bullet', 'injection']
     hitOnCooldown = false
     knockbackspeed = 0
+    selectedItem = 0
+    spacePressed = false
 
     constructor() {
         super({
@@ -45,8 +48,32 @@ export class Player extends Actor {
             this.graphics.flipHorizontal = false
         }
 
-        if (engine.input.keyboard.isHeld(Keys.Space) && this.bulletReady) {
-            this.shoot()
+        if (engine.input.keyboard.wasPressed(Keys.Key1)) {
+            this.selectedItem = 'bullet'
+            console.log(`selected item is ${this.selectedItem}`)
+        }
+
+        if (engine.input.keyboard.wasPressed(Keys.Key2)) {
+            this.selectedItem = 'injection'
+            console.log(`selected item is ${this.selectedItem}`)
+        }
+
+        if (engine.input.keyboard.wasPressed(Keys.Key3)) {
+            this.selectedItem = 'key'
+            console.log(`selected item is ${this.selectedItem}`)
+        }
+
+        if (engine.input.keyboard.isHeld(Keys.Space)) {
+            if (this.bulletReady && this.selectedItem === 'bullet') {
+                this.shoot()
+            } else if (this.injectionReady && this.selectedItem === 'injection') {
+                this.inject()
+                this.spacePressed = true
+
+                this.scene.engine.clock.schedule(() => {
+                    this.spacePressed = false
+                }, 500)
+            }
         }
 
         this.vel = new Vector(xVel + this.knockbackspeed, this.vel.y)
@@ -54,7 +81,7 @@ export class Player extends Actor {
         if (this.knockbackspeed >= 10) {
             this.knockbackspeed -= 10
         } else if (this.knockbackspeed <= -10) {
-            this.knockbackspeed +=10
+            this.knockbackspeed += 10
         } else {
             this.knockbackspeed = 0
         }
@@ -62,8 +89,6 @@ export class Player extends Actor {
         if (this.health <= 0) {
             this.kill()
         }
-
-        console.log(this.knockbackspeed)
     }
 
     shoot() {
@@ -91,6 +116,14 @@ export class Player extends Actor {
         this.scene.engine.clock.schedule(() => {
             this.bulletReady = true
         }, 500)
+    }
+
+    inject() {
+        const injection = new Injection()
+        injection.pos = new Vector(300, 0)
+        this.injectionReady = false
+        this.addChild(injection)
+        console.log('injecting')
 
     }
 
@@ -115,7 +148,7 @@ export class Player extends Actor {
         }
     }
 
-    knockback(direction){
+    knockback(direction) {
         this.knockbackspeed = -400 * direction
         console.log('knockback')
     }
