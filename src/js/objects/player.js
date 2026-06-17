@@ -11,7 +11,6 @@ export class Player extends Actor {
     inventory = ['feef']
     hitOnCooldown = false
     knockbackspeed = 0
-    delta
 
     constructor() {
         super({
@@ -28,6 +27,7 @@ export class Player extends Actor {
         this.graphics.use(sprite)
         this.pos = new Vector(engine.drawWidth - 1600, 850)
         this.on('collisionstart', (e) => this.hitSomething(e))
+        this.scale = new Vector(0.6, 0.6)
     }
 
 
@@ -50,8 +50,6 @@ export class Player extends Actor {
         }
 
         this.vel = new Vector(xVel + this.knockbackspeed, this.vel.y)
-        this.delta = delta
-
 
         if (this.knockbackspeed >= 10) {
             this.knockbackspeed -= 10

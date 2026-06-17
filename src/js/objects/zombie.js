@@ -9,8 +9,8 @@ export class Zombie extends Actor {
 
     constructor(player) {
         super({
-            width: Resources.Zombie.width / 3,
-            height: Resources.Zombie.height / 3
+            width: Resources.Zombie.width,
+            height: Resources.Zombie.height
         })
         this.player = player
         this.body.collisionType = CollisionType.Active
@@ -36,7 +36,7 @@ export class Zombie extends Actor {
             this.walkToPlayer()
 
             const sprite = Resources.Zombie.toSprite()
-            sprite.scale = new Vector(0.5, 0.5)
+            this.scale = new Vector(0.5, 0.5)
             this.graphics.use(sprite)
 
         } else {
