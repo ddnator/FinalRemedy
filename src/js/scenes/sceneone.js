@@ -1,4 +1,4 @@
-import { Actor, Engine, Vector, DisplayMode, SolverStrategy, Scene } from "excalibur"
+import { Actor, Engine, Vector, DisplayMode, ParallaxComponent, SolverStrategy, Scene } from "excalibur"
 import { Resources, ResourceLoader } from '../resources.js'
 import { Player } from '../objects/player.js'
 import { Zombie } from '../objects/zombie.js'
@@ -11,8 +11,38 @@ export class SceneOne extends Scene {
 
     onInitialize(engine) {
 
-        const background1 = new Background1()
-        this.add(background1)
+        //Background
+        const sky = new Actor()
+        sky.graphics.use(Resources.Scene1Sky.toSprite())
+        sky.pos = new Vector(engine.screen.resolution.width / 2, engine.screen.resolution.height / 4)
+        sky.addComponent(new ParallaxComponent(new Vector(0, 1)))
+        this.add(sky)
+
+        const back = new Actor()
+        back.graphics.use(Resources.Scene1Back.toSprite())
+        back.pos = new Vector(engine.screen.resolution.width / 2, engine.screen.resolution.height / 4)
+        back.addComponent(new ParallaxComponent(new Vector(2, 1)))
+        this.add(back)
+
+        const build2 = new Actor()
+        build2.graphics.use(Resources.Scene1Buildings2.toSprite())
+        build2.pos = new Vector(engine.screen.resolution.width / 2.3, engine.screen.resolution.height / 4)
+        build2.addComponent(new ParallaxComponent(new Vector(2.3, 1)))
+        this.add(build2)
+
+        const build1 = new Actor()
+        build1.graphics.use(Resources.Scene1Buildings1.toSprite())
+        build1.pos = new Vector(engine.screen.resolution.width / 2.5, engine.screen.resolution.height / 4)
+        build1.addComponent(new ParallaxComponent(new Vector(2.5, 1)))
+        this.add(build1)
+
+        const street = new Actor()
+        street.graphics.use(Resources.Scene1Street.toSprite())
+
+        street.pos = new Vector(engine.screen.resolution.width / 2, engine.screen.resolution.height / 4)
+        street.addComponent(new ParallaxComponent(new Vector(1, 1)))
+        this.add(street)
+
 
         const player = new Player()
         this.add(player)
@@ -21,16 +51,15 @@ export class SceneOne extends Scene {
         this.add(zombie)
 
 
-
-
-
         const floor = new Floor()
         this.add(floor)
 
 
-
         const ui = new UI(player)
         this.add(ui)
+
+
+
 
     }
 
