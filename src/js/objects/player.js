@@ -12,7 +12,7 @@ export class Player extends Actor {
     hitOnCooldown = false
     knockbackspeed = 0
     delta
-    
+
     constructor() {
         super({
             width: Resources.Player.width,
@@ -26,11 +26,11 @@ export class Player extends Actor {
     onInitialize(engine) {
         const sprite = Resources.Player.toSprite()
         this.graphics.use(sprite)
-        this.pos = new Vector(engine.drawWidth - 200, engine.drawHeight / 3)
+        this.pos = new Vector(engine.drawWidth - 1600, engine.drawHeight / 3)
         this.on('collisionstart', (e) => this.hitSomething(e))
     }
 
-    
+
     onPostUpdate(engine, delta) {
         let yVel = 0
         let xVel = 0
@@ -56,6 +56,10 @@ export class Player extends Actor {
         if (this.knockbackspeed >= 10) {
             this.knockbackspeed -= 10
         }
+
+        if (this.health) {
+            
+        }
     }
 
     shoot() {
@@ -64,7 +68,7 @@ export class Player extends Actor {
             flip = true
         }
         const bullet = new Bullet(this.pos.x, this.pos.y, flip)
-        
+
         if (flip) {
             bullet.graphics.flipHorizontal = true
             this.knockbackspeed = 200
@@ -94,8 +98,12 @@ export class Player extends Actor {
 
         }
 
-        if (this.inventory.length){
-            
+        if (!this.inventory.length < 6) {
+            console.log('inventory is full')
+            console.log(this.inventory)
+        } else {
+            console.log(this.inventory)
+            this.inventory.add('gvergoo')
         }
     }
 
