@@ -32,10 +32,10 @@ export class UI extends ScreenElement {
     }
 
     onPostUpdate(engine) {
-        if (this.player.health > 70) {
+        if (this.player.health > 60) {
             let sprite = Resources.HealthbarFine.toSprite()
             this.healthbar.graphics.use(sprite)
-        } else if (this.player.health > 40 && this.player.health < 70) {
+        } else if (this.player.health > 30 && this.player.health < 60) {
             let sprite = Resources.HealthbarCaution.toSprite()
             this.healthbar.graphics.use(sprite)
         } else {
