@@ -9,7 +9,7 @@ export class Injection extends Actor {
 
     constructor(zombie, player, x, y) {
         super({
-            width: Resources.Injection.width / 4,
+            width: Resources.Injection.width / 3,
             height: Resources.Injection.height / 4
         })
 
@@ -32,7 +32,7 @@ export class Injection extends Actor {
     onCollisionStart(event, other, engine) {
         if (other.owner instanceof Zombie && this.zombie.healed == false) {
             this.zombie.healed = true
-            this.kill()
+
         } else {
             return
         }
