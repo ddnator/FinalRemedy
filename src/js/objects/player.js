@@ -26,7 +26,7 @@ export class Player extends Actor {
     onInitialize(engine) {
         const sprite = Resources.Player.toSprite()
         this.graphics.use(sprite)
-        this.pos = new Vector(engine.drawWidth - 1600, engine.drawHeight / 3)
+        this.pos = new Vector(engine.drawWidth - 100, engine.drawHeight / 3)
         this.on('collisionstart', (e) => this.hitSomething(e))
     }
 
@@ -55,6 +55,8 @@ export class Player extends Actor {
 
         if (this.knockbackspeed >= 10) {
             this.knockbackspeed -= 10
+        } else if (this.knockbackspeed <= -10) {
+            this.knockbackspeed +=10
         }
 
         if (this.health) {
@@ -71,7 +73,12 @@ export class Player extends Actor {
 
         if (flip) {
             bullet.graphics.flipHorizontal = true
-            this.knockbackspeed = 200
+        }
+
+        if (flip) {
+            this.knockback(-1)
+        } else {
+            this.knockback(1)
         }
 
         bullet.events.on("exitviewport", (e) => bullet.kill())
@@ -87,10 +94,9 @@ export class Player extends Actor {
 
     hitSomething(e) {
         if (e.other.owner instanceof Zombie && !this.hitOnCooldown) {
-
             this.hitOnCooldown = true
-
-            this.knockbackspeed = 400
+            const direction = e.other.owner.pos.sub(this.pos).normalize().x
+            this.knockback(direction)
 
             this.scene.engine.clock.schedule(() => {
                 this.hitOnCooldown = false
@@ -107,5 +113,9 @@ export class Player extends Actor {
         }
     }
 
+    knockback(direction){
+        this.knockbackspeed = -400 * direction
+        console.log('knockback')
+    }
 
 }
