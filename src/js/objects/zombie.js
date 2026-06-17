@@ -23,7 +23,7 @@ export class Zombie extends Actor {
     }
 
     onPostUpdate(engine) {
-        if (this.health === 0) {
+        if (this.health == 0) {
             this.kill()
         }
         this.healChecker()
@@ -36,15 +36,16 @@ export class Zombie extends Actor {
             this.walkToPlayer()
 
             const sprite = Resources.Zombie.toSprite()
-            this.scale = new Vector(0.5, 0.5)
+            this.scale = new Vector(0.55, 0.55)
+
             this.graphics.use(sprite)
 
         } else {
             const sprite = Resources.Player.toSprite()
-            sprite.scale = new Vector(0.5, 0.5)
+            this.scale = new Vector(0.6, 0.6)
             this.graphics.use(sprite)
             this.body.collisionType = CollisionType.Passive
-
+            this.graphics.flipHorizontal = false
             this.vel = new Vector(300, 0)
 
             this.events.on("exitviewport", (e) => this.kill())

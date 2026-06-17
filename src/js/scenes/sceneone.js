@@ -26,6 +26,9 @@ export class SceneOne extends Scene {
         const floor = new Floor()
         this.add(floor)
 
+        const injection = new Injection(zombie, player)
+        this.add(injection)
+
     }
 
 
