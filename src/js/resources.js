@@ -11,7 +11,12 @@ const Resources = {
     HealthbarFine: new ImageSource('/images/fine_healthbar.png'),
     HealthbarCaution: new ImageSource('/images/caution_healthbar.png'),
     HealthbarDanger: new ImageSource('/images/danger_healthbar.png'),
-
+    //Scene 1
+    Scene1Sky: new ImageSource('/images/scene1/backgroundImages/S-1-Sky.png'),
+    Scene1Back: new ImageSource('/images/scene1/backgroundImages/S-1-backBuildings.png'),
+    Scene1Buidings2: new ImageSource('/images/scene1/backgroundImages/S-1-Buildings-2.png'),
+    Scene1Buildings1: new ImageSource('/images/scene1/backgroundImages/S-1-Buildings-1.png'),
+    Scene1Street: new ImageSource('/images/scene1/backgroundImages/S-1-Street.png'),
 }
 
 
