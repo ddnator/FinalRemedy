@@ -7,16 +7,19 @@ export class Injection extends Actor {
 
 
 
-    constructor(zombie, player, x, y) {
+    constructor(zombie, player) {
         super({
             width: Resources.Injection.width / 3,
-            height: Resources.Injection.height / 4
+            height: Resources.Injection.height / 3
         })
 
         this.body.collisionType = CollisionType.Passive
         this.body.limitDegreeOfFreedom.push(DegreeOfFreedom.Rotation)
-        this.zombie = zombie
+
+
         this.player = player
+
+
     }
 
     onInitialize(engine) {
@@ -24,27 +27,23 @@ export class Injection extends Actor {
         sprite.scale = new Vector(0.5, 0.5)
         this.graphics.use(sprite)
 
-        this.pos = new Vector(engine.drawWidth / 2, engine.drawHeight / 1.25)
+        // this.pos = new Vector(engine.drawWidth / 2, engine.drawHeight / 1.25)
 
 
     }
 
-    onCollisionStart(event, other, engine) {
-        if (other.owner instanceof Zombie && this.zombie.healed == false) {
-            this.zombie.healed = true
-
-        } else {
-            return
+    onCollisionStart(event, other) {
+        if (other.owner instanceof Zombie && !other.owner.healed) {
+            console.log('boem')
+            other.owner.healed = true
+            this.kill()
         }
     }
+
 
     onPostUpdate(engine) {
 
     }
 
-    zombieCollisionChecker() {
-
-
-    }
 
 }
