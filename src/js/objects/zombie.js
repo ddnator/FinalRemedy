@@ -42,7 +42,7 @@ export class Zombie extends Actor {
 
         } else {
             const sprite = Resources.Player.toSprite()
-            sprite.scale = new Vector(0.6, 0.6)
+            this.scale = new Vector(0.65, 0.65)
             this.graphics.use(sprite)
             this.body.collisionType = CollisionType.Passive
             this.graphics.flipHorizontal = false
