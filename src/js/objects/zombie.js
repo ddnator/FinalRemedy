@@ -36,15 +36,15 @@ export class Zombie extends Actor {
             this.walkToPlayer()
 
             const sprite = Resources.Zombie.toSprite()
-            this.scale = new Vector(0.5, 0.5)
+
             this.graphics.use(sprite)
 
         } else {
             const sprite = Resources.Player.toSprite()
-            sprite.scale = new Vector(0.5, 0.5)
+            sprite.scale = new Vector(0.6, 0.6)
             this.graphics.use(sprite)
             this.body.collisionType = CollisionType.Passive
-
+            this.graphics.flipHorizontal = false
             this.vel = new Vector(300, 0)
 
             this.events.on("exitviewport", (e) => this.kill())

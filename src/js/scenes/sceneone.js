@@ -26,6 +26,8 @@ export class SceneOne extends Scene {
         const floor = new Floor()
         this.add(floor)
 
+
+
     }
 
 
