@@ -35,12 +35,12 @@ export class Player extends Actor {
         let yVel = 0
         let xVel = 0
 
-        if (engine.input.keyboard.isHeld(Keys.A)) {
+        if (engine.input.keyboard.isHeld(Keys.A) && this.knockbackspeed === 0) {
             xVel = -600
             this.graphics.flipHorizontal = true
         }
 
-        if (engine.input.keyboard.isHeld(Keys.D)) {
+        if (engine.input.keyboard.isHeld(Keys.D) && this.knockbackspeed === 0) {
             xVel = 600
             this.graphics.flipHorizontal = false
         }
@@ -55,11 +55,15 @@ export class Player extends Actor {
             this.knockbackspeed -= 10
         } else if (this.knockbackspeed <= -10) {
             this.knockbackspeed +=10
+        } else {
+            this.knockbackspeed = 0
         }
 
-        if (this.health) {
-
+        if (this.health <= 0) {
+            this.kill()
         }
+
+        console.log(this.knockbackspeed)
     }
 
     shoot() {
@@ -86,7 +90,7 @@ export class Player extends Actor {
 
         this.scene.engine.clock.schedule(() => {
             this.bulletReady = true
-        }, 200)
+        }, 500)
 
     }
 
@@ -98,7 +102,7 @@ export class Player extends Actor {
 
             this.scene.engine.clock.schedule(() => {
                 this.hitOnCooldown = false
-            }, 1000)
+            }, 400)
 
         }
 
