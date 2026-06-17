@@ -8,12 +8,13 @@ export class Player extends Actor {
     health = 100
     sanity = 100
     bulletReady = true
-    injectionReady = true
+    injectionHeld = false
     inventory = ['bullet', 'injection']
     hitOnCooldown = false
     knockbackspeed = 0
     selectedItem = 0
     spacePressed = false
+    injection = new Injection()
 
     constructor() {
         super({
@@ -31,6 +32,7 @@ export class Player extends Actor {
         this.pos = new Vector(engine.drawWidth - 1600, 850)
         this.on('collisionstart', (e) => this.hitSomething(e))
         this.scale = new Vector(0.6, 0.6)
+        this.injection.pos = new Vector(300, 0)
     }
 
 
@@ -48,31 +50,35 @@ export class Player extends Actor {
             this.graphics.flipHorizontal = false
         }
 
+        if (engine.input.keyboard.wasPressed(Keys.C) || engine.input.keyboard.wasPressed(Keys.ControlLeft)) {
+            //Crouch controls
+        }
+
         if (engine.input.keyboard.wasPressed(Keys.Key1)) {
             this.selectedItem = 'bullet'
             console.log(`selected item is ${this.selectedItem}`)
+            this.injectionHeld = false
+            this.removeChild(this.injection)
         }
 
-        if (engine.input.keyboard.wasPressed(Keys.Key2)) {
+        if (engine.input.keyboard.wasPressed(Keys.Key2) && !this.injectionHeld) {
+            this.injectionHeld = true
             this.selectedItem = 'injection'
+
+            console.log(this.injection)
+            this.addChild(this.injection)
             console.log(`selected item is ${this.selectedItem}`)
         }
 
         if (engine.input.keyboard.wasPressed(Keys.Key3)) {
             this.selectedItem = 'key'
             console.log(`selected item is ${this.selectedItem}`)
+            this.injectionHeld = false
         }
 
         if (engine.input.keyboard.isHeld(Keys.Space)) {
             if (this.bulletReady && this.selectedItem === 'bullet') {
                 this.shoot()
-            } else if (this.injectionReady && this.selectedItem === 'injection') {
-                this.inject()
-                this.spacePressed = true
-
-                this.scene.engine.clock.schedule(() => {
-                    this.spacePressed = false
-                }, 500)
             }
         }
 
@@ -123,8 +129,6 @@ export class Player extends Actor {
         injection.pos = new Vector(300, 0)
         this.injectionReady = false
         this.addChild(injection)
-        console.log('injecting')
-
     }
 
     hitSomething(e) {
@@ -139,6 +143,16 @@ export class Player extends Actor {
 
         }
 
+        if (!this.inventory.length < 6) {
+            console.log('inventory is full')
+            console.log(this.inventory)
+        } else {
+            console.log(this.inventory)
+            this.inventory.add('gvergoo')
+        }
+    }
+
+    pickUpItem() {
         if (!this.inventory.length < 6) {
             console.log('inventory is full')
             console.log(this.inventory)
