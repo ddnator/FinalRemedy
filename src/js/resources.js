@@ -6,7 +6,9 @@ const Resources = {
     Zombie: new ImageSource('/images/zombie_placeholder.png'),
     Player: new ImageSource('/images/player_placeholder.png'),
     Bullet: new ImageSource('/images/bullet_placeholder.png'),
-    Injection: new ImageSource('/images/injection_placeholder.png')
+    Injection: new ImageSource('/images/injection_placeholder.png'),
+    Background1: new ImageSource('/images/background_city_start.png')
+
 }
 
 
