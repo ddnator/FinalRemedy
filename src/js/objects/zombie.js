@@ -19,7 +19,7 @@ export class Zombie extends Actor {
 
     onInitialize(engine) {
 
-        this.pos = new Vector(engine.drawWidth / 2, engine.drawHeight / 2)
+        this.pos = new Vector(engine.drawWidth / 2, 950)
     }
 
     onPostUpdate(engine) {
@@ -74,19 +74,22 @@ export class Zombie extends Actor {
         if (!this.player) {
             return
         }
-        const direction = this.player.pos.sub(this.pos).normalize()
-        this.vel = direction.scale(110)
 
-        if (direction.x == -1) {
+        const direction = this.player.pos.sub(this.pos).normalize()
+
+        this.vel = new Vector(direction.x * 110, this.vel.y)
+
+        if (direction.x < 0) {
             this.graphics.flipHorizontal = true
-        } else if (direction.x == 1) {
+        } else if (direction.x > 0) {
             this.graphics.flipHorizontal = false
         }
-
-
-
-
-
     }
 
+
+
+
+
 }
+
+
