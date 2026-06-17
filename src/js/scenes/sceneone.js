@@ -5,6 +5,7 @@ import { Zombie } from '../objects/zombie.js'
 import { Injection } from '../objects/injection.js'
 import { Floor } from '../objects/floor.js'
 import { Background1 } from '../objects/background1.js'
+import { UI } from "../objects/ui.js"
 
 export class SceneOne extends Scene {
 
@@ -26,8 +27,10 @@ export class SceneOne extends Scene {
         const floor = new Floor()
         this.add(floor)
 
-        const injection = new Injection(zombie, player)
-        this.add(injection)
+
+
+        const ui = new UI(player)
+        this.add(ui)
 
     }
 
