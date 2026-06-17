@@ -26,7 +26,7 @@ export class Player extends Actor {
     onInitialize(engine) {
         const sprite = Resources.Player.toSprite()
         this.graphics.use(sprite)
-        this.pos = new Vector(engine.drawWidth - 100, engine.drawHeight / 3)
+        this.pos = new Vector(engine.drawWidth - 1600, 850)
         this.on('collisionstart', (e) => this.hitSomething(e))
     }
 
@@ -60,7 +60,7 @@ export class Player extends Actor {
         }
 
         if (this.health) {
-            
+
         }
     }
 
