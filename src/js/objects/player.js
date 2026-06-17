@@ -3,6 +3,7 @@ import { Resources, ResourceLoader } from '../resources.js'
 import { Bullet } from './bullet.js'
 import { Zombie } from './zombie.js'
 import { Injection } from "./injection.js"
+import { UI } from './ui.js'
 
 export class Player extends Actor {
     health = 100
@@ -42,9 +43,14 @@ export class Player extends Actor {
 
         if (engine.input.keyboard.isHeld(Keys.A) && this.knockbackspeed === 0) {
             xVel = -600
+
             this.graphics.flipHorizontal = true
             this.scene.world.entityManager.entities.forEach(element => {
-                element.pos.x += 10
+                if (element instanceof UI) {
+                    element.pos.x -= 10
+                } else {
+                    element.pos.x += 10
+                }
             });
         }
 
@@ -52,7 +58,11 @@ export class Player extends Actor {
             xVel = 600
             this.graphics.flipHorizontal = false
             this.scene.world.entityManager.entities.forEach(element => {
-                element.pos.x -= 10
+                if (element instanceof UI) {
+                    element.pos.x += 10
+                } else {
+                    element.pos.x -= 10
+                }
             });
         }
 
