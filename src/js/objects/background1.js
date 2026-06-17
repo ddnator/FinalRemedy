@@ -4,8 +4,7 @@ import { Resources, ResourceLoader } from '../resources.js'
 export class Background1 extends Actor {
     constructor() {
         super({
-            width: 1980,
-            height: 1080,
+
             displayMode: DisplayMode.FitScreen,
         })
 

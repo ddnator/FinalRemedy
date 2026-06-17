@@ -43,11 +43,17 @@ export class Player extends Actor {
         if (engine.input.keyboard.isHeld(Keys.A) && this.knockbackspeed === 0) {
             xVel = -600
             this.graphics.flipHorizontal = true
+            this.scene.world.entityManager.entities.forEach(element => {
+                element.pos.x += 10
+            });
         }
 
         if (engine.input.keyboard.isHeld(Keys.D) && this.knockbackspeed === 0) {
             xVel = 600
             this.graphics.flipHorizontal = false
+            this.scene.world.entityManager.entities.forEach(element => {
+                element.pos.x -= 10
+            });
         }
 
         if (engine.input.keyboard.wasPressed(Keys.C) || engine.input.keyboard.wasPressed(Keys.ControlLeft)) {
@@ -98,10 +104,10 @@ export class Player extends Actor {
         }
 
         if (this.graphics.flipHorizontal) {
-            this.injection.pos.x = -80
+            this.injection.pos.x = -Resources.Player.width / 2 - Resources.Injection.width / 6
             this.injection.graphics.flipHorizontal = true
         } else {
-            this.injection.pos.x = 80
+            this.injection.pos.x = Resources.Player.width
             this.injection.graphics.flipHorizontal = false
         }
     }
@@ -135,7 +141,7 @@ export class Player extends Actor {
 
     inject() {
         const injection = new Injection()
-        injection.pos = new Vector(300, 0)
+        injection.pos = new Vector(Resources.Player.width / 2, 0)
         this.injectionReady = false
         this.addChild(injection)
     }
