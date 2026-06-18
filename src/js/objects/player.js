@@ -43,15 +43,28 @@ export class Player extends Actor {
 
         if (engine.input.keyboard.isHeld(Keys.A) && this.knockbackspeed === 0) {
             xVel = -600
-
             this.graphics.flipHorizontal = true
+            this.scene.world.entityManager.entities.forEach(element => {
 
+                if (element instanceof UI) {
+                    element.pos.x -= 10
+                } else {
+                    element.pos.x += 10
+                }
+
+            });
         }
 
         if (engine.input.keyboard.isHeld(Keys.D) && this.knockbackspeed === 0) {
             xVel = 600
             this.graphics.flipHorizontal = false
-
+            this.scene.world.entityManager.entities.forEach(element => {
+                if (element instanceof UI) {
+                    element.pos.x += 10
+                } else {
+                    element.pos.x -= 10
+                }
+            });
         }
 
         if (engine.input.keyboard.wasPressed(Keys.C) || engine.input.keyboard.wasPressed(Keys.ControlLeft)) {
