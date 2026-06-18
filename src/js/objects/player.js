@@ -4,16 +4,18 @@ import { Bullet } from './bullet.js'
 import { Zombie } from './zombie.js'
 import { Injection } from "./injection.js"
 import { UI } from './ui.js'
+import { BulletPickup } from './bulletpickup.js'
+import { InjectionPickup } from './injectionpickup.js'
 
 export class Player extends Actor {
     health = 100
     sanity = 100
     bulletReady = true
     injectionHeld = false
-    inventory = ['bullet', 'injection']
+    inventory = ['bullet', 'injection', 'bullet']
     hitOnCooldown = false
     knockbackspeed = 0
-    selectedItem = 0
+    selectedItem = 'bullet'
     spacePressed = false
     injection = new Injection()
 
@@ -81,7 +83,7 @@ export class Player extends Actor {
 
         if (engine.input.keyboard.isHeld(Keys.Space)) {
 
-            if (this.bulletReady && this.selectedItem === 'bullet') {
+            if (this.bulletReady && this.selectedItem === 'bullet' && this.inventory.includes('bullet')) {
                 this.shoot()
             }
         }
@@ -129,6 +131,9 @@ export class Player extends Actor {
         bullet.events.on("exitviewport", (e) => bullet.kill())
         this.scene.add(bullet)
 
+        const bulletIndex = this.inventory.indexOf("bullet")
+        this.inventory.splice(bulletIndex, 1)
+
         this.bulletReady = false
 
         this.scene.engine.clock.schedule(() => {
@@ -152,17 +157,21 @@ export class Player extends Actor {
             this.scene.engine.clock.schedule(() => {
                 this.hitOnCooldown = false
             }, 400)
+        }
 
+        if (e.other.owner instanceof BulletPickup) {
+            this.pickUpItem('bullet', e.other.owner)
+        } else if (e.other.owner instanceof InjectionPickup) {
+            this.pickUpItem('injection', e.other.owner)
         }
     }
 
-    pickUpItem() {
-        if (!this.inventory.length < 6) {
-            console.log('inventory is full')
-            console.log(this.inventory)
+    pickUpItem(inventoryItem, pickUpItem) {
+        if (this.inventory.length < 6) {
+            this.inventory.push(inventoryItem)
+            pickUpItem.kill()
         } else {
-            console.log(this.inventory)
-            this.inventory.add('gvergoo')
+            console.log('inventory full')
         }
     }
 
