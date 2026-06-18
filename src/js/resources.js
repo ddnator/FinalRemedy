@@ -8,6 +8,9 @@ const Resources = {
     Bullet: new ImageSource('/images/bullet_placeholder.png'),
     Injection: new ImageSource('/images/injection_placeholder.png'),
     Background1: new ImageSource('/images/background_city_start.png'),
+    BulletPickUp: new ImageSource('images/bulletpickup.png'),
+    InjectionPickUp: new ImageSource('images/injectionpickup.png'),
+
 
     //UI
     HealthbarFine: new ImageSource('/images/fine_healthbar.png'),

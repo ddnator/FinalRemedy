@@ -6,6 +6,8 @@ import { Injection } from '../objects/injection.js'
 import { Floor } from '../objects/floor.js'
 import { Background1 } from '../objects/background1.js'
 import { UI } from "../objects/ui.js"
+import { InjectionPickup } from "../objects/injectionpickup.js"
+import { BulletPickup } from "../objects/bulletpickup.js"
 
 export class SceneOne extends Scene {
 
@@ -54,6 +56,12 @@ export class SceneOne extends Scene {
 
         const floor = new Floor()
         this.add(floor)
+
+        const bulletpickup = new BulletPickup()
+        this.add(bulletpickup)
+
+        const injectionpickup = new InjectionPickup()
+        this.add(injectionpickup)
 
 
         //cam on player
