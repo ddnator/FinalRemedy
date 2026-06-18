@@ -51,12 +51,26 @@ export class Zombie extends Actor {
             this.scale = new Vector(0.65, 0.65)
             this.graphics.use(sprite)
             this.body.collisionType = CollisionType.Passive
-            this.graphics.flipHorizontal = false
-            this.vel = new Vector(700, 0)
+
+            this.walkAway()
+            // this.vel = new Vector(700, 0)
             this.health = 500
             this.events.on("exitviewport", (e) => this.kill())
 
         }
+    }
+
+    walkAway() {
+        if (this.player.pos.x > this.pos.x) {
+            this.vel = new Vector(-700, 0)
+            this.graphics.flipHorizontal = true
+        } else {
+
+            this.vel = new Vector(700, 0)
+            this.graphics.flipHorizontal = false
+        }
+
+
     }
 
     onCollisionStart(event, other) {
@@ -67,8 +81,11 @@ export class Zombie extends Actor {
 
     attackPlayer() {
         // hier de image van hit player
-        this.player.health = this.player.health - 25
-        console.log(this.player.health)
+        if (!this.healed) {
+            this.player.health = this.player.health - 25
+            console.log(this.player.health)
+        }
+
     }
 
     getHit() {
@@ -98,5 +115,4 @@ export class Zombie extends Actor {
 
 
 }
-
 

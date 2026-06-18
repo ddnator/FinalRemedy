@@ -11,6 +11,9 @@ const Resources = {
     BulletPickUp: new ImageSource('images/bulletpickup.png'),
     InjectionPickUp: new ImageSource('images/injectionpickup.png'),
 
+    //Prompts
+    PressE: new ImageSource('images/prompts/PressE.png'),
+
 
     //UI
     HealthbarFine: new ImageSource('/images/ui_fine_healthbar.png'),

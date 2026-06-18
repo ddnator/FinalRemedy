@@ -36,12 +36,14 @@ export class Player extends Actor {
         this.on('collisionstart', (e) => this.hitSomething(e))
         this.scale = new Vector(0.6, 0.6)
         this.injection.pos = new Vector(80, 0)
+
     }
 
 
     onPostUpdate(engine, delta) {
         let yVel = 0
         let xVel = 0
+
 
         if (engine.input.keyboard.isHeld(Keys.A) && this.knockbackspeed === 0) {
             xVel = -600
@@ -66,7 +68,7 @@ export class Player extends Actor {
             this.removeChild(this.injection)
         }
 
-        if (engine.input.keyboard.wasPressed(Keys.Key2) && !this.injectionHeld) {
+        if (engine.input.keyboard.wasPressed(Keys.Key2) && !this.injectionHeld && this.inventory.includes('injection')) {
             this.selectedItem = 'injection'
             this.inject()
             console.log(`selected item is ${this.selectedItem}`)
@@ -82,10 +84,12 @@ export class Player extends Actor {
         if (engine.input.keyboard.isHeld(Keys.Space)) {
             if (this.bulletReady && this.selectedItem === 'bullet' && this.inventory.includes('bullet')) {
                 this.shoot()
-            } else if (!this.injectionHeld && this.selectedItem === 'injection') {
+            } else if (!this.injectionHeld && this.selectedItem === 'injection' && this.inventory.includes('injection')) {
                 this.inject()
             }
         }
+
+
 
         this.vel = new Vector(xVel + this.knockbackspeed, this.vel.y)
 
@@ -175,4 +179,10 @@ export class Player extends Actor {
     knockback(direction) {
         this.knockbackspeed = -400 * direction
     }
+
+
+
+
+
+
 }
