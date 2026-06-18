@@ -50,7 +50,7 @@ export class Player extends Actor {
         }
 
         if (engine.input.keyboard.isHeld(Keys.D) && this.knockbackspeed === 0) {
-            xVel = 600
+            xVel = 1200
             this.graphics.flipHorizontal = false
 
         }

@@ -21,11 +21,15 @@ const Resources = {
 
 
     //Scene 1
+    //Background
     Scene1Sky: new ImageSource('/images/scene1/backgroundImages/S-1-Sky.png'),
     Scene1Back: new ImageSource('/images/scene1/backgroundImages/S-1-backBuildings.png'),
     Scene1Buildings2: new ImageSource('/images/scene1/backgroundImages/S-1-Buildings-2.png'),
     Scene1Buildings1: new ImageSource('/images/scene1/backgroundImages/S-1-Buildings-1.png'),
     Scene1Street: new ImageSource('/images/scene1/backgroundImages/S-1-Street.png'),
+    //Doors
+    Scene1Door1: new ImageSource('/images/scene1/doors/S-1-door-1.png'),
+    Scene1Door2: new ImageSource('/images/scene1/doors/S-1-door-2.png'),
 }
 
 
