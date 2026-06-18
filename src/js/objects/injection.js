@@ -5,9 +5,9 @@ import { Zombie } from "./zombie.js"
 
 export class Injection extends Actor {
 
+    player
 
-
-    constructor(zombie, player) {
+    constructor(player) {
         super({
             width: Resources.Injection.width / 3,
             height: Resources.Injection.height / 3
@@ -18,7 +18,7 @@ export class Injection extends Actor {
 
 
         this.player = player
-
+        console.log(player)
 
     }
 
@@ -28,15 +28,21 @@ export class Injection extends Actor {
         this.graphics.use(sprite)
 
         // this.pos = new Vector(engine.drawWidth / 2, engine.drawHeight / 1.25)
-
-
+        const entityList = this.scene.world.entityManager.entities.forEach(element => {
+            if (element instanceof Player) {
+                this.player = element
+            }
+        })
     }
+
 
     onCollisionStart(event, other) {
         if (other.owner instanceof Zombie && !other.owner.healed) {
-            console.log('boem')
             other.owner.healed = true
             this.kill()
+            const injectionIndex = this.player.inventory.indexOf("injection")
+            this.player.inventory.splice(injectionIndex, 1)
+            this.player.injectionHeld = false
         }
     }
 

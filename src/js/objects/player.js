@@ -12,7 +12,7 @@ export class Player extends Actor {
     sanity = 100
     bulletReady = true
     injectionHeld = false
-    inventory = ['bullet', 'injection', 'bullet']
+    inventory = ['bullet', 'injection']
     hitOnCooldown = false
     knockbackspeed = 0
     selectedItem = 'bullet'
@@ -67,10 +67,8 @@ export class Player extends Actor {
         }
 
         if (engine.input.keyboard.wasPressed(Keys.Key2) && !this.injectionHeld) {
-            this.injectionHeld = true
             this.selectedItem = 'injection'
-
-            this.addChild(this.injection)
+            this.inject()
             console.log(`selected item is ${this.selectedItem}`)
         }
 
@@ -82,9 +80,10 @@ export class Player extends Actor {
         }
 
         if (engine.input.keyboard.isHeld(Keys.Space)) {
-
             if (this.bulletReady && this.selectedItem === 'bullet' && this.inventory.includes('bullet')) {
                 this.shoot()
+            } else if (!this.injectionHeld && this.selectedItem === 'injection') {
+                this.inject()
             }
         }
 
@@ -106,7 +105,7 @@ export class Player extends Actor {
             this.injection.pos.x = -Resources.Player.width / 2 - Resources.Injection.width / 6
             this.injection.graphics.flipHorizontal = true
         } else {
-            this.injection.pos.x = Resources.Player.width
+            this.injection.pos.x = Resources.Player.width / 2 + Resources.Injection.width / 6
             this.injection.graphics.flipHorizontal = false
         }
     }
@@ -142,10 +141,8 @@ export class Player extends Actor {
     }
 
     inject() {
-        const injection = new Injection()
-        injection.pos = new Vector(Resources.Player.width / 2, 0)
-        this.injectionReady = false
-        this.addChild(injection)
+        this.injectionHeld = true
+        this.addChild(this.injection)
     }
 
     hitSomething(e) {
