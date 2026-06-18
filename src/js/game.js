@@ -32,7 +32,7 @@ export class Game extends Engine {
         const sceneOne = new SceneOne()
         this.add('sceneone', SceneOne)
         this.goToScene('sceneone')
-
+        
 
     }
 }
