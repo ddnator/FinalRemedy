@@ -54,6 +54,8 @@ export class SceneOne extends Scene {
         const floor = new Floor()
         this.add(floor)
 
+        const cam = this.currentScene && this.currentScene.camera ? this.currentScene.camera : this.camera
+        if (cam && cam.strategy) cam.strategy.elasticToActor(player, 0.2, 0.6)
 
         const ui = new UI(player)
         this.add(ui)

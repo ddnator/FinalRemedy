@@ -1,4 +1,4 @@
-import { Actor, Engine, Vector, Keys, DegreeOfFreedom, CollisionType, linear } from "excalibur"
+import { Actor, Engine, Vector, Keys, DegreeOfFreedom, CollisionType, linear, ParallaxComponent } from "excalibur"
 import { Resources, ResourceLoader } from '../resources.js'
 import { Bullet } from './bullet.js'
 import { Zombie } from './zombie.js'
