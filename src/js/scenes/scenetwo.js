@@ -6,16 +6,10 @@ import { Injection } from '../objects/injection.js'
 import { Floor } from '../objects/floor.js'
 import { Background1 } from '../objects/background1.js'
 import { UI } from "../objects/ui.js"
-import { InjectionPickup } from "../objects/injectionpickup.js"
-import { BulletPickup } from "../objects/bulletpickup.js"
 
 export class SceneOne extends Scene {
 
     onInitialize(engine) {
-
-        const floor = new Floor()
-        this.add(floor)
-
 
         //Background
         const sky = new Actor()
@@ -61,12 +55,6 @@ export class SceneOne extends Scene {
         const floor = new Floor()
         this.add(floor)
 
-        const bulletpickup = new BulletPickup()
-        this.add(bulletpickup)
-
-        const injectionpickup = new InjectionPickup()
-        this.add(injectionpickup)
-
 
         //cam on player
         const cam = this.currentScene && this.currentScene.camera ? this.currentScene.camera : this.camera
@@ -95,8 +83,10 @@ export class SceneOne extends Scene {
         const minX = -8000
         const maxX = 15000
 
+
         if (cam) {
             cam.pos.x = Math.min(Math.max(cam.pos.x, minX), maxX)
+
         }
     }
 
