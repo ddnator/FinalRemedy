@@ -8,9 +8,15 @@ const Resources = {
     Bullet: new ImageSource('/images/bullet_placeholder.png'),
     Injection: new ImageSource('/images/injection_placeholder.png'),
     Background1: new ImageSource('/images/background_city_start.png'),
+
+    //UI
     HealthbarFine: new ImageSource('/images/fine_healthbar.png'),
     HealthbarCaution: new ImageSource('/images/caution_healthbar.png'),
     HealthbarDanger: new ImageSource('/images/danger_healthbar.png'),
+    SanityBar: new ImageSource('/images/sanity_bar.png'),
+
+
+
     //Scene 1
     Scene1Sky: new ImageSource('/images/scene1/backgroundImages/S-1-Sky.png'),
     Scene1Back: new ImageSource('/images/scene1/backgroundImages/S-1-backBuildings.png'),
