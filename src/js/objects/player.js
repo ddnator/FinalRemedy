@@ -4,6 +4,7 @@ import { Bullet } from './bullet.js'
 import { Zombie } from './zombie.js'
 import { Injection } from "./injection.js"
 import { UI } from './ui.js'
+import { Door1 } from "../scenes/scene1/door1.js"
 
 export class Player extends Actor {
     health = 100
@@ -34,12 +35,14 @@ export class Player extends Actor {
         this.on('collisionstart', (e) => this.hitSomething(e))
         this.scale = new Vector(0.6, 0.6)
         this.injection.pos = new Vector(80, 0)
+
     }
 
 
     onPostUpdate(engine, delta) {
         let yVel = 0
         let xVel = 0
+
 
         if (engine.input.keyboard.isHeld(Keys.A) && this.knockbackspeed === 0) {
             xVel = -600
@@ -85,6 +88,8 @@ export class Player extends Actor {
                 this.shoot()
             }
         }
+
+
 
         this.vel = new Vector(xVel + this.knockbackspeed, this.vel.y)
 
@@ -169,4 +174,10 @@ export class Player extends Actor {
     knockback(direction) {
         this.knockbackspeed = -400 * direction
     }
+
+
+
+
+
+
 }
