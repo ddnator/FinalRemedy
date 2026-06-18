@@ -55,8 +55,12 @@ export class SceneOne extends Scene {
         const floor = new Floor()
         this.add(floor)
 
+
+        //cam on player
         const cam = this.currentScene && this.currentScene.camera ? this.currentScene.camera : this.camera
         cam.strategy.elasticToActor(player, 0.2, 0.6)
+
+
 
 
         const ui = new UI(player)
@@ -68,11 +72,23 @@ export class SceneOne extends Scene {
     }
 
     onPostUpdate() {
+        //cam offset 
         const cam = this.currentScene && this.currentScene.camera ? this.currentScene.camera : this.camera
         const offset = 24
         if (cam && cam.strategy) {
             cam.pos = cam.pos.add(new Vector(0, -offset))
         }
+
+        //cam bounds
+        const minX = -8000
+        const maxX = 15000
+
+
+        if (cam) {
+            cam.pos.x = Math.min(Math.max(cam.pos.x, minX), maxX)
+
+        }
     }
+
 
 }
