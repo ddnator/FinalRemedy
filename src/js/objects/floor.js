@@ -4,7 +4,7 @@ import { Resources, ResourceLoader } from '../resources.js'
 export class Floor extends Actor {
     constructor() {
         super({
-            width: 1980,
+            width: 40000,
             height: 100
         })
 
