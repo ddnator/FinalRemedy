@@ -1,13 +1,15 @@
 import { Actor, Engine, Vector, DisplayMode, ParallaxComponent, SolverStrategy, Scene } from "excalibur"
-import { Resources, ResourceLoader } from '../resources.js'
-import { Player } from '../objects/player.js'
-import { Zombie } from '../objects/zombie.js'
-import { Injection } from '../objects/injection.js'
-import { Floor } from '../objects/floor.js'
-import { Background1 } from '../objects/background1.js'
-import { UI } from "../objects/ui.js"
-import { InjectionPickup } from "../objects/injectionpickup.js"
-import { BulletPickup } from "../objects/bulletpickup.js"
+import { Resources, ResourceLoader } from '../../resources.js'
+import { Player } from '../../objects/player.js'
+import { Zombie } from '../../objects/zombie.js'
+import { Injection } from '../../objects/injection.js'
+import { Floor } from '../../objects/floor.js'
+import { Background1 } from '../../objects/background1.js'
+import { UI } from "../../objects/ui.js"
+import { InjectionPickup } from "../../objects/injectionpickup.js"
+import { BulletPickup } from "../../objects/bulletpickup.js"
+import { Door1 } from "./door1.js"
+
 
 export class SceneOne extends Scene {
 
@@ -49,7 +51,10 @@ export class SceneOne extends Scene {
         street.addComponent(new ParallaxComponent(new Vector(0.5, 1)))
         this.add(street)
 
+        //interactable door
+        const door1 = new Door1()
 
+        this.add(door1)
 
         const player = new Player()
         this.add(player)
@@ -58,8 +63,6 @@ export class SceneOne extends Scene {
         this.add(zombie)
 
 
-        const floor = new Floor()
-        this.add(floor)
 
         const bulletpickup = new BulletPickup()
         this.add(bulletpickup)

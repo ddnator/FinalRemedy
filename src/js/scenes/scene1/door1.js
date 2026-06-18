@@ -1,7 +1,7 @@
-import { Actor, Engine, Vector, CollisionType, DegreeOfFreedom, Scene } from "excalibur"
-import { Resources, ResourceLoader } from '../resources.js'
+import { Actor, Engine, Vector, CollisionType, DegreeOfFreedom, Scene, ParallaxComponent } from "excalibur"
+import { Resources, ResourceLoader } from '../../resources.js'
 
-export class Floor extends Actor {
+export class Door1 extends Actor {
     constructor() {
         super({
             width: Resources.Scene1Door1.width,
@@ -13,9 +13,9 @@ export class Floor extends Actor {
     }
 
     onInitialize(engine,) {
-        const door1 = new Actor()
-        door1.graphics.use(Resources.Scene1Door1.toSprite())
-        door1.pos = new Vector(15350, 942)
+        this.graphics.use(Resources.Scene1Door1.toSprite())
+        this.pos = new Vector(15350, 762)
+        this.addComponent(new ParallaxComponent(new Vector(0.52, 1)))
 
     }
 }
