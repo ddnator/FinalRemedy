@@ -1,15 +1,19 @@
 import { Actor, Engine, Vector, DisplayMode, ParallaxComponent, SolverStrategy, Scene } from "excalibur"
-import { Resources, ResourceLoader } from '../resources.js'
-import { Player } from '../objects/player.js'
-import { Zombie } from '../objects/zombie.js'
-import { Injection } from '../objects/injection.js'
-import { Floor } from '../objects/floor.js'
-import { Background1 } from '../objects/background1.js'
-import { UI } from "../objects/ui.js"
+import { Resources, ResourceLoader } from '../../resources.js'
+import { Player } from '../../objects/player.js'
+import { Zombie } from '../../objects/zombie.js'
+import { Injection } from '../../objects/injection.js'
+import { Floor } from '../../objects/floor.js'
+import { Background1 } from '../../objects/background1.js'
+import { UI } from "../../objects/ui.js"
 
 export class SceneOne extends Scene {
 
     onInitialize(engine) {
+
+        const floor = new Floor()
+        this.add(floor)
+
 
         //Background
         const sky = new Actor()
@@ -52,8 +56,7 @@ export class SceneOne extends Scene {
         this.add(zombie)
 
 
-        const floor = new Floor()
-        this.add(floor)
+
 
 
         //cam on player
@@ -83,10 +86,8 @@ export class SceneOne extends Scene {
         const minX = -8000
         const maxX = 15000
 
-
         if (cam) {
             cam.pos.x = Math.min(Math.max(cam.pos.x, minX), maxX)
-
         }
     }
 

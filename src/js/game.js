@@ -5,7 +5,7 @@ import { Player } from './objects/player.js'
 import { Zombie } from './objects/zombie.js'
 import { Injection } from './objects/injection.js'
 import { Floor } from './objects/floor.js'
-import { SceneOne } from './scenes/sceneone.js'
+import { SceneOne } from './scenes/scene1/sceneone.js'
 
 export class Game extends Engine {
 
