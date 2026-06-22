@@ -19,7 +19,12 @@ export class Player extends Actor {
     spacePressed = false
     injection = new Injection()
 
-    constructor() {
+
+    x
+    y
+
+
+    constructor(xpos, ypos) {
         super({
             width: Resources.Player.width,
             height: Resources.Player.height,
@@ -27,12 +32,17 @@ export class Player extends Actor {
         this.body.collisionType = CollisionType.Active
         this.body.bounciness = 0
         this.body.limitDegreeOfFreedom.push(DegreeOfFreedom.Rotation)
+
+        this.pos = new Vector(xpos, ypos)
     }
+
+
 
     onInitialize(engine) {
         const sprite = Resources.Player.toSprite()
         this.graphics.use(sprite)
-        this.pos = new Vector(engine.drawWidth - 1600, 850)
+        //this.pos = new Vector(engine.drawWidth - 1600, 850)
+
         this.on('collisionstart', (e) => this.hitSomething(e))
         this.scale = new Vector(0.6, 0.6)
         this.injection.pos = new Vector(80, 0)

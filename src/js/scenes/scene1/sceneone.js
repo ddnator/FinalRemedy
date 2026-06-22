@@ -58,7 +58,7 @@ export class SceneOne extends Scene {
 
         this.add(door1)
 
-        this.player = new Player()
+        this.player = new Player(-7800, 850)
         this.add(this.player)
 
         const zombie = new Zombie(this.player)
@@ -93,7 +93,7 @@ export class SceneOne extends Scene {
         const cam = this.currentScene && this.currentScene.camera ? this.currentScene.camera : this.camera
         const offset = 24
         if (cam && cam.strategy) {
-            cam.pos = cam.pos.add(new Vector(0, -offset))
+            cam.pos = cam.pos.add(new Vector(50, -offset))
         }
 
         //cam bounds
