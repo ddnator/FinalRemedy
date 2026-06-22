@@ -6,6 +6,8 @@ import { Injection } from "./injection.js"
 import { UI } from './ui.js'
 import { BulletPickup } from './bulletpickup.js'
 import { InjectionPickup } from './injectionpickup.js'
+import { Quest } from "./quest.js"
+import { Floor } from './floor.js'
 
 export class Player extends Actor {
     health = 100
@@ -15,11 +17,11 @@ export class Player extends Actor {
     inventory = ['bullet', 'injection']
     hitOnCooldown = false
     knockbackspeed = 0
-    selectedItem = 'bullet'
+    selectedItem = 'none'
     spacePressed = false
     injection = new Injection()
-
-
+    quest
+    grounded
     x
     y
 
@@ -64,7 +66,10 @@ export class Player extends Actor {
         if (engine.input.keyboard.isHeld(Keys.D) && this.knockbackspeed === 0) {
             xVel = 1200
             this.graphics.flipHorizontal = false
+        }
 
+        if (engine.input.keyboard.isHeld(Keys.W) && this.knockbackspeed === 0 && this.grounded) {
+            this.body.applyLinearImpulse(new Vector(0, -300 * delta))
         }
 
         if (engine.input.keyboard.wasPressed(Keys.C) || engine.input.keyboard.wasPressed(Keys.ControlLeft)) {
@@ -72,6 +77,18 @@ export class Player extends Actor {
         }
 
         if (engine.input.keyboard.wasPressed(Keys.Key1)) {
+            const entityList = this.scene.world.entityManager.entities
+
+            entityList.forEach(element => {
+                if (element instanceof Quest) {
+                    this.quest = element
+                }
+            });
+
+            if (this.quest.currentQuest === 'Pistol tutorial') {
+                this.quest.updateQuest()
+            }
+
             this.selectedItem = 'bullet'
             console.log(`selected item is ${this.selectedItem}`)
             this.injectionHeld = false
@@ -168,8 +185,6 @@ export class Player extends Actor {
             this.scene.engine.clock.schedule(() => {
                 this.hitOnCooldown = false
             }, 400)
-        } else if (e.other.owner instanceof InjectionPickup) {
-            this.pickUpItem('injection', e.other.owner)
         }
     }
 
@@ -186,7 +201,17 @@ export class Player extends Actor {
         this.knockbackspeed = -400 * direction
     }
 
+    onCollisionStart(event, other) {
+        if (other.owner instanceof Floor) {
+            this.grounded = true
+        }
+    }
 
+    onCollisionEnd(event, other) {
+        if (other.owner instanceof Floor) {
+            this.grounded = false
+        }
+    }
 
 
 
