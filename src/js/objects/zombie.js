@@ -101,9 +101,7 @@ export class Zombie extends Actor {
         // hier de image van hit player
         if (!this.healed) {
             this.player.health = this.player.health - 25
-            console.log(this.player.health)
         }
-
     }
 
     getHit() {

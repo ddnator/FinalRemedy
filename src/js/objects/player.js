@@ -14,7 +14,7 @@ export class Player extends Actor {
     sanity = 100
     bulletReady = true
     injectionHeld = false
-    inventory = ['bullet', 'injection']
+    inventory = ['bullet']
     hitOnCooldown = false
     knockbackspeed = 0
     selectedItem = 'none'
@@ -74,6 +74,20 @@ export class Player extends Actor {
 
         if (engine.input.keyboard.wasPressed(Keys.C) || engine.input.keyboard.wasPressed(Keys.ControlLeft)) {
             //Crouch controls
+        }
+
+        if (engine.input.keyboard.wasPressed(Keys.Enter)) {
+            const entityList = this.scene.world.entityManager.entities
+
+            entityList.forEach(element => {
+                if (element instanceof Quest) {
+                    this.quest = element
+                }
+            });
+
+            if (this.quest.currentQuest === 'Sanity tutorial') {
+                this.quest.updateQuest()
+            }
         }
 
         if (engine.input.keyboard.wasPressed(Keys.Key1)) {

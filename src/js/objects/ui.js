@@ -31,7 +31,6 @@ export class UI extends ScreenElement {
         this.setupAnimations();
         this.firstUpdate = false;
         this.player = engine.currentScene.player
-        console.log(this.player.health)
 
         this.currentquest = new Quest()
         this.addChild(this.currentquest)
@@ -57,7 +56,6 @@ export class UI extends ScreenElement {
     }
 
     setupAnimations() {
-        console.log("animation setup")
         const configGrid = {
             rows: 1,
             columns: 42,

@@ -39,12 +39,12 @@ export class Quest extends ScreenElement {
     }
 
     updateQuest() {
-        console.log(this.currentQuest)
         switch (this.currentQuest) {
             case "WASD tutorial":
                 this.label.text = 'Press 1 to switch to your pistol'
                 this.currentQuest = 'Pistol tutorial'
                 break
+
             case "Pistol tutorial":
                 this.label.text = 'Shoot the Zombie by pressing Spacebar'
                 this.currentQuest = 'Shoot the zombie'
@@ -52,13 +52,23 @@ export class Quest extends ScreenElement {
                 const zombie = new Zombie(this.player, -6000, 850, 'tutorial zombie')
                 this.scene.add(zombie)
                 break
+
             case "Shoot the zombie":
+                this.label.text = 'Killing zombies decrease your sanity, try to avoid killing too many zombies\n Using syringes to cure the instead does not decrease your sanity\n Press Enter to continue'
+                this.currentQuest = 'Sanity tutorial'
+                break
+
+            case "Sanity tutorial":
                 this.label.text = 'Walk over to the injection and pick it up by pressing E'
                 this.currentQuest = 'Injection pickup tutorial'
 
                 const injection = new InjectionPickup(-6000, 850, 'tutorial injection')
                 this.scene.add(injection)
                 break
+
+            case "Injection pickup tutorial":
+                this.label.text = 'End'
+                this.currentQuest = 'End'
         }
     }
 }
