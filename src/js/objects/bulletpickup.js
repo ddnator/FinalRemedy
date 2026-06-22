@@ -2,41 +2,74 @@ import { Actor, Engine, Vector, CollisionType, DegreeOfFreedom, Scene, Keys } fr
 import { Resources, ResourceLoader } from '../resources.js'
 import { Player } from "./player.js"
 import { Zombie } from "./zombie.js"
+import { PressE } from './prompts/pressE.js'
+import { Quest } from './quest.js'
 
 export class BulletPickup extends Actor {
+    questitem = false
+    playerInRange = false
+    player
+    quest
 
-
-
-    constructor() {
+    constructor(x, y, questItem) {
         super({
-            width: Resources.Injection.width / 2,
-            height: Resources.Injection.height / 2
+            width: Resources.BulletPickUp.width,
+            height: Resources.BulletPickUp.height
         })
 
         this.body.collisionType = CollisionType.Passive
         this.body.limitDegreeOfFreedom.push(DegreeOfFreedom.Rotation)
 
-
-
+        this.pos = new Vector(x, y)
+        this.questItem = questItem
 
     }
 
     onInitialize(engine) {
         const sprite = Resources.BulletPickUp.toSprite()
-        sprite.scale = new Vector(0.25, 0.25)
+        this.scale = new Vector(0.2, 0.2)
         this.graphics.use(sprite)
-
-        this.pos = new Vector(engine.drawWidth / 3, engine.drawHeight / 1.25)
-
-
     }
 
+    onCollisionStart(event, other) {
+        const collider = other ?? event.other
+        if (collider?.owner instanceof Player) {
+            this.playerInRange = true
+            if (!this.pressE) {
+                this.pressE = new PressE(0, -120)
+                this.pressE.scale = new Vector(2, 2)
+                this.addChild(this.pressE)
+            }
+        }
 
+        const entityList = this.scene.world.entityManager.entities
 
+        entityList.forEach(element => {
+            if (element instanceof Player) {
+                this.player = element
+            } else if (element instanceof Quest)
+                this.quest = element
+        });
+        console.log(this.player)
+    }
+
+    onCollisionEnd(event, other) {
+        const collider = other ?? event.other
+        if (collider?.owner instanceof Player) {
+            this.playerInRange = false
+            if (this.pressE) {
+                this.removeChild(this.pressE)
+                this.pressE = null
+            }
+        }
+    }
 
     onPostUpdate(engine) {
-
+        if (this.playerInRange && engine.input.keyboard.wasPressed(Keys.E)) {
+            this.player.pickUpItem('bullet', this)
+            if (this.questItem) {
+                this.quest.updateQuest()
+            }
+        }
     }
-
-
 }

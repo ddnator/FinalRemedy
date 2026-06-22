@@ -168,10 +168,6 @@ export class Player extends Actor {
             this.scene.engine.clock.schedule(() => {
                 this.hitOnCooldown = false
             }, 400)
-        }
-
-        if (e.other.owner instanceof BulletPickup) {
-            this.pickUpItem('bullet', e.other.owner)
         } else if (e.other.owner instanceof InjectionPickup) {
             this.pickUpItem('injection', e.other.owner)
         }

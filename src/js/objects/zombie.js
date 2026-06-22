@@ -5,9 +5,10 @@ import { Player } from "./player.js"
 export class Zombie extends Actor {
     health = 100
     healed = false
+    x
+    y
 
-
-    constructor(player) {
+    constructor(player, x, y) {
         super({
             width: Resources.Zombie.width,
             height: Resources.Zombie.height
@@ -15,11 +16,13 @@ export class Zombie extends Actor {
         this.player = player
         this.body.collisionType = CollisionType.Active
         this.body.limitDegreeOfFreedom.push(DegreeOfFreedom.Rotation)
+        this.x = x
+        this.y = y
     }
 
     onInitialize(engine) {
 
-        this.pos = new Vector(engine.drawWidth / 2, 950)
+        this.pos = new Vector(this.x, this.y)
     }
 
     onPostUpdate(engine) {

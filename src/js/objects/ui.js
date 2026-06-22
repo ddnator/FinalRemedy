@@ -3,7 +3,7 @@ import { Resources, ResourceLoader } from '../resources.js'
 import { Bullet } from './bullet.js'
 import { Zombie } from './zombie.js'
 import { Injection } from "./injection.js"
-
+import { Quest } from './quest.js'
 
 
 
@@ -11,19 +11,19 @@ export class UI extends ScreenElement {
 
     healthbar
     player
-
+    currentquest
 
     constructor(player) {
         super({})
 
 
-       
+
 
     }
 
     onInitialize(engine) {
         this.pos = new Vector(250, 150)
-        
+
 
         this.healthbar = new Actor()
         this.healthbar.pos = new Vector(0, 0)
@@ -32,25 +32,28 @@ export class UI extends ScreenElement {
         this.firstUpdate = false;
         this.player = engine.currentScene.player
         console.log(this.player.health)
+
+        this.currentquest = new Quest()
+        this.addChild(this.currentquest)
     }
 
     onPostUpdate(engine) {
 
-        
+
         if (this.player.health > 60) {
             ///let sprite = Resources.HealthbarFine.load()
             ///this.healthbar.graphics.use(sprite)
 
             this.healthbar.graphics.use('fine')
-            
+
 
         } else if (this.player.health > 30 && this.player.health < 60) {
-           this.healthbar.graphics.use('caution')
+            this.healthbar.graphics.use('caution')
         } else {
             this.healthbar.graphics.use('danger')
         }
 
-        
+
     }
 
     setupAnimations() {
@@ -92,15 +95,15 @@ export class UI extends ScreenElement {
 
         this.healthbar.graphics.add('fine', fineAnim)
 
-        
+
 
         this.healthbar.graphics.add('caution', cautionAnim)
         this.healthbar.graphics.add('danger', dangerAnim)
 
         this.healthbar.graphics.use('fine')
 
-        
-        
+
+
 
     }
 
