@@ -4,6 +4,7 @@ import { UI } from './ui.js'
 import { SceneOne } from '../scenes/scene1/sceneone.js'
 import { Zombie } from '../objects/zombie.js'
 import { Player } from '../objects/player.js'
+import { InjectionPickup } from "./injectionpickup.js"
 
 export class Quest extends ScreenElement {
     label
@@ -41,9 +42,10 @@ export class Quest extends ScreenElement {
         console.log(this.currentQuest)
         switch (this.currentQuest) {
             case "WASD tutorial":
-                this.label.text = 'Press E to pickup items'
-                this.currentQuest = 'Pickup tutorial'
-            case "pickup tutorial":
+                this.label.text = 'Press 1 to switch to your pistol'
+                this.currentQuest = 'Pistol tutorial'
+                break
+            case "Pistol tutorial":
                 this.label.text = 'Shoot the Zombie by pressing Spacebar'
                 this.currentQuest = 'Shoot the zombie'
 
@@ -51,9 +53,12 @@ export class Quest extends ScreenElement {
                 this.scene.add(zombie)
                 break
             case "Shoot the zombie":
-                this.label.text = 'The end'
-                this.currentQuest = 'The end'
+                this.label.text = 'Walk over to the injection and pick it up by pressing E'
+                this.currentQuest = 'Injection pickup tutorial'
+
+                const injection = new InjectionPickup(-6000, 850, 'tutorial injection')
+                this.scene.add(injection)
+                break
         }
     }
-    
 }
