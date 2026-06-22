@@ -1,14 +1,16 @@
 import { Actor, Engine, Vector, CollisionType, DegreeOfFreedom, Scene } from "excalibur"
 import { Resources, ResourceLoader } from '../resources.js'
 import { Player } from "./player.js"
+import { Quest } from "./quest.js"
 
 export class Zombie extends Actor {
     health = 100
     healed = false
     x
     y
+    quest
 
-    constructor(player, x, y) {
+    constructor(player, x, y, quest) {
         super({
             width: Resources.Zombie.width,
             height: Resources.Zombie.height
@@ -18,6 +20,8 @@ export class Zombie extends Actor {
         this.body.limitDegreeOfFreedom.push(DegreeOfFreedom.Rotation)
         this.x = x
         this.y = y
+
+        this.quest = quest
     }
 
     onInitialize(engine) {
@@ -29,6 +33,17 @@ export class Zombie extends Actor {
         if (this.health == 0) {
             this.kill()
             this.lowerSanity()
+
+            if (this.quest != null) {
+                const entityList = this.scene.world.entityManager.entities
+
+                entityList.forEach(element => {
+                    if (element instanceof Quest) {
+                        this.quest = element
+                    }
+                })
+                this.quest.updateQuest()
+            }
         }
         this.healChecker()
     }

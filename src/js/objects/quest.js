@@ -37,11 +37,6 @@ export class Quest extends ScreenElement {
 
     }
 
-
-    onPostUpdate(engine) {
-
-    }
-
     updateQuest() {
         console.log(this.currentQuest)
         switch (this.currentQuest) {
@@ -52,9 +47,13 @@ export class Quest extends ScreenElement {
                 this.label.text = 'Shoot the Zombie by pressing Spacebar'
                 this.currentQuest = 'Shoot the zombie'
 
-                const zombie = new Zombie(this.player, -6000, 850)
+                const zombie = new Zombie(this.player, -6000, 850, 'tutorial zombie')
                 this.scene.add(zombie)
+                break
+            case "Shoot the zombie":
+                this.label.text = 'The end'
+                this.currentQuest = 'The end'
         }
     }
-
+    
 }

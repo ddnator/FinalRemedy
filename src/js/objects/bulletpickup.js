@@ -6,12 +6,11 @@ import { PressE } from './prompts/pressE.js'
 import { Quest } from './quest.js'
 
 export class BulletPickup extends Actor {
-    questitem = false
     playerInRange = false
     player
     quest
 
-    constructor(x, y, questItem) {
+    constructor(x, y, quest) {
         super({
             width: Resources.BulletPickUp.width,
             height: Resources.BulletPickUp.height
@@ -21,7 +20,7 @@ export class BulletPickup extends Actor {
         this.body.limitDegreeOfFreedom.push(DegreeOfFreedom.Rotation)
 
         this.pos = new Vector(x, y)
-        this.questItem = questItem
+        this.quest = quest
 
     }
 
@@ -50,7 +49,6 @@ export class BulletPickup extends Actor {
             } else if (element instanceof Quest)
                 this.quest = element
         });
-        console.log(this.player)
     }
 
     onCollisionEnd(event, other) {
@@ -67,7 +65,7 @@ export class BulletPickup extends Actor {
     onPostUpdate(engine) {
         if (this.playerInRange && engine.input.keyboard.wasPressed(Keys.E)) {
             this.player.pickUpItem('bullet', this)
-            if (this.questItem) {
+            if (this.quest != null) {
                 this.quest.updateQuest()
             }
         }
