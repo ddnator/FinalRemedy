@@ -63,7 +63,7 @@ export class SceneOne extends Scene {
         this.add(zombie)
 
 
-
+        //pickup items
         const bulletpickup = new BulletPickup()
         this.add(bulletpickup)
 
@@ -77,7 +77,7 @@ export class SceneOne extends Scene {
 
 
 
-
+        //ui
         const ui = new UI(player)
         this.add(ui)
 
