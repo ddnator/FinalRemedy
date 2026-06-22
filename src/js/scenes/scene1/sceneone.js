@@ -13,6 +13,8 @@ import { Door1 } from "./door1.js"
 
 export class SceneOne extends Scene {
 
+    player
+
     onInitialize(engine) {
 
         const floor = new Floor()
@@ -56,10 +58,10 @@ export class SceneOne extends Scene {
 
         this.add(door1)
 
-        const player = new Player()
-        this.add(player)
+        this.player = new Player()
+        this.add(this.player)
 
-        const zombie = new Zombie(player)
+        const zombie = new Zombie(this.player)
         this.add(zombie)
 
 
@@ -73,12 +75,12 @@ export class SceneOne extends Scene {
 
         //cam on player
         const cam = this.currentScene && this.currentScene.camera ? this.currentScene.camera : this.camera
-        cam.strategy.elasticToActor(player, 0.2, 0.6)
+        cam.strategy.elasticToActor(this.player, 0.2, 0.6)
 
 
 
-        //ui
-        const ui = new UI(player)
+
+        const ui = new UI()
         this.add(ui)
 
 

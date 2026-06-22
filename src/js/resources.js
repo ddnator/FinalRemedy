@@ -1,4 +1,4 @@
-import { ImageSource, Sound, Resource, Loader } from 'excalibur'
+import { ImageSource, Sound, Resource, Loader, Gif } from 'excalibur'
 import { Injection } from './objects/injection'
 
 // voeg hier jouw eigen resources toe
@@ -16,9 +16,9 @@ const Resources = {
 
 
     //UI
-    HealthbarFine: new ImageSource('/images/fine_healthbar.png'),
-    HealthbarCaution: new ImageSource('/images/caution_healthbar.png'),
-    HealthbarDanger: new ImageSource('/images/danger_healthbar.png'),
+    HealthbarFine: new ImageSource('/images/ui_fine_healthbar.png'),
+    HealthbarCaution: new ImageSource('/images/ui_caution_healthbar.png'),
+    HealthbarDanger: new ImageSource('/images/ui_danger_healthbar.png'),
     SanityBar: new ImageSource('/images/sanity_bar.png'),
 
 
