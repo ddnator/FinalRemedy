@@ -35,8 +35,8 @@ export class BulletPickup extends Actor {
         if (collider?.owner instanceof Player) {
             this.playerInRange = true
             if (!this.pressE) {
-                this.pressE = new PressE(0, -120)
-                this.pressE.scale = new Vector(2, 2)
+                this.pressE = new PressE(0, -400)
+                this.pressE.scale = new Vector(4, 4)
                 this.addChild(this.pressE)
             }
         }
