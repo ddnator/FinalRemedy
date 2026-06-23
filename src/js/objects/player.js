@@ -306,21 +306,14 @@ export class Player extends Actor {
         });
 
 
-        this.shootAnim = Animation.fromSpriteSheet(playerShootSheet, range(0, 5), frameSpeed, AnimationStrategy.Freeze);
+        this.shootAnim = Animation.fromSpriteSheet(playerShootSheet, range(0, 5), frameSpeed, AnimationStrategy.End);
         this.shootAnim.scale = new Vector(8, 8)
 
 
         this.graphics.add('shoot', this.shootAnim)
 
-
-
-
-
-
-
-
-
     }
+
     onCollisionStart(event, other) {
         if (other.owner instanceof Floor) {
             this.grounded = true
