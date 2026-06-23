@@ -34,8 +34,8 @@ export class Player extends Actor {
 
     constructor(xpos, ypos) {
         super({
-            width: Resources.Player.width,
-            height: Resources.Player.height,
+            width: 73,
+            height: 102,
         })
         this.body.collisionType = CollisionType.Active
         this.body.bounciness = 0
@@ -52,7 +52,7 @@ export class Player extends Actor {
         //this.pos = new Vector(engine.drawWidth - 1600, 850)
 
         this.on('collisionstart', (e) => this.hitSomething(e))
-        this.scale = new Vector(0.6, 0.6)
+        this.scale = new Vector(8, 8)
         this.injection.pos = new Vector(80, 0)
         this.setupAnimations();
 
