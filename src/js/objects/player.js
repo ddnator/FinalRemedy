@@ -258,7 +258,7 @@ export class Player extends Actor {
 
             this.scene.engine.clock.schedule(() => {
                 this.hitOnCooldown = false
-            }, 400)
+            }, 200)
         }
     }
 
@@ -272,7 +272,7 @@ export class Player extends Actor {
     }
 
     knockback(direction) {
-        this.knockbackspeed = -200 * direction
+        this.knockbackspeed = -300 * direction
     }
 
     setupAnimations() {
