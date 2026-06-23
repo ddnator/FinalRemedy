@@ -9,6 +9,9 @@ import { InjectionPickup } from './injectionpickup.js'
 import { Quest } from "./quest.js"
 import { Floor } from './floor.js'
 
+
+
+
 export class Player extends Actor {
     health = 100
     sanity = 100
@@ -252,6 +255,8 @@ export class Player extends Actor {
         this.scene.engine.clock.schedule(() => {
             this.bulletReady = true
         }, 500)
+
+        Resources.gunshot.play()
     }
 
     inject() {
