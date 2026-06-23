@@ -28,6 +28,7 @@ const Resources = {
     HealthbarCaution: new ImageSource('/images/ui_caution_healthbar.png'),
     HealthbarDanger: new ImageSource('/images/ui_danger_healthbar.png'),
     SanityBar: new ImageSource('/images/sanity_bar.png'),
+    SanityBrain: new ImageSource('/images/sanity_brain.png'),
 
 
 
