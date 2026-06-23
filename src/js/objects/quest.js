@@ -5,6 +5,7 @@ import { SceneOne } from '../scenes/scene1/sceneone.js'
 import { Zombie } from '../objects/zombie.js'
 import { Player } from '../objects/player.js'
 import { InjectionPickup } from "./injectionpickup.js"
+import { Door2 } from "../scenes/scene1/door2.js"
 
 export class Quest extends ScreenElement {
     label
@@ -71,8 +72,50 @@ export class Quest extends ScreenElement {
                 break
 
             case "Injection pickup tutorial":
-                this.label.text = 'End'
-                this.currentQuest = 'End'
+                this.label.text = 'Press 2 to switch to your injection'
+                this.currentQuest = 'Cure the zombie'
+                this.player.stuck = true
+                break
+
+
+            case 'Cure the zombie':
+                this.label.text = 'Walk towards the zombie with the injection in hand to cure the zombie'
+                this.currentQuest = 'Curing the zombie'
+                this.player.stuck = false
+
+                const zombie2 = new Zombie(this.player, -4000, 850, 'tutorial injection zombie')
+                this.scene.add(zombie2)
+                break
+
+            // case "Curing the zombie":
+            //     this.label.text = 'Well done! Press Enter to continue'
+            //     this.currentQuest = 'Compliment'
+            //     this.player.stuck = true
+            //     break
+
+            case 'Curing the zombie':
+                this.label.text = 'Press B to check your inventory'
+                this.currentQuest = 'Inventorian'
+                this.player.stuck = true
+                break
+
+            case "Inventorian":
+                this.label.text = 'Find your way to the city'
+                this.currentQuest = 'Cityseeking'
+                this.player.stuck = false
+
+                const door2 = new Door2(this.player, 'door2locked')
+                this.scene.add(door2)
+                break
+
+            case "Cityseeking":
+                this.label.text = 'Find the key to the door'
+                this.currentQuest = 'Keyfinder'
+                this.player.stuck = false
+                break
+
+
+
         }
     }
 }

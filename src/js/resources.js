@@ -8,6 +8,9 @@ const Resources = {
     Player: new ImageSource('/images/player_placeholder.png'),
     PlayerShoot: new ImageSource('/images/player_shoot.png'),
 
+    //player sounds
+    gunshot: new Sound('/sounds/objects/gunshot.mp3'),
+
 
     Zombie: new ImageSource('/images/zombie_placeholder.png'),
     Bullet: new ImageSource('/images/bullet_placeholder.png'),

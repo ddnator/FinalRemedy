@@ -9,18 +9,23 @@ import { InjectionPickup } from './injectionpickup.js'
 import { Quest } from "./quest.js"
 import { Floor } from './floor.js'
 
+
+
+
 export class Player extends Actor {
     health = 100
     sanity = 100
     bulletReady = true
     injectionHeld = false
     inventory = ['bullet']
+    inventoryShown = false
     hitOnCooldown = false
     knockbackspeed = 0
     selectedItem = 'none'
     spacePressed = false
     injection = new Injection()
     stuck = false
+    UI
     quest
     grounded
     x
@@ -89,6 +94,37 @@ export class Player extends Actor {
 
             if (this.quest.currentQuest === 'Sanity tutorial') {
                 this.quest.updateQuest()
+            } else if (this.quest.currentQuest === 'Compliment') {
+                this.quest.updateQuest()
+            }
+        }
+
+        if (engine.input.keyboard.wasPressed(Keys.B)) {
+            const entityList = this.scene.world.entityManager.entities
+
+            entityList.forEach(element => {
+                if (element instanceof UI) {
+                    this.UI = element
+                }
+            });
+            if (!this.inventoryShown) {
+                this.UI.showInventory()
+            } else {
+                this.UI.hideInventory()
+            }
+        }
+
+        if (engine.input.keyboard.wasPressed(Keys.KeyB)) {
+            const entityList = this.scene.world.entityManager.entities
+
+            entityList.forEach(element => {
+                if (element instanceof Quest) {
+                    this.quest = element
+                }
+            });
+
+            if (this.quest.currentQuest == 'Inventorian') {
+                this.quest.updateQuest()
             }
         }
 
@@ -115,6 +151,19 @@ export class Player extends Actor {
             this.selectedItem = 'injection'
             this.inject()
             console.log(`selected item is ${this.selectedItem}`)
+
+
+            const entityList = this.scene.world.entityManager.entities
+
+            entityList.forEach(element => {
+                if (element instanceof Quest) {
+                    this.quest = element
+                }
+            });
+
+            if (this.quest.currentQuest === 'Cure the zombie') {
+                this.quest.updateQuest()
+            }
         }
 
         if (engine.input.keyboard.wasPressed(Keys.Key3)) {
@@ -126,21 +175,21 @@ export class Player extends Actor {
 
         if (engine.input.keyboard.wasPressed(Keys.Space)) {
             if (this.bulletReady && this.selectedItem === 'bullet' && this.inventory.includes('bullet')) {
-  
+
                 console.log("i have shot")
                 this.shoot()
                 this.shootAnim.events.on('end', (a) => {
                     console.log('ended')
                     this.shootAnim.reset()
                     this.graphics.use(Resources.Player.toSprite())
-                  })
-      
+                })
 
-                
+
+
             } else if (!this.injectionHeld && this.selectedItem === 'injection' && this.inventory.includes('injection')) {
                 this.inject()
             }
-        } 
+        }
 
 
 
@@ -193,9 +242,21 @@ export class Player extends Actor {
 
         this.bulletReady = false
 
+        const entityList = this.scene.world.entityManager.entities
+
+        entityList.forEach(element => {
+            if (element instanceof UI) {
+                this.UI = element
+            }
+        })
+
+        this.UI.updateInventory()
+
         this.scene.engine.clock.schedule(() => {
             this.bulletReady = true
         }, 500)
+
+        Resources.gunshot.play()
     }
 
     inject() {
@@ -211,7 +272,7 @@ export class Player extends Actor {
 
             this.scene.engine.clock.schedule(() => {
                 this.hitOnCooldown = false
-            }, 400)
+            }, 200)
         }
     }
 
@@ -225,10 +286,10 @@ export class Player extends Actor {
     }
 
     knockback(direction) {
-        this.knockbackspeed = -200 * direction
+        this.knockbackspeed = -300 * direction
     }
 
-setupAnimations() {
+    setupAnimations() {
         console.log("animation setup")
         const configGrid = {
             rows: 1,
@@ -254,8 +315,10 @@ setupAnimations() {
 
 
 
-        
-        
+
+
+
+
 
     }
     onCollisionStart(event, other) {

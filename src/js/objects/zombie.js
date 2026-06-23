@@ -34,7 +34,7 @@ export class Zombie extends Actor {
             this.kill()
             this.lowerSanity()
 
-            if (this.quest != null) {
+            if (this.quest == 'tutorial zombie') {
                 const entityList = this.scene.world.entityManager.entities
 
                 entityList.forEach(element => {
@@ -65,6 +65,17 @@ export class Zombie extends Actor {
             this.graphics.use(sprite)
 
         } else {
+
+            if (this.quest == 'tutorial injection zombie') {
+                const entityList = this.scene.world.entityManager.entities
+
+                entityList.forEach(element => {
+                    if (element instanceof Quest) {
+                        this.quest = element
+                    }
+                })
+                this.quest.updateQuest()
+            }
             const sprite = Resources.Player.toSprite()
             this.scale = new Vector(0.65, 0.65)
             this.graphics.use(sprite)

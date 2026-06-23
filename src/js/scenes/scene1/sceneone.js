@@ -10,6 +10,7 @@ import { InjectionPickup } from "../../objects/injectionpickup.js"
 import { BulletPickup } from "../../objects/bulletpickup.js"
 import { Door1 } from "./door1.js"
 import { Quest } from '../../objects/quest.js'
+import { Door2 } from "./door2.js"
 
 
 export class SceneOne extends Scene {
@@ -59,9 +60,12 @@ export class SceneOne extends Scene {
 
         this.add(door1)
 
+
+
         this.player = new Player(-7800, 850)
         this.add(this.player)
         //pickup items
+
 
 
         //cam on player
@@ -74,7 +78,7 @@ export class SceneOne extends Scene {
         const ui = new UI()
         this.add(ui)
 
-        const bulletPickupQuest = new BulletPickup(-7000, 1025 , true)
+        const bulletPickupQuest = new BulletPickup(-7000, 1025, true)
         this.add(bulletPickupQuest)
     }
 
