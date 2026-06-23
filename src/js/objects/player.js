@@ -14,7 +14,7 @@ import { Floor } from './floor.js'
 
 export class Player extends Actor {
     health = 100
-    sanity = 100
+    sanity = 50
     bulletReady = true
     injectionHeld = false
     inventory = ['bullet']
@@ -52,7 +52,7 @@ export class Player extends Actor {
         //this.pos = new Vector(engine.drawWidth - 1600, 850)
 
         this.on('collisionstart', (e) => this.hitSomething(e))
-        this.scale = new Vector(8, 8)
+        this.scale = new Vector(4, 4)
         this.injection.pos = new Vector(80, 0)
         this.setupAnimations();
 
