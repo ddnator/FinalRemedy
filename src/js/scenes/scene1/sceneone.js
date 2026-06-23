@@ -70,8 +70,7 @@ export class SceneOne extends Scene {
         this.add(this.player)
         //pickup items
 
-        const door2 = new Door2(this.player)
-        this.add(door2)
+
 
         //cam on player
         const cam = this.currentScene && this.currentScene.camera ? this.currentScene.camera : this.camera
