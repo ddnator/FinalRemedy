@@ -11,6 +11,10 @@ const Resources = {
     //player sounds
     gunshot: new Sound('/sounds/objects/gunshot.mp3'),
 
+    //music
+    track1: new Sound('/sounds/music/Being a Man.mp3'),
+    track2: new Sound('/sounds/music/The Following.mp3'),
+    track3: new Sound('/sounds/music/The Mission.mp3'),
 
     Zombie: new ImageSource('/images/zombie_placeholder.png'),
     Bullet: new ImageSource('/images/bullet_placeholder.png'),
