@@ -124,14 +124,23 @@ export class Player extends Actor {
             this.removeChild(this.injection)
         }
 
-        if (engine.input.keyboard.isHeld(Keys.Space)) {
+        if (engine.input.keyboard.wasPressed(Keys.Space)) {
             if (this.bulletReady && this.selectedItem === 'bullet' && this.inventory.includes('bullet')) {
+  
+                console.log("i have shot")
                 this.shoot()
-                this.graphics.use('shoot')
+                this.shootAnim.events.on('end', (a) => {
+                    console.log('ended')
+                    this.shootAnim.reset()
+                    this.graphics.use(Resources.Player.toSprite())
+                  })
+      
+
+                
             } else if (!this.injectionHeld && this.selectedItem === 'injection' && this.inventory.includes('injection')) {
                 this.inject()
             }
-        }
+        } 
 
 
 
@@ -159,6 +168,7 @@ export class Player extends Actor {
     }
 
     shoot() {
+        this.graphics.use('shoot')
         let flip
         if (this.graphics.flipHorizontal) {
             flip = true
@@ -215,7 +225,7 @@ export class Player extends Actor {
     }
 
     knockback(direction) {
-        this.knockbackspeed = -400 * direction
+        this.knockbackspeed = -200 * direction
     }
 
 setupAnimations() {
@@ -235,13 +245,14 @@ setupAnimations() {
         });
 
 
-        const shootAnim = Animation.fromSpriteSheet(playerShootSheet, range(0, 5), frameSpeed, AnimationStrategy.Freeze);
-        shootAnim.scale = new Vector(2, 2)
+        this.shootAnim = Animation.fromSpriteSheet(playerShootSheet, range(0, 5), frameSpeed, AnimationStrategy.Freeze);
+        this.shootAnim.scale = new Vector(8, 8)
 
 
-        this.graphics.add('shoot', shootAnim)
+        this.graphics.add('shoot', this.shootAnim)
 
-        //this.healthbar.graphics.use('shoot')
+
+
 
         
         
