@@ -3,8 +3,13 @@ import { Injection } from './objects/injection'
 
 // voeg hier jouw eigen resources toe
 const Resources = {
-    Zombie: new ImageSource('/images/zombie_placeholder.png'),
+
+    //player
     Player: new ImageSource('/images/player_placeholder.png'),
+    PlayerShoot: new ImageSource('/images/player_shoot.png'),
+
+
+    Zombie: new ImageSource('/images/zombie_placeholder.png'),
     Bullet: new ImageSource('/images/bullet_placeholder.png'),
     Injection: new ImageSource('/images/injection_placeholder.png'),
     Background1: new ImageSource('/images/background_city_start.png'),

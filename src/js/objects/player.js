@@ -1,4 +1,4 @@
-import { Actor, Engine, Vector, Keys, DegreeOfFreedom, CollisionType, linear, ParallaxComponent } from "excalibur"
+import { Actor, Engine, Vector, Keys, DegreeOfFreedom, CollisionType, linear, ParallaxComponent, SpriteSheet, Sprite, range, AnimationStrategy, Animation } from "excalibur"
 import { Resources, ResourceLoader } from '../resources.js'
 import { Bullet } from './bullet.js'
 import { Zombie } from './zombie.js'
@@ -36,6 +36,7 @@ export class Player extends Actor {
         this.on('collisionstart', (e) => this.hitSomething(e))
         this.scale = new Vector(0.6, 0.6)
         this.injection.pos = new Vector(80, 0)
+        this.setupAnimations();
 
     }
 
@@ -84,6 +85,7 @@ export class Player extends Actor {
         if (engine.input.keyboard.isHeld(Keys.Space)) {
             if (this.bulletReady && this.selectedItem === 'bullet' && this.inventory.includes('bullet')) {
                 this.shoot()
+                this.graphics.use('shoot')
             } else if (!this.injectionHeld && this.selectedItem === 'injection' && this.inventory.includes('injection')) {
                 this.inject()
             }
@@ -180,7 +182,35 @@ export class Player extends Actor {
         this.knockbackspeed = -400 * direction
     }
 
+setupAnimations() {
+        console.log("animation setup")
+        const configGrid = {
+            rows: 1,
+            columns: 6,
+            spriteWidth: 73,
+            spriteHeight: 102
+        }
 
+        const frameSpeed = 60;
+
+        const playerShootSheet = SpriteSheet.fromImageSource({
+            image: Resources.PlayerShoot,
+            grid: configGrid
+        });
+
+
+        const shootAnim = Animation.fromSpriteSheet(playerShootSheet, range(0, 5), frameSpeed, AnimationStrategy.Freeze);
+        shootAnim.scale = new Vector(2, 2)
+
+
+        this.graphics.add('shoot', shootAnim)
+
+        //this.healthbar.graphics.use('shoot')
+
+        
+        
+
+    }
 
 
 
