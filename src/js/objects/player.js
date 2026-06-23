@@ -14,7 +14,7 @@ import { Floor } from './floor.js'
 
 export class Player extends Actor {
     health = 100
-    sanity = 100
+    sanity = 50
     bulletReady = true
     injectionHeld = false
     inventory = ['bullet']
