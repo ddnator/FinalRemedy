@@ -34,7 +34,7 @@ export class Zombie extends Actor {
             this.kill()
             this.lowerSanity()
 
-            if (this.quest != null) {
+            if (this.quest == 'tutorial zombie') {
                 const entityList = this.scene.world.entityManager.entities
 
                 entityList.forEach(element => {
@@ -66,7 +66,7 @@ export class Zombie extends Actor {
 
         } else {
 
-            if (this.quest != null) {
+            if (this.quest == 'tutorial injection zombie') {
                 const entityList = this.scene.world.entityManager.entities
 
                 entityList.forEach(element => {
