@@ -11,6 +11,10 @@ const Resources = {
     //player sounds
     gunshot: new Sound('/sounds/objects/gunshot.mp3'),
 
+    //music
+    track1: new Sound('/sounds/music/BeingaMan.mp3'),
+    track2: new Sound('/sounds/music/TheFollowing.mp3'),
+    track3: new Sound('/sounds/music/TheMission.mp3'),
 
     Zombie: new ImageSource('/images/zombie_placeholder.png'),
     Bullet: new ImageSource('/images/bullet_placeholder.png'),
@@ -28,6 +32,7 @@ const Resources = {
     HealthbarCaution: new ImageSource('/images/ui_caution_healthbar.png'),
     HealthbarDanger: new ImageSource('/images/ui_danger_healthbar.png'),
     SanityBar: new ImageSource('/images/sanity_bar.png'),
+    SanityBrain: new ImageSource('/images/sanity_brain.png'),
 
 
 
@@ -50,5 +55,7 @@ const ResourceLoader = new Loader()
 for (let res of Object.values(Resources)) {
     ResourceLoader.addResource(res)
 }
+
+
 
 export { Resources, ResourceLoader }
