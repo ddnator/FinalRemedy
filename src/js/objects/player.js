@@ -307,7 +307,7 @@ export class Player extends Actor {
 
 
         this.shootAnim = Animation.fromSpriteSheet(playerShootSheet, range(0, 5), frameSpeed, AnimationStrategy.End);
-        this.shootAnim.scale = new Vector(8, 8)
+        this.shootAnim.scale = new Vector(1, 1)
 
 
         this.graphics.add('shoot', this.shootAnim)
