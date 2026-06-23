@@ -12,7 +12,7 @@ import { Quest } from '../../objects/quest.js'
 
 
 
-export class SceneOne extends Scene {
+export class SceneTwo extends Scene {
 
     player
 
