@@ -6,10 +6,26 @@ import { Injection } from '../../objects/injection.js'
 import { Floor } from '../../objects/floor.js'
 import { Background1 } from '../../objects/background1.js'
 import { UI } from "../../objects/ui.js"
+import { InjectionPickup } from "../../objects/injectionpickup.js"
+import { BulletPickup } from "../../objects/bulletpickup.js"
+import { Quest } from '../../objects/quest.js'
 
-export class SceneTwo extends Scene {
+
+
+export class SceneOne extends Scene {
+
+    player
 
     onInitialize(engine) {
+
+
+        Resources.track2.play()
+        Resources.track2.loop
+
+        const floor = new Floor()
+        this.add(floor)
+
+
 
         //Background
         const sky = new Actor()
@@ -43,32 +59,29 @@ export class SceneTwo extends Scene {
         street.addComponent(new ParallaxComponent(new Vector(0.5, 1)))
         this.add(street)
 
+        //interactable door
 
 
-        const player = new Player()
-        this.add(player)
-
-        const zombie = new Zombie(player)
-        this.add(zombie)
 
 
-        const floor = new Floor()
-        this.add(floor)
+        this.player = new Player(-7800, 850)
+        this.add(this.player)
+        //pickup items
+
 
 
         //cam on player
         const cam = this.currentScene && this.currentScene.camera ? this.currentScene.camera : this.camera
-        cam.strategy.elasticToActor(player, 0.2, 0.6)
+        cam.strategy.elasticToActor(this.player, 0.2, 0.6)
 
 
 
 
-        const ui = new UI(player)
+        const ui = new UI()
         this.add(ui)
 
-
-
-
+        const bulletPickupQuest = new BulletPickup(-7000, 1025, true)
+        this.add(bulletPickupQuest)
     }
 
     onPostUpdate() {
@@ -76,17 +89,15 @@ export class SceneTwo extends Scene {
         const cam = this.currentScene && this.currentScene.camera ? this.currentScene.camera : this.camera
         const offset = 24
         if (cam && cam.strategy) {
-            cam.pos = cam.pos.add(new Vector(0, -offset))
+            cam.pos = cam.pos.add(new Vector(50, -offset))
         }
 
         //cam bounds
         const minX = -8000
         const maxX = 15000
 
-
         if (cam) {
             cam.pos.x = Math.min(Math.max(cam.pos.x, minX), maxX)
-
         }
     }
 

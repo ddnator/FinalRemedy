@@ -19,8 +19,9 @@ export class SceneOne extends Scene {
 
     onInitialize(engine) {
 
-        Resources.track3.loop = true
+
         Resources.track3.play()
+        Resources.track3.loop
 
         const floor = new Floor()
         this.add(floor)
