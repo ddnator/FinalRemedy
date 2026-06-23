@@ -1,4 +1,4 @@
-import { Actor, Engine, Vector, Keys, DegreeOfFreedom, CollisionType, linear, ParallaxComponent } from "excalibur"
+import { Actor, Engine, Vector, Keys, DegreeOfFreedom, CollisionType, linear, ParallaxComponent, SpriteSheet, Sprite, range, AnimationStrategy, Animation } from "excalibur"
 import { Resources, ResourceLoader } from '../resources.js'
 import { Bullet } from './bullet.js'
 import { Zombie } from './zombie.js'
@@ -51,6 +51,7 @@ export class Player extends Actor {
         this.on('collisionstart', (e) => this.hitSomething(e))
         this.scale = new Vector(0.6, 0.6)
         this.injection.pos = new Vector(80, 0)
+        this.setupAnimations();
 
     }
 
@@ -140,13 +141,23 @@ export class Player extends Actor {
             this.removeChild(this.injection)
         }
 
-        if (engine.input.keyboard.isHeld(Keys.Space)) {
+        if (engine.input.keyboard.wasPressed(Keys.Space)) {
             if (this.bulletReady && this.selectedItem === 'bullet' && this.inventory.includes('bullet')) {
+  
+                console.log("i have shot")
                 this.shoot()
+                this.shootAnim.events.on('end', (a) => {
+                    console.log('ended')
+                    this.shootAnim.reset()
+                    this.graphics.use(Resources.Player.toSprite())
+                  })
+      
+
+                
             } else if (!this.injectionHeld && this.selectedItem === 'injection' && this.inventory.includes('injection')) {
                 this.inject()
             }
-        }
+        } 
 
 
 
@@ -174,6 +185,7 @@ export class Player extends Actor {
     }
 
     shoot() {
+        this.graphics.use('shoot')
         let flip
         if (this.graphics.flipHorizontal) {
             flip = true
@@ -230,9 +242,39 @@ export class Player extends Actor {
     }
 
     knockback(direction) {
-        this.knockbackspeed = -400 * direction
+        this.knockbackspeed = -200 * direction
     }
 
+setupAnimations() {
+        console.log("animation setup")
+        const configGrid = {
+            rows: 1,
+            columns: 6,
+            spriteWidth: 73,
+            spriteHeight: 102
+        }
+
+        const frameSpeed = 60;
+
+        const playerShootSheet = SpriteSheet.fromImageSource({
+            image: Resources.PlayerShoot,
+            grid: configGrid
+        });
+
+
+        this.shootAnim = Animation.fromSpriteSheet(playerShootSheet, range(0, 5), frameSpeed, AnimationStrategy.Freeze);
+        this.shootAnim.scale = new Vector(8, 8)
+
+
+        this.graphics.add('shoot', this.shootAnim)
+
+
+
+
+        
+        
+
+    }
     onCollisionStart(event, other) {
         if (other.owner instanceof Floor) {
             this.grounded = true
