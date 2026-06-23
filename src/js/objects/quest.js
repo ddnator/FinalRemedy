@@ -71,8 +71,41 @@ export class Quest extends ScreenElement {
                 break
 
             case "Injection pickup tutorial":
-                this.label.text = 'End'
-                this.currentQuest = 'End'
+                this.label.text = 'Press 2 to switch to your injection'
+                this.currentQuest = 'Cure the zombie'
+                this.player.stuck = true
+                break
+
+
+            case 'Cure the zombie':
+                this.label.text = 'Walk towards the zombie with the injection in hand to cure the zombie'
+                this.currentQuest = 'Curing the zombie'
+                this.player.stuck = false
+
+                const zombie2 = new Zombie(this.player, -4000, 850, 'tutorial injection zombie')
+                this.scene.add(zombie2)
+                break
+
+            // case "Curing the zombie":
+            //     this.label.text = 'Well done! Press Enter to continue'
+            //     this.currentQuest = 'Compliment'
+            //     this.player.stuck = true
+            //     break
+
+            case "Curing the zombie":
+                this.label.text = 'Find your way to the city'
+                this.currentQuest = 'Cityseeking'
+                this.player.stuck = false
+                break
+
+            // case "Cityseeking":
+            //     this.label.text = 'Find the key to the door'
+            //     this.currentQuest = 'Keyfinder'
+            //     this.player.stuck = false
+            //     break
+
+
+
         }
     }
 }

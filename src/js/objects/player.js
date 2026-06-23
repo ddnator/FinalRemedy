@@ -89,6 +89,8 @@ export class Player extends Actor {
 
             if (this.quest.currentQuest === 'Sanity tutorial') {
                 this.quest.updateQuest()
+            } else if (this.quest.currentQuest === 'Compliment') {
+                this.quest.updateQuest()
             }
         }
 
@@ -115,6 +117,19 @@ export class Player extends Actor {
             this.selectedItem = 'injection'
             this.inject()
             console.log(`selected item is ${this.selectedItem}`)
+
+
+            const entityList = this.scene.world.entityManager.entities
+
+            entityList.forEach(element => {
+                if (element instanceof Quest) {
+                    this.quest = element
+                }
+            });
+
+            if (this.quest.currentQuest === 'Cure the zombie') {
+                this.quest.updateQuest()
+            }
         }
 
         if (engine.input.keyboard.wasPressed(Keys.Key3)) {
@@ -218,7 +233,7 @@ export class Player extends Actor {
         this.knockbackspeed = -400 * direction
     }
 
-setupAnimations() {
+    setupAnimations() {
         console.log("animation setup")
         const configGrid = {
             rows: 1,
@@ -243,8 +258,8 @@ setupAnimations() {
 
         //this.healthbar.graphics.use('shoot')
 
-        
-        
+
+
 
     }
     onCollisionStart(event, other) {
