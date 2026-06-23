@@ -1,5 +1,5 @@
 import '../css/style.css'
-import { Actor, Engine, Vector, DisplayMode, SolverStrategy, Scene } from "excalibur"
+import { Actor, Engine, Vector, DisplayMode, SolverStrategy, Scene, Sound } from "excalibur"
 import { Resources, ResourceLoader } from './resources.js'
 import { Player } from './objects/player.js'
 import { Zombie } from './objects/zombie.js'
@@ -7,6 +7,8 @@ import { Injection } from './objects/injection.js'
 import { Floor } from './objects/floor.js'
 import { SceneOne } from './scenes/scene1/sceneone.js'
 import { SceneTwo } from './scenes/scene2/scenetwo.js'
+
+
 
 export class Game extends Engine {
 
@@ -23,11 +25,17 @@ export class Game extends Engine {
         })
 
         this.start(ResourceLoader).then(() => this.startGame())
+
+
     }
 
 
 
+
+
     startGame() {
+
+
 
 
         const sceneOne = new SceneOne()
@@ -36,7 +44,7 @@ export class Game extends Engine {
         const scenetwo = new SceneTwo()
         this.add('scenetwo', SceneTwo)
 
-
+        // startMusic()
 
     }
 }
