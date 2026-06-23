@@ -52,7 +52,7 @@ export class Player extends Actor {
         //this.pos = new Vector(engine.drawWidth - 1600, 850)
 
         this.on('collisionstart', (e) => this.hitSomething(e))
-        this.scale = new Vector(8, 8)
+        this.scale = new Vector(4, 4)
         this.injection.pos = new Vector(80, 0)
         this.setupAnimations();
 
@@ -307,7 +307,7 @@ export class Player extends Actor {
 
 
         this.shootAnim = Animation.fromSpriteSheet(playerShootSheet, range(0, 5), frameSpeed, AnimationStrategy.End);
-        this.shootAnim.scale = new Vector(8, 8)
+        // this.shootAnim.scale = new Vector(8, 8)
 
 
         this.graphics.add('shoot', this.shootAnim)
