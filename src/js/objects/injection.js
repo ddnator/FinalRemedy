@@ -49,10 +49,15 @@ export class Injection extends Actor {
             entityList.forEach(element => {
                 if (element instanceof UI) {
                     this.UI = element
+                } else if (element instanceof Player) {
+                    this.player = element
                 }
             })
 
+            this.player.sanity += 15
+            this.UI.sanitybrain.pos = new Vector((this.player.sanity - 50) * 0.7, 0)
             this.UI.updateInventory()
+            console.log
         }
     }
 
