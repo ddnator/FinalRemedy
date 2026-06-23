@@ -12,9 +12,9 @@ const Resources = {
     gunshot: new Sound('/sounds/objects/gunshot.mp3'),
 
     //music
-    track1: new Sound('/sounds/music/Being a Man.mp3'),
-    track2: new Sound('/sounds/music/The Following.mp3'),
-    track3: new Sound('/sounds/music/The Mission.mp3'),
+    track1: new Sound('/sounds/music/BeingaMan.mp3'),
+    track2: new Sound('/sounds/music/TheFollowing.mp3'),
+    track3: new Sound('/sounds/music/TheMission.mp3'),
 
     Zombie: new ImageSource('/images/zombie_placeholder.png'),
     Bullet: new ImageSource('/images/bullet_placeholder.png'),
@@ -54,5 +54,7 @@ const ResourceLoader = new Loader()
 for (let res of Object.values(Resources)) {
     ResourceLoader.addResource(res)
 }
+
+
 
 export { Resources, ResourceLoader }
