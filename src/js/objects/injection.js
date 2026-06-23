@@ -16,10 +16,7 @@ export class Injection extends Actor {
         this.body.collisionType = CollisionType.Passive
         this.body.limitDegreeOfFreedom.push(DegreeOfFreedom.Rotation)
 
-
         this.player = player
-        console.log(player)
-
     }
 
     onInitialize(engine) {

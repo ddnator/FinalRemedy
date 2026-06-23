@@ -6,20 +6,28 @@ import { Injection } from "./injection.js"
 import { UI } from './ui.js'
 import { BulletPickup } from './bulletpickup.js'
 import { InjectionPickup } from './injectionpickup.js'
+import { Quest } from "./quest.js"
+import { Floor } from './floor.js'
 
 export class Player extends Actor {
     health = 100
     sanity = 100
     bulletReady = true
     injectionHeld = false
-    inventory = ['bullet', 'injection']
+    inventory = ['bullet']
     hitOnCooldown = false
     knockbackspeed = 0
-    selectedItem = 'bullet'
+    selectedItem = 'none'
     spacePressed = false
     injection = new Injection()
+    stuck = false
+    quest
+    grounded
+    x
+    y
 
-    constructor() {
+
+    constructor(xpos, ypos) {
         super({
             width: Resources.Player.width,
             height: Resources.Player.height,
@@ -27,12 +35,17 @@ export class Player extends Actor {
         this.body.collisionType = CollisionType.Active
         this.body.bounciness = 0
         this.body.limitDegreeOfFreedom.push(DegreeOfFreedom.Rotation)
+
+        this.pos = new Vector(xpos, ypos)
     }
+
+
 
     onInitialize(engine) {
         const sprite = Resources.Player.toSprite()
         this.graphics.use(sprite)
-        this.pos = new Vector(engine.drawWidth - 1600, 850)
+        //this.pos = new Vector(engine.drawWidth - 1600, 850)
+
         this.on('collisionstart', (e) => this.hitSomething(e))
         this.scale = new Vector(0.6, 0.6)
         this.injection.pos = new Vector(80, 0)
@@ -46,23 +59,52 @@ export class Player extends Actor {
         let xVel = 0
 
 
-        if (engine.input.keyboard.isHeld(Keys.A) && this.knockbackspeed === 0) {
+        if (engine.input.keyboard.isHeld(Keys.A) && this.knockbackspeed === 0 && !this.stuck) {
             xVel = -600
             this.graphics.flipHorizontal = true
 
         }
 
-        if (engine.input.keyboard.isHeld(Keys.D) && this.knockbackspeed === 0) {
+        if (engine.input.keyboard.isHeld(Keys.D) && this.knockbackspeed === 0 && !this.stuck) {
             xVel = 1200
             this.graphics.flipHorizontal = false
-
         }
 
-        if (engine.input.keyboard.wasPressed(Keys.C) || engine.input.keyboard.wasPressed(Keys.ControlLeft)) {
+        if (engine.input.keyboard.isHeld(Keys.W) && this.knockbackspeed === 0 && this.grounded && !this.stuck) {
+            this.body.applyLinearImpulse(new Vector(0, -300 * delta))
+        }
+
+        if (engine.input.keyboard.wasPressed(Keys.C) || engine.input.keyboard.wasPressed(Keys.ControlLeft) && !this.stuck) {
             //Crouch controls
         }
 
+        if (engine.input.keyboard.wasPressed(Keys.Enter)) {
+            const entityList = this.scene.world.entityManager.entities
+
+            entityList.forEach(element => {
+                if (element instanceof Quest) {
+                    this.quest = element
+                }
+            });
+
+            if (this.quest.currentQuest === 'Sanity tutorial') {
+                this.quest.updateQuest()
+            }
+        }
+
         if (engine.input.keyboard.wasPressed(Keys.Key1)) {
+            const entityList = this.scene.world.entityManager.entities
+
+            entityList.forEach(element => {
+                if (element instanceof Quest) {
+                    this.quest = element
+                }
+            });
+
+            if (this.quest.currentQuest === 'Pistol tutorial') {
+                this.quest.updateQuest()
+            }
+
             this.selectedItem = 'bullet'
             console.log(`selected item is ${this.selectedItem}`)
             this.injectionHeld = false
@@ -161,12 +203,6 @@ export class Player extends Actor {
                 this.hitOnCooldown = false
             }, 400)
         }
-
-        if (e.other.owner instanceof BulletPickup) {
-            this.pickUpItem('bullet', e.other.owner)
-        } else if (e.other.owner instanceof InjectionPickup) {
-            this.pickUpItem('injection', e.other.owner)
-        }
     }
 
     pickUpItem(inventoryItem, pickUpItem) {
@@ -210,6 +246,17 @@ setupAnimations() {
         
         
 
+    }
+    onCollisionStart(event, other) {
+        if (other.owner instanceof Floor) {
+            this.grounded = true
+        }
+    }
+
+    onCollisionEnd(event, other) {
+        if (other.owner instanceof Floor) {
+            this.grounded = false
+        }
     }
 
 
