@@ -73,6 +73,8 @@ export class Quest extends ScreenElement {
             case "Injection pickup tutorial":
                 this.label.text = 'End'
                 this.currentQuest = 'End'
+                const zombie2 = new Zombie(this.player, -6000, 850, 'tutorial zombie')
+                this.scene.add(zombie2)
         }
     }
 }

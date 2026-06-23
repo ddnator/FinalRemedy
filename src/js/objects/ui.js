@@ -138,6 +138,15 @@ export class UI extends ScreenElement {
                 this.player = element
             }
         });
+        this.updateInventory()
+
+        this.addChild(this.bulletsLabel)
+        this.addChild(this.injectionsLabel)
+
+        this.player.inventoryShown = true
+    }
+
+    updateInventory() {
         let bullets = 0
         let injections = 0
         this.player.inventory.forEach(element => {
@@ -152,11 +161,6 @@ export class UI extends ScreenElement {
         });
         this.bulletsLabel.text = `Bullets: ${bullets}`
         this.injectionsLabel.text = `Injections: ${injections}`
-
-        this.addChild(this.bulletsLabel)
-        this.addChild(this.injectionsLabel)
-
-        this.player.inventoryShown = true
     }
 
     hideInventory() {

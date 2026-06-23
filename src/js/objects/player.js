@@ -143,21 +143,21 @@ export class Player extends Actor {
 
         if (engine.input.keyboard.wasPressed(Keys.Space)) {
             if (this.bulletReady && this.selectedItem === 'bullet' && this.inventory.includes('bullet')) {
-  
+
                 console.log("i have shot")
                 this.shoot()
                 this.shootAnim.events.on('end', (a) => {
                     console.log('ended')
                     this.shootAnim.reset()
                     this.graphics.use(Resources.Player.toSprite())
-                  })
-      
+                })
 
-                
+
+
             } else if (!this.injectionHeld && this.selectedItem === 'injection' && this.inventory.includes('injection')) {
                 this.inject()
             }
-        } 
+        }
 
 
 
@@ -210,6 +210,16 @@ export class Player extends Actor {
 
         this.bulletReady = false
 
+        const entityList = this.scene.world.entityManager.entities
+
+        entityList.forEach(element => {
+            if (element instanceof UI) {
+                this.UI = element
+            }
+        })
+
+        this.UI.updateInventory()
+
         this.scene.engine.clock.schedule(() => {
             this.bulletReady = true
         }, 500)
@@ -245,7 +255,7 @@ export class Player extends Actor {
         this.knockbackspeed = -200 * direction
     }
 
-setupAnimations() {
+    setupAnimations() {
         console.log("animation setup")
         const configGrid = {
             rows: 1,
@@ -271,8 +281,8 @@ setupAnimations() {
 
 
 
-        
-        
+
+
 
     }
     onCollisionStart(event, other) {

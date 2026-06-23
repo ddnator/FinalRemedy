@@ -4,6 +4,7 @@ import { Player } from "./player.js"
 import { Zombie } from "./zombie.js"
 import { Quest } from './quest.js'
 import { PressE } from './prompts/pressE.js'
+import { UI } from './ui.js'
 
 export class InjectionPickup extends Actor {
     x
@@ -11,6 +12,7 @@ export class InjectionPickup extends Actor {
     quest
     player
     playerInRange
+    UI
 
     constructor(x, y, quest) {
         super({
@@ -49,8 +51,11 @@ export class InjectionPickup extends Actor {
         entityList.forEach(element => {
             if (element instanceof Player) {
                 this.player = element
-            } else if (element instanceof Quest)
+            } else if (element instanceof Quest) {
                 this.quest = element
+            } else if (element instanceof UI) {
+                this.UI = element
+            }
         });
     }
 
@@ -68,6 +73,7 @@ export class InjectionPickup extends Actor {
     onPostUpdate(engine) {
         if (this.playerInRange && engine.input.keyboard.wasPressed(Keys.E)) {
             this.player.pickUpItem('injection', this)
+            this.UI.updateInventory()
             if (this.quest != null) {
                 this.quest.updateQuest()
             }
