@@ -114,6 +114,12 @@ export class Quest extends ScreenElement {
                 this.player.stuck = false
                 break
 
+            case "Keyfinder":
+                this.label.text = 'Open the door'
+                this.currentQuest = 'Doorio'
+                this.player.stuck = false
+                break
+
 
 
         }
