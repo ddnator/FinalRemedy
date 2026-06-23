@@ -1,9 +1,10 @@
-import { Actor, Engine, Vector, Keys, DegreeOfFreedom, CollisionType, linear, ScreenElement, Sprite, range, vec, DefaultLoader, SpriteSheet, AnimationStrategy, Animation } from "excalibur"
+import { Actor, Engine, Vector, Keys, DegreeOfFreedom, CollisionType, linear, Label, Font, FontUnit, Color, ScreenElement, Sprite, range, vec, DefaultLoader, SpriteSheet, AnimationStrategy, Animation } from "excalibur"
 import { Resources, ResourceLoader } from '../resources.js'
 import { Bullet } from './bullet.js'
 import { Zombie } from './zombie.js'
 import { Injection } from "./injection.js"
 import { Quest } from './quest.js'
+import { Player } from './player.js'
 
 
 
@@ -12,6 +13,9 @@ export class UI extends ScreenElement {
     healthbar
     player
     currentquest
+    inventoryPopup = false
+    bulletsLabel
+    injectionsLabel
 
     constructor(player) {
         super({})
@@ -34,6 +38,28 @@ export class UI extends ScreenElement {
 
         this.currentquest = new Quest()
         this.addChild(this.currentquest)
+
+        this.bulletsLabel = new Label({
+            text: '0',
+            pos: new Vector(700, 800),
+            font: new Font({
+                family: 'impact',
+                size: 24,
+                unit: FontUnit.Px,
+                color: Color.White
+            })
+        })
+
+        this.injectionsLabel = new Label({
+            text: '0',
+            pos: new Vector(500, 800),
+            font: new Font({
+                family: 'impact',
+                size: 24,
+                unit: FontUnit.Px,
+                color: Color.White
+            })
+        })
     }
 
     onPostUpdate(engine) {
@@ -51,8 +77,7 @@ export class UI extends ScreenElement {
         } else {
             this.healthbar.graphics.use('danger')
         }
-
-
+        
     }
 
     setupAnimations() {
@@ -105,6 +130,40 @@ export class UI extends ScreenElement {
 
     }
 
+    showInventory() {
+        const entityList = this.scene.world.entityManager.entities
+
+        entityList.forEach(element => {
+            if (element instanceof Player) {
+                this.player = element
+            }
+        });
+        let bullets = 0
+        let injections = 0
+        this.player.inventory.forEach(element => {
+            switch (element) {
+                case 'bullet':
+                    bullets++
+                    break
+                case 'injection':
+                    injections++
+                    break
+            }
+        });
+        this.bulletsLabel.text = `Bullets: ${bullets}`
+        this.injectionsLabel.text = `Injections: ${injections}`
+
+        this.addChild(this.bulletsLabel)
+        this.addChild(this.injectionsLabel)
+
+        this.player.inventoryShown = true
+    }
+
+    hideInventory() {
+        this.removeChild(this.bulletsLabel)
+        this.removeChild(this.injectionsLabel)
+        this.player.inventoryShown = false
+    }
     // healthStatus() {
     //     this.healthbar.graphics.use('fine') 
     //     switch(this.player.health)

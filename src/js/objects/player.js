@@ -15,12 +15,14 @@ export class Player extends Actor {
     bulletReady = true
     injectionHeld = false
     inventory = ['bullet']
+    inventoryShown = false
     hitOnCooldown = false
     knockbackspeed = 0
     selectedItem = 'none'
     spacePressed = false
     injection = new Injection()
     stuck = false
+    UI
     quest
     grounded
     x
@@ -88,6 +90,21 @@ export class Player extends Actor {
 
             if (this.quest.currentQuest === 'Sanity tutorial') {
                 this.quest.updateQuest()
+            }
+        }
+
+        if (engine.input.keyboard.wasPressed(Keys.B)) {
+            const entityList = this.scene.world.entityManager.entities
+
+            entityList.forEach(element => {
+                if (element instanceof UI) {
+                    this.UI = element
+                }
+            });
+            if (!this.inventoryShown) {
+                this.UI.showInventory()
+            } else {
+                this.UI.hideInventory()
             }
         }
 
