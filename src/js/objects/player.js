@@ -14,7 +14,7 @@ import { Floor } from './floor.js'
 
 export class Player extends Actor {
     health = 100
-    sanity = 100
+    sanity = 50
     bulletReady = true
     injectionHeld = false
     inventory = ['bullet']
@@ -34,8 +34,8 @@ export class Player extends Actor {
 
     constructor(xpos, ypos) {
         super({
-            width: Resources.Player.width,
-            height: Resources.Player.height,
+            width: 73,
+            height: 102,
         })
         this.body.collisionType = CollisionType.Active
         this.body.bounciness = 0
@@ -52,7 +52,7 @@ export class Player extends Actor {
         //this.pos = new Vector(engine.drawWidth - 1600, 850)
 
         this.on('collisionstart', (e) => this.hitSomething(e))
-        this.scale = new Vector(0.6, 0.6)
+        this.scale = new Vector(4, 4)
         this.injection.pos = new Vector(80, 0)
         this.setupAnimations();
 
@@ -306,21 +306,14 @@ export class Player extends Actor {
         });
 
 
-        this.shootAnim = Animation.fromSpriteSheet(playerShootSheet, range(0, 5), frameSpeed, AnimationStrategy.Freeze);
-        this.shootAnim.scale = new Vector(8, 8)
+        this.shootAnim = Animation.fromSpriteSheet(playerShootSheet, range(0, 5), frameSpeed, AnimationStrategy.End);
+        this.shootAnim.scale = new Vector(1, 1)
 
 
         this.graphics.add('shoot', this.shootAnim)
 
-
-
-
-
-
-
-
-
     }
+
     onCollisionStart(event, other) {
         if (other.owner instanceof Floor) {
             this.grounded = true
