@@ -20,6 +20,7 @@ export class Player extends Actor {
     selectedItem = 'none'
     spacePressed = false
     injection = new Injection()
+    stuck = false
     quest
     grounded
     x
@@ -57,22 +58,22 @@ export class Player extends Actor {
         let xVel = 0
 
 
-        if (engine.input.keyboard.isHeld(Keys.A) && this.knockbackspeed === 0) {
+        if (engine.input.keyboard.isHeld(Keys.A) && this.knockbackspeed === 0 && !this.stuck) {
             xVel = -600
             this.graphics.flipHorizontal = true
 
         }
 
-        if (engine.input.keyboard.isHeld(Keys.D) && this.knockbackspeed === 0) {
+        if (engine.input.keyboard.isHeld(Keys.D) && this.knockbackspeed === 0 && !this.stuck) {
             xVel = 1200
             this.graphics.flipHorizontal = false
         }
 
-        if (engine.input.keyboard.isHeld(Keys.W) && this.knockbackspeed === 0 && this.grounded) {
+        if (engine.input.keyboard.isHeld(Keys.W) && this.knockbackspeed === 0 && this.grounded && !this.stuck) {
             this.body.applyLinearImpulse(new Vector(0, -300 * delta))
         }
 
-        if (engine.input.keyboard.wasPressed(Keys.C) || engine.input.keyboard.wasPressed(Keys.ControlLeft)) {
+        if (engine.input.keyboard.wasPressed(Keys.C) || engine.input.keyboard.wasPressed(Keys.ControlLeft) && !this.stuck) {
             //Crouch controls
         }
 

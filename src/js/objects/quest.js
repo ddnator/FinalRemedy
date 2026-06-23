@@ -41,11 +41,13 @@ export class Quest extends ScreenElement {
     updateQuest() {
         switch (this.currentQuest) {
             case "WASD tutorial":
+                this.player.stuck = true
                 this.label.text = 'Press 1 to switch to your pistol'
                 this.currentQuest = 'Pistol tutorial'
                 break
 
             case "Pistol tutorial":
+                this.player.stuck = false
                 this.label.text = 'Shoot the Zombie by pressing Spacebar'
                 this.currentQuest = 'Shoot the zombie'
 
@@ -54,11 +56,13 @@ export class Quest extends ScreenElement {
                 break
 
             case "Shoot the zombie":
-                this.label.text = 'Killing zombies decrease your sanity, try to avoid killing too many zombies\n Using syringes to cure the instead does not decrease your sanity\n Press Enter to continue'
+                this.player.stuck = true
+                this.label.text = 'Killing zombies decrease your sanity, try to avoid killing too many zombies\n Using syringes to cure the zombies instead does not decrease your sanity\n Press Enter to continue'
                 this.currentQuest = 'Sanity tutorial'
                 break
 
             case "Sanity tutorial":
+                this.player.stuck = false
                 this.label.text = 'Walk over to the injection and pick it up by pressing E'
                 this.currentQuest = 'Injection pickup tutorial'
 
