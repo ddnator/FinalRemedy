@@ -52,7 +52,7 @@ export class Player extends Actor {
         //this.pos = new Vector(engine.drawWidth - 1600, 850)
 
         this.on('collisionstart', (e) => this.hitSomething(e))
-        this.scale = new Vector(4, 4)
+        this.scale = new Vector(4.5, 4.5)
         this.injection.pos = new Vector(80, 0)
         this.setupAnimations();
 
