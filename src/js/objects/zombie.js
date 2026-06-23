@@ -2,6 +2,7 @@ import { Actor, Engine, Vector, CollisionType, DegreeOfFreedom, Scene } from "ex
 import { Resources, ResourceLoader } from '../resources.js'
 import { Player } from "./player.js"
 import { Quest } from "./quest.js"
+import { UI } from './ui.js'
 
 export class Zombie extends Actor {
     health = 100
@@ -52,7 +53,9 @@ export class Zombie extends Actor {
         const entityList = this.scene.world.entityManager.entities
 
         const player = entityList.find((entity) => entity instanceof Player)
-        player.sanity -= 25
+        const ui = entityList.find((entity) => entity instanceof UI)
+        player.sanity -= 10
+        ui.sanitybrain.pos = new Vector((player.sanity - 50) * 0.7 , 0)
     }
 
     healChecker() {
