@@ -11,7 +11,8 @@ const Resources = {
     //player sounds
     gunshot: new Sound('/sounds/objects/gunshot.mp3'),
 
-
+    Key: new ImageSource('/images/key_placeholder.png'),
+    KeyPickup: new ImageSource('/images/keypickup.png'),
     Zombie: new ImageSource('/images/zombie_placeholder.png'),
     Bullet: new ImageSource('/images/bullet_placeholder.png'),
     Injection: new ImageSource('/images/injection_placeholder.png'),
