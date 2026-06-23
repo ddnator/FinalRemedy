@@ -8,9 +8,8 @@ import { Background1 } from '../../objects/background1.js'
 import { UI } from "../../objects/ui.js"
 import { InjectionPickup } from "../../objects/injectionpickup.js"
 import { BulletPickup } from "../../objects/bulletpickup.js"
-import { Door1 } from "./door1.js"
 import { Quest } from '../../objects/quest.js'
-import { Door2 } from "./door2.js"
+
 
 
 export class SceneOne extends Scene {
@@ -61,9 +60,7 @@ export class SceneOne extends Scene {
         this.add(street)
 
         //interactable door
-        const door1 = new Door1()
 
-        this.add(door1)
 
 
 
