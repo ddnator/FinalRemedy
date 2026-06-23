@@ -114,6 +114,20 @@ export class Player extends Actor {
             }
         }
 
+        if (engine.input.keyboard.wasPressed(Keys.KeyB)) {
+            const entityList = this.scene.world.entityManager.entities
+
+            entityList.forEach(element => {
+                if (element instanceof Quest) {
+                    this.quest = element
+                }
+            });
+
+            if (this.quest.currentQuest == 'Inventorian') {
+                this.quest.updateQuest()
+            }
+        }
+
         if (engine.input.keyboard.wasPressed(Keys.Key1)) {
             const entityList = this.scene.world.entityManager.entities
 

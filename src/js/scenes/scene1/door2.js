@@ -2,18 +2,20 @@ import { Actor, Engine, Vector, CollisionType, DegreeOfFreedom, Scene, ParallaxC
 import { Resources, ResourceLoader } from '../../resources.js'
 import { PressE } from "../../objects/prompts/pressE.js"
 import { Player } from '../../objects/player.js'
+import { Quest } from "../../objects/quest.js"
 
 export class Door2 extends Actor {
 
     locked = true
+    quest
 
-    constructor(player) {
+    constructor(player, quest) {
         super({
             width: Resources.Scene1Door2.width,
             height: Resources.Scene1Door2.height
         })
         this.player = player
-
+        this.quest = quest
 
     }
 
@@ -51,10 +53,21 @@ export class Door2 extends Actor {
     }
 
     onPostUpdate(engine) {
-        if (this.playerInRange && engine.input.keyboard.wasPressed(Keys.E) && this.locked && this.player.selectedItem == 'injection') {
-            this.locked = false
+        if (this.playerInRange && engine.input.keyboard.wasPressed(Keys.E) && this.locked == true) {
+            if (this.quest == 'door2locked') {
+                const entityList = this.scene.world.entityManager.entities
+
+                entityList.forEach(element => {
+                    if (element instanceof Quest) {
+                        this.quest = element
+                    }
+                })
+                this.quest.updateQuest()
+                console.log('door locked')
+            }
+
         }
-        if (!this.locked) {
+        if (this.playerInRange && engine.input.keyboard.wasPressed(Keys.E) && this.locked == false) {
             this.scene.engine.goToScene('scenethree')
         }
     }
