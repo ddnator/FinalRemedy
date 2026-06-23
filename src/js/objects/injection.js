@@ -2,10 +2,11 @@ import { Actor, Engine, Vector, CollisionType, DegreeOfFreedom, Scene, Keys } fr
 import { Resources, ResourceLoader } from '../resources.js'
 import { Player } from "./player.js"
 import { Zombie } from "./zombie.js"
-
+import { UI } from './ui.js'
 export class Injection extends Actor {
 
     player
+    UI
 
     constructor(player) {
         super({
@@ -25,7 +26,9 @@ export class Injection extends Actor {
         this.graphics.use(sprite)
 
         // this.pos = new Vector(engine.drawWidth / 2, engine.drawHeight / 1.25)
-        const entityList = this.scene.world.entityManager.entities.forEach(element => {
+        const entityList = this.scene.world.entityManager.entities
+
+        entityList.forEach(element => {
             if (element instanceof Player) {
                 this.player = element
             }
@@ -40,6 +43,16 @@ export class Injection extends Actor {
             const injectionIndex = this.player.inventory.indexOf("injection")
             this.player.inventory.splice(injectionIndex, 1)
             this.player.injectionHeld = false
+
+            const entityList = this.player.scene.world.entityManager.entities
+
+            entityList.forEach(element => {
+                if (element instanceof UI) {
+                    this.UI = element
+                }
+            })
+
+            this.UI.updateInventory()
         }
     }
 

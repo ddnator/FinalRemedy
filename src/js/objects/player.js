@@ -15,12 +15,14 @@ export class Player extends Actor {
     bulletReady = true
     injectionHeld = false
     inventory = ['bullet']
+    inventoryShown = false
     hitOnCooldown = false
     knockbackspeed = 0
     selectedItem = 'none'
     spacePressed = false
     injection = new Injection()
     stuck = false
+    UI
     quest
     grounded
     x
@@ -94,6 +96,21 @@ export class Player extends Actor {
             }
         }
 
+        if (engine.input.keyboard.wasPressed(Keys.B)) {
+            const entityList = this.scene.world.entityManager.entities
+
+            entityList.forEach(element => {
+                if (element instanceof UI) {
+                    this.UI = element
+                }
+            });
+            if (!this.inventoryShown) {
+                this.UI.showInventory()
+            } else {
+                this.UI.hideInventory()
+            }
+        }
+
         if (engine.input.keyboard.wasPressed(Keys.Key1)) {
             const entityList = this.scene.world.entityManager.entities
 
@@ -139,10 +156,19 @@ export class Player extends Actor {
             this.removeChild(this.injection)
         }
 
-        if (engine.input.keyboard.isHeld(Keys.Space)) {
+        if (engine.input.keyboard.wasPressed(Keys.Space)) {
             if (this.bulletReady && this.selectedItem === 'bullet' && this.inventory.includes('bullet')) {
+
+                console.log("i have shot")
                 this.shoot()
-                this.graphics.use('shoot')
+                this.shootAnim.events.on('end', (a) => {
+                    console.log('ended')
+                    this.shootAnim.reset()
+                    this.graphics.use(Resources.Player.toSprite())
+                })
+
+
+
             } else if (!this.injectionHeld && this.selectedItem === 'injection' && this.inventory.includes('injection')) {
                 this.inject()
             }
@@ -174,6 +200,7 @@ export class Player extends Actor {
     }
 
     shoot() {
+        this.graphics.use('shoot')
         let flip
         if (this.graphics.flipHorizontal) {
             flip = true
@@ -197,6 +224,16 @@ export class Player extends Actor {
         this.inventory.splice(bulletIndex, 1)
 
         this.bulletReady = false
+
+        const entityList = this.scene.world.entityManager.entities
+
+        entityList.forEach(element => {
+            if (element instanceof UI) {
+                this.UI = element
+            }
+        })
+
+        this.UI.updateInventory()
 
         this.scene.engine.clock.schedule(() => {
             this.bulletReady = true
@@ -230,7 +267,7 @@ export class Player extends Actor {
     }
 
     knockback(direction) {
-        this.knockbackspeed = -400 * direction
+        this.knockbackspeed = -200 * direction
     }
 
     setupAnimations() {
@@ -250,13 +287,16 @@ export class Player extends Actor {
         });
 
 
-        const shootAnim = Animation.fromSpriteSheet(playerShootSheet, range(0, 5), frameSpeed, AnimationStrategy.Freeze);
-        shootAnim.scale = new Vector(2, 2)
+        this.shootAnim = Animation.fromSpriteSheet(playerShootSheet, range(0, 5), frameSpeed, AnimationStrategy.Freeze);
+        this.shootAnim.scale = new Vector(8, 8)
 
 
-        this.graphics.add('shoot', shootAnim)
+        this.graphics.add('shoot', this.shootAnim)
 
-        //this.healthbar.graphics.use('shoot')
+
+
+
+
 
 
 
