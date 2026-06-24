@@ -16,13 +16,11 @@ export class UI extends ScreenElement {
     inventoryPopup = false
     bulletsLabel
     injectionsLabel
+    sanitybar
+    sanitybrain
 
     constructor(player) {
         super({})
-
-
-
-
     }
 
     onInitialize(engine) {
@@ -38,6 +36,18 @@ export class UI extends ScreenElement {
 
         this.currentquest = new Quest()
         this.addChild(this.currentquest)
+
+        this.sanitybar = new Actor()
+        this.sanitybar.graphics.use(Resources.SanityBar.toSprite())
+        this.sanitybar.scale = new Vector(2.5, 2.5)
+        this.sanitybar.pos = new Vector(0, 200)
+        this.addChild(this.sanitybar)
+
+        this.sanitybrain = new Actor()
+        this.sanitybrain.graphics.use(Resources.SanityBrain.toSprite())
+        this.sanitybrain.scale = new Vector(1.5, 1.5)
+        this.sanitybrain.pos = new Vector(0, 0)
+        this.sanitybar.addChild(this.sanitybrain)
 
         this.bulletsLabel = new Label({
             text: '0',
