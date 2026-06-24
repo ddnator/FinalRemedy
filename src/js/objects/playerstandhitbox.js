@@ -16,7 +16,6 @@ export class PlayerStandHitbox extends Actor {
     onCollisionStart(event, other) {
         if (other.owner instanceof Wall) {
             this.parent.canStandUp = false
-            console.log(this.parent)
         }
     }
 
