@@ -70,7 +70,8 @@ export class SceneOne extends Scene {
         this.player = new Player(-7800, 800)
         this.add(this.player)
         //pickup items
-
+        const bulletPickupQuest = new BulletPickup(-7000, 1025, true)
+        this.add(bulletPickupQuest)
 
 
         //cam on player
@@ -83,8 +84,7 @@ export class SceneOne extends Scene {
         const ui = new UI()
         this.add(ui)
 
-        const bulletPickupQuest = new BulletPickup(-7000, 1025, true)
-        this.add(bulletPickupQuest)
+
     }
 
     onPostUpdate() {
