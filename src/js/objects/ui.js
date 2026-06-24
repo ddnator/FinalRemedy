@@ -82,13 +82,11 @@ export class UI extends ScreenElement {
 
             this.healthbar.graphics.use('fine')
 
-
         } else if (this.player.health > 30 && this.player.health < 60) {
             this.healthbar.graphics.use('caution')
         } else {
             this.healthbar.graphics.use('danger')
         }
-
     }
 
     setupAnimations() {
