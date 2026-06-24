@@ -6,7 +6,7 @@ import { Zombie } from './objects/zombie.js'
 import { Injection } from './objects/injection.js'
 import { Floor } from './objects/floor.js'
 import { SceneOne } from './scenes/scene1/sceneone.js'
-// import { SceneTwo } from './scenes/scene2/scenetwo.js'
+import { SceneTwo } from './scenes/scene2/scenetwo.js'
 
 
 

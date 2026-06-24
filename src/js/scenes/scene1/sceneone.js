@@ -23,7 +23,7 @@ export class SceneOne extends Scene {
         Resources.track3.play()
         Resources.track3.loop
 
-        const floor = new Floor()
+        const floor = new Floor(40000, 100, 540, 1100)
         this.add(floor)
 
 

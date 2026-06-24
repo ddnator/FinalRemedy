@@ -2,17 +2,15 @@ import { Actor, Engine, Vector, CollisionType, DegreeOfFreedom, Scene } from "ex
 import { Resources, ResourceLoader } from '../resources.js'
 
 export class Floor extends Actor {
-    constructor() {
+    constructor(w, h, x, y) {
         super({
-            width: 40000,
-            height: 100
+            width: w,
+            height: h
         })
-
+        this.pos = new Vector(x, y)
         this.body.collisionType = CollisionType.Fixed
         this.body.limitDegreeOfFreedom.push(DegreeOfFreedom.Rotation)
     }
 
-    onInitialize(engine) {
-        this.pos = new Vector(engine.drawWidth / 2, 1100)
-    }
+
 }
