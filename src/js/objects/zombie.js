@@ -80,9 +80,10 @@ export class Zombie extends Actor {
                 this.quest.updateQuest()
             }
             const sprite = Resources.Player.toSprite()
+            
             this.scale = new Vector(4.5, 4.5)
             this.graphics.use(sprite)
-            this.body.collisionType = CollisionType.Passive
+            this.body.collisionType = CollisionType.PreventCollision
 
             this.walkAway()
             // this.vel = new Vector(700, 0)
