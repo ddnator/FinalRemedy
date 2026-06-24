@@ -23,6 +23,11 @@ export class Zombie extends Actor {
         this.y = y
 
         this.quest = quest
+
+        const sprite = Resources.Zombie.toSprite()
+        this.scale = new Vector(0.9, 0.9)
+
+        this.graphics.use(sprite)
     }
 
     onInitialize(engine) {
@@ -31,7 +36,7 @@ export class Zombie extends Actor {
     }
 
     onPostUpdate(engine) {
-        if (this.health == 0) {
+        if (this.health <= 0) {
             this.kill()
             this.lowerSanity()
 
@@ -55,17 +60,17 @@ export class Zombie extends Actor {
         const player = entityList.find((entity) => entity instanceof Player)
         const ui = entityList.find((entity) => entity instanceof UI)
         player.sanity -= 10
-        ui.sanitybrain.pos = new Vector((player.sanity - 50) * 0.7 , 0)
+        ui.sanitybrain.pos = new Vector((player.sanity - 50) * 0.7, 0)
     }
 
     healChecker() {
         if (this.healed === false) {
             this.walkToPlayer()
 
-            const sprite = Resources.Zombie.toSprite()
-            this.scale = new Vector(0.9, 0.9)
+            // const sprite = Resources.Zombie.toSprite()
+            // this.scale = new Vector(0.9, 0.9)
 
-            this.graphics.use(sprite)
+            // this.graphics.use(sprite)
 
         } else {
 
@@ -80,7 +85,7 @@ export class Zombie extends Actor {
                 this.quest.updateQuest()
             }
             const sprite = Resources.Player.toSprite()
-            
+
             this.scale = new Vector(4.5, 4.5)
             this.graphics.use(sprite)
             this.body.collisionType = CollisionType.PreventCollision
@@ -121,8 +126,6 @@ export class Zombie extends Actor {
 
     getHit() {
         this.health = this.health - 50
-
-
     }
 
     walkToPlayer() {

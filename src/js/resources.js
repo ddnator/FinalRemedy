@@ -49,6 +49,7 @@ const Resources = {
 
     //Scene 2
     //Background
+    Scene2Background: new ImageSource('/images/scene2/backgroundImages/S-2-InsBackEx.png'),
     Scene2Sky: new ImageSource('/images/scene2/backgroundImages/S-2-Sky.png'),
     Scene2Foreground: new ImageSource('/images/scene2/backgroundImages/S-2-Foreground.png'),
     Scene2Wall: new ImageSource('/images/scene2/backgroundImages/S-2-Wall.png'),
