@@ -103,12 +103,20 @@ export class Player extends Actor {
         }
 
         if (engine.input.keyboard.wasPressed(Keys.C) && !this.stuck && !this.crouched) {
+            const oldHeight = this.height
             this.scale = new Vector (2.24, 2.24)
+            const newHeight = this.height
+
+            this.pos.y += (oldHeight -  newHeight) / 2
             this.crouched = true
             //Change Sprite
         } else if (engine.input.keyboard.wasPressed(Keys.C) && !this.stuck && this.crouched) {
+            const oldHeight = this.height
             this.scale = new Vector (4.5, 4.5)
             this.crouched = false
+            const newHeight = this.height
+
+            this.pos.y += (oldHeight -  newHeight) / 2
             //change sprite
         }
 
