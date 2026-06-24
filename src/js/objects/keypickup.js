@@ -84,11 +84,8 @@ export class KeyPickup extends Actor {
 
     onPostUpdate(engine) {
         if (this.playerInRange && engine.input.keyboard.wasPressed(Keys.E)) {
-            this.player.pickUpItem('injection', this)
+            this.player.key = true
             this.UI.updateInventory()
-            if (this.quest === 'Injection pickup tutorial') {
-                this.quest.updateQuest()
-            }
         }
     }
 
