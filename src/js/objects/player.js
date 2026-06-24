@@ -316,7 +316,9 @@ export class Player extends Actor {
 
     onCollisionStart(event, other) {
         if (other.owner instanceof Floor) {
-            this.grounded = true
+            this.scene.engine.clock.schedule(() => {
+                this.grounded = true
+            }, 500)
         }
     }
 
