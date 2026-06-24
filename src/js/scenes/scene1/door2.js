@@ -22,6 +22,7 @@ export class Door2 extends Actor {
     onInitialize(engine) {
         this.graphics.use(Resources.Scene1Door2.toSprite())
         this.pos = new Vector(4800, 941)
+        this.scale = new Vector(1.1, 1.75)
         this.addComponent(new ParallaxComponent(new Vector(0, 0)))
 
         this.playerInRange = false
