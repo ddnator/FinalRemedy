@@ -60,8 +60,7 @@ const Resources = {
     //Background
     Scene3Sky: new ImageSource('/images/scene3/backgroundImages/S-3-Sky.png'),
     Scene3Foreground: new ImageSource('/images/scene3/backgroundImages/S-3-Foreground.png'),
-    Scene3Wall: new ImageSource('/images/scene3/backgroundImages/S-3-Grafity.png'),
-    Scene3Grafity: new ImageSource('/images/scene3/backgroundImages/S-3-Wall.png'),
+    Scene3Wall: new ImageSource('/images/scene3/backgroundImages/S-3-Wall.png'),
     Scene3Floor: new ImageSource('/images/scene3/backgroundImages/S-3-Floor.png'),
     Scene3Objects: new ImageSource('/images/scene3/backgroundImages/S-3-Objects.png'),
     Scene3Shadows: new ImageSource('/images/scene3/backgroundImages/S-3-Shadows.png'),

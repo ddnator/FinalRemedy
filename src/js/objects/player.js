@@ -1,4 +1,4 @@
-import { Actor, Engine, Vector, Keys, DegreeOfFreedom, CollisionType, linear, ParallaxComponent, SpriteSheet, Sprite, range, AnimationStrategy, Animation } from "excalibur"
+import { Actor, Engine, Vector, Keys, EdgeCollider, DegreeOfFreedom, CollisionType, linear, ParallaxComponent, SpriteSheet, Sprite, range, AnimationStrategy, Animation } from "excalibur"
 import { Resources, ResourceLoader } from '../resources.js'
 import { Bullet } from './bullet.js'
 import { Zombie } from './zombie.js'
@@ -81,7 +81,7 @@ export class Player extends Actor {
 
     checkMovement(engine, delta) {
         let xAccel = 0;
-        let yAccel = 300;
+        let yAccel = 400;
 
         if (engine.input.keyboard.isHeld(Keys.A) && !this.stuck) {
             xAccel = -20; // Use an acceleration value instead of a massive direct velocity
@@ -104,19 +104,19 @@ export class Player extends Actor {
 
         if (engine.input.keyboard.wasPressed(Keys.C) && !this.stuck && !this.crouched) {
             const oldHeight = this.height
-            this.scale = new Vector (2.24, 2.24)
+            this.scale = new Vector(2.24, 2.24)
             const newHeight = this.height
 
-            this.pos.y += (oldHeight -  newHeight) / 2
+            this.pos.y += (oldHeight - newHeight) / 2
             this.crouched = true
             //Change Sprite
         } else if (engine.input.keyboard.wasPressed(Keys.C) && !this.stuck && this.crouched) {
             const oldHeight = this.height
-            this.scale = new Vector (4.5, 4.5)
+            this.scale = new Vector(4.5, 4.5)
             this.crouched = false
             const newHeight = this.height
 
-            this.pos.y += (oldHeight -  newHeight) / 2
+            this.pos.y += (oldHeight - newHeight) / 2
             //change sprite
         }
 
@@ -330,7 +330,7 @@ export class Player extends Actor {
     }
 
     onCollisionStart(event, other) {
-        if (other.owner instanceof Floor) {
+        if (other.owner instanceof Floor || other.owner.name === 'slope') {
             this.scene.engine.clock.schedule(() => {
                 this.grounded = true
             }, 500)
@@ -338,7 +338,7 @@ export class Player extends Actor {
     }
 
     onCollisionEnd(event, other) {
-        if (other.owner instanceof Floor) {
+        if (other.owner instanceof Floor || other.owner.name === 'slope') {
             this.grounded = false
         }
     }
