@@ -30,6 +30,7 @@ export class Player extends Actor {
     quest
     grounded = false
     jumpReady = true
+    crouched = false
     x
     y
 
@@ -80,7 +81,7 @@ export class Player extends Actor {
 
     checkMovement(engine, delta) {
         let xAccel = 0;
-        let yAccel = 0;
+        let yAccel = 300;
 
         if (engine.input.keyboard.isHeld(Keys.A) && !this.stuck) {
             xAccel = -20; // Use an acceleration value instead of a massive direct velocity
@@ -93,12 +94,22 @@ export class Player extends Actor {
         }
 
         if (engine.input.keyboard.wasPressed(Keys.W) && this.grounded && this.jumpReady && !this.stuck) {
-            this.body.applyLinearImpulse(new Vector(0, -300 * delta))
+            this.body.applyLinearImpulse(new Vector(0, -yAccel * delta))
             this.jumpReady = false
 
             this.scene.engine.clock.schedule(() => {
                 this.jumpReady = true
             }, 500)
+        }
+
+        if (engine.input.keyboard.wasPressed(Keys.C) && !this.stuck && !this.crouched) {
+            this.scale = new Vector (2.24, 2.24)
+            this.crouched = true
+            //Change Sprite
+        } else if (engine.input.keyboard.wasPressed(Keys.C) && !this.stuck && this.crouched) {
+            this.scale = new Vector (4.5, 4.5)
+            this.crouched = false
+            //change sprite
         }
 
         if (xAccel !== 0) {
