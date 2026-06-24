@@ -20,11 +20,8 @@ export class Door2 extends Actor {
     }
 
     onInitialize(engine) {
-        this.graphics.use(Resources.Scene1Door2.toSprite())
-        this.pos = new Vector(4800, 941)
-        this.scale = new Vector(1.1, 1.75)
-        this.addComponent(new ParallaxComponent(new Vector(0, 0)))
-
+        this.pos = new Vector(4800, 741)
+        this.addComponent(new ParallaxComponent(new Vector(0.52, 1)))
         this.playerInRange = false
         this.engine = engine
     }
@@ -36,7 +33,7 @@ export class Door2 extends Actor {
         if (collider?.owner instanceof Player) {
             this.playerInRange = true
             if (!this.pressE) {
-                this.pressE = new PressE(0, -80)
+                this.pressE = new PressE(0, -180)
                 this.addChild(this.pressE)
             }
         }
