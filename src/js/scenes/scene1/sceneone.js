@@ -16,14 +16,17 @@ import { Door2 } from "./door2.js"
 export class SceneOne extends Scene {
 
     player
+    music = Resources.track3
 
     onInitialize(engine) {
 
 
-        Resources.track3.play()
-        Resources.track3.loop
 
-        const floor = new Floor()
+
+
+
+
+        const floor = new Floor(40000, 100, 540, 1100)
         this.add(floor)
 
 
@@ -65,12 +68,11 @@ export class SceneOne extends Scene {
 
         this.add(door1)
 
-
-
-        this.player = new Player(-7800, 850)
+        this.player = new Player(-7800, 800)
         this.add(this.player)
         //pickup items
-
+        const bulletPickupQuest = new BulletPickup(-7000, 1025, true)
+        this.add(bulletPickupQuest)
 
 
         //cam on player
@@ -83,8 +85,7 @@ export class SceneOne extends Scene {
         const ui = new UI()
         this.add(ui)
 
-        const bulletPickupQuest = new BulletPickup(-7000, 1025, true)
-        this.add(bulletPickupQuest)
+
     }
 
     onPostUpdate() {
@@ -104,5 +105,41 @@ export class SceneOne extends Scene {
         }
     }
 
+    onActivate() {
+        this.music.loop = true
+        this.music.play()
+        this.fadeIn()
+    }
 
+    onDeactivate() {
+        this.fadeOut().then(() => this.music.pause())
+    }
+
+    fadeIn() {
+        this.music.volume = 0
+        const fade = setInterval(() => {
+            if (this.music.volume < 0.9) {
+                this.music.volume += 0.1
+            } else {
+                this.music.volume = 1
+                clearInterval(fade)
+            }
+        }, 100)
+    }
+
+    fadeOut() {
+        return new Promise(resolve => {
+            const fade = setInterval(() => {
+                if (this.music.volume > 0.1) {
+                    this.music.volume -= 0.1
+                } else {
+                    this.music.volume = 0
+                    clearInterval(fade)
+                    resolve()
+                }
+            }, 100)
+        })
+    }
 }
+
+

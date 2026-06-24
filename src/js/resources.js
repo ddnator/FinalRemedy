@@ -15,7 +15,6 @@ const Resources = {
     track1: new Sound('/sounds/music/BeingaMan.mp3'),
     track2: new Sound('/sounds/music/TheFollowing.mp3'),
     track3: new Sound('/sounds/music/TheMission.mp3'),
-    Key: new ImageSource('/images/key_placeholder.png'),
     KeyPickup: new ImageSource('/images/keypickup.png'),
     Zombie: new ImageSource('/images/zombie_placeholder.png'),
     Bullet: new ImageSource('/images/bullet_placeholder.png'),
@@ -50,6 +49,7 @@ const Resources = {
 
     //Scene 2
     //Background
+    Scene2Background: new ImageSource('/images/scene2/backgroundImages/S-2-InsBackEx.png'),
     Scene2Sky: new ImageSource('/images/scene2/backgroundImages/S-2-Sky.png'),
     Scene2Foreground: new ImageSource('/images/scene2/backgroundImages/S-2-Foreground.png'),
     Scene2Wall: new ImageSource('/images/scene2/backgroundImages/S-2-Wall.png'),
@@ -60,8 +60,7 @@ const Resources = {
     //Background
     Scene3Sky: new ImageSource('/images/scene3/backgroundImages/S-3-Sky.png'),
     Scene3Foreground: new ImageSource('/images/scene3/backgroundImages/S-3-Foreground.png'),
-    Scene3Wall: new ImageSource('/images/scene3/backgroundImages/S-3-Grafity.png'),
-    Scene3Grafity: new ImageSource('/images/scene3/backgroundImages/S-3-Wall.png'),
+    Scene3Wall: new ImageSource('/images/scene3/backgroundImages/S-3-Wall.png'),
     Scene3Floor: new ImageSource('/images/scene3/backgroundImages/S-3-Floor.png'),
     Scene3Objects: new ImageSource('/images/scene3/backgroundImages/S-3-Objects.png'),
     Scene3Shadows: new ImageSource('/images/scene3/backgroundImages/S-3-Shadows.png'),

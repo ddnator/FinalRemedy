@@ -30,7 +30,7 @@ export class Door1 extends Actor {
         if (collider?.owner instanceof Player) {
             this.playerInRange = true
             if (!this.pressE) {
-                this.pressE = new PressE(0, -80)
+                this.pressE = new PressE(0, -180)
                 this.addChild(this.pressE)
             }
         }

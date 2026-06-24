@@ -6,6 +6,7 @@ import { Zombie } from '../objects/zombie.js'
 import { Player } from '../objects/player.js'
 import { InjectionPickup } from "./injectionpickup.js"
 import { Door2 } from "../scenes/scene1/door2.js"
+import { KeyPickup } from "./keypickup.js"
 
 export class Quest extends ScreenElement {
     label
@@ -19,7 +20,7 @@ export class Quest extends ScreenElement {
     onInitialize(engine) {
         this.label = new Label({
             text: 'Press W to jump \nPress A to move left and D to move right\nWalk over the item and press E to pick it up',
-            pos: new Vector(-200, 300),
+            pos: new Vector(950, -50),
             font: new Font({
                 family: 'impact',
                 size: 24,
@@ -112,11 +113,32 @@ export class Quest extends ScreenElement {
                 this.label.text = 'Find the key to the door'
                 this.currentQuest = 'Keyfinder'
                 this.player.stuck = false
+
+
+
                 break
 
             case "Keyfinder":
                 this.label.text = 'Open the door'
                 this.currentQuest = 'Doorio'
+                this.player.stuck = false
+                break
+
+            case "Doorio":
+                this.label.text = 'Explore'
+                this.currentQuest = 'Climb'
+                this.player.stuck = false
+                break
+
+            case "Climb":
+                this.label.text = 'Survive!'
+                this.currentQuest = 'Survival'
+                this.player.stuck = false
+                break
+
+            case "Survival":
+                this.label.text = 'Explore'
+                this.currentQuest = 'Back on track'
                 this.player.stuck = false
                 break
 

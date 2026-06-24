@@ -1,4 +1,4 @@
-import { Actor, Engine, Vector, Keys, DegreeOfFreedom, CollisionType, linear, ParallaxComponent, SpriteSheet, Sprite, range, AnimationStrategy, Animation } from "excalibur"
+import { Actor, Engine, Vector, Keys, EdgeCollider, DegreeOfFreedom, CollisionType, linear, ParallaxComponent, SpriteSheet, Sprite, range, AnimationStrategy, Animation } from "excalibur"
 import { Resources, ResourceLoader } from '../resources.js'
 import { Bullet } from './bullet.js'
 import { Zombie } from './zombie.js'
@@ -8,7 +8,8 @@ import { BulletPickup } from './bulletpickup.js'
 import { InjectionPickup } from './injectionpickup.js'
 import { Quest } from "./quest.js"
 import { Floor } from './floor.js'
-
+import { Wall } from './wall.js'
+import { PlayerStandHitbox } from './playerstandhitbox.js'
 
 
 
@@ -25,9 +26,14 @@ export class Player extends Actor {
     spacePressed = false
     injection = new Injection()
     stuck = false
+    key = false
+    canStandUp = true
+    playerStandHitbox
     UI
     quest
-    grounded
+    grounded = false
+    jumpReady = true
+    crouched = false
     x
     y
 
@@ -40,7 +46,7 @@ export class Player extends Actor {
         this.body.collisionType = CollisionType.Active
         this.body.bounciness = 0
         this.body.limitDegreeOfFreedom.push(DegreeOfFreedom.Rotation)
-
+        this.body.friction = 100
         this.pos = new Vector(xpos, ypos)
     }
 
@@ -60,29 +66,85 @@ export class Player extends Actor {
 
 
     onPostUpdate(engine, delta) {
-        let yVel = 0
-        let xVel = 0
+        this.checkMovement(engine, delta)
+        this.checkInventory(engine)
+        this.switchPickedItem(engine)
+        this.useSelectedItem(engine)
+        this.checkInjectionPosition()
+        this.checkQuest(engine, delta)
+        this.healthChecker()
+        //this.checkQuest(engine, delta)
+    }
 
+    healthChecker() {
+        if (this.health <= 0) {
+            this.kill()
+        }
+    }
 
-        if (engine.input.keyboard.isHeld(Keys.A) && this.knockbackspeed === 0 && !this.stuck) {
-            xVel = -600
-            this.graphics.flipHorizontal = true
+    checkMovement(engine, delta) {
+        let xAccel = 0;
+        let yAccel = 400;
 
+        if (engine.input.keyboard.isHeld(Keys.A) && !this.stuck) {
+            xAccel = -20; // Use an acceleration value instead of a massive direct velocity
+            this.graphics.flipHorizontal = true;
+        } else if (engine.input.keyboard.isHeld(Keys.D) && !this.stuck) {
+            xAccel = 20;
+            this.graphics.flipHorizontal = false;
+        } else if (this.grounded) {
+            this.vel = new Vector(this.vel.x * 0.8, this.vel.y)
         }
 
-        if (engine.input.keyboard.isHeld(Keys.D) && this.knockbackspeed === 0 && !this.stuck) {
-            xVel = 1200
-            this.graphics.flipHorizontal = false
+        if (engine.input.keyboard.wasPressed(Keys.W) && this.grounded && this.jumpReady && !this.stuck && !this.crouched) {
+            this.body.applyLinearImpulse(new Vector(0, -yAccel * delta))
+            this.jumpReady = false
+
+            this.scene.engine.clock.schedule(() => {
+                this.jumpReady = true
+            }, 500)
         }
 
-        if (engine.input.keyboard.isHeld(Keys.W) && this.knockbackspeed === 0 && this.grounded && !this.stuck) {
-            this.body.applyLinearImpulse(new Vector(0, -300 * delta))
+        if (engine.input.keyboard.wasPressed(Keys.C) && !this.stuck && !this.crouched) {
+            const oldHeight = this.height
+
+            const oldWidth = this.width
+
+            this.scale = new Vector(2.24, 2.24)
+
+            const newHeight = this.height
+            const newWidth = this.width
+
+            this.playerStandHitbox = new PlayerStandHitbox((oldWidth - newWidth), (oldHeight - newHeight) / 2, 0, -newHeight / 2)
+
+            this.addChild(this.playerStandHitbox)
+
+            this.pos.y += (oldHeight - newHeight) / 2
+            this.crouched = true
+            //Change Sprite
+
+        } else if (engine.input.keyboard.wasPressed(Keys.C) && !this.stuck && this.crouched && this.canStandUp) {
+            const oldHeight = this.height
+
+            this.scale = new Vector(4.5, 4.5)
+
+            this.crouched = false
+            const newHeight = this.height
+
+
+            this.removeChild(this.playerStandHitbox)
+            this.pos.y += (oldHeight - newHeight) / 2
+            //change sprite
         }
 
-        if (engine.input.keyboard.wasPressed(Keys.C) || engine.input.keyboard.wasPressed(Keys.ControlLeft) && !this.stuck) {
-            //Crouch controls
+        if (xAccel !== 0) {
+            if (this.vel.x < 900 && this.vel.x > -900) {
+                this.body.applyLinearImpulse(new Vector(xAccel * delta, 0));
+            }
         }
+    }
 
+    checkQuest(engine, delta) {
         if (engine.input.keyboard.wasPressed(Keys.Enter)) {
             const entityList = this.scene.world.entityManager.entities
 
@@ -98,36 +160,43 @@ export class Player extends Actor {
                 this.quest.updateQuest()
             }
         }
+    }
 
-        if (engine.input.keyboard.wasPressed(Keys.B)) {
-            const entityList = this.scene.world.entityManager.entities
-
-            entityList.forEach(element => {
-                if (element instanceof UI) {
-                    this.UI = element
-                }
-            });
-            if (!this.inventoryShown) {
-                this.UI.showInventory()
-            } else {
-                this.UI.hideInventory()
-            }
+    checkInjectionPosition() {
+        if (this.graphics.flipHorizontal) {
+            this.injection.pos.x = -Resources.Player.width / 2 - Resources.Injection.width / 6
+            this.injection.graphics.flipHorizontal = true
+        } else {
+            this.injection.pos.x = Resources.Player.width / 2 + Resources.Injection.width / 6
+            this.injection.graphics.flipHorizontal = false
         }
+    }
 
+    checkInventory(engine) {
         if (engine.input.keyboard.wasPressed(Keys.KeyB)) {
             const entityList = this.scene.world.entityManager.entities
 
             entityList.forEach(element => {
                 if (element instanceof Quest) {
                     this.quest = element
+                } else if (element instanceof UI) {
+                    this.UI = element
                 }
             });
+
+            if (!this.inventoryShown) {
+                this.UI.showInventory()
+            } else {
+                this.UI.hideInventory()
+            }
 
             if (this.quest.currentQuest == 'Inventorian') {
                 this.quest.updateQuest()
             }
         }
+    }
 
+    switchPickedItem(engine) {
         if (engine.input.keyboard.wasPressed(Keys.Key1)) {
             const entityList = this.scene.world.entityManager.entities
 
@@ -145,9 +214,7 @@ export class Player extends Actor {
             console.log(`selected item is ${this.selectedItem}`)
             this.injectionHeld = false
             this.removeChild(this.injection)
-        }
-
-        if (engine.input.keyboard.wasPressed(Keys.Key2) && !this.injectionHeld && this.inventory.includes('injection')) {
+        } else if (engine.input.keyboard.wasPressed(Keys.Key2) && !this.injectionHeld && this.inventory.includes('injection')) {
             this.selectedItem = 'injection'
             this.inject()
             console.log(`selected item is ${this.selectedItem}`)
@@ -165,54 +232,20 @@ export class Player extends Actor {
                 this.quest.updateQuest()
             }
         }
+    }
 
-        if (engine.input.keyboard.wasPressed(Keys.Key3)) {
-            this.selectedItem = 'key'
-            console.log(`selected item is ${this.selectedItem}`)
-            this.injectionHeld = false
-            this.removeChild(this.injection)
-        }
-
+    useSelectedItem(engine) {
         if (engine.input.keyboard.wasPressed(Keys.Space)) {
             if (this.bulletReady && this.selectedItem === 'bullet' && this.inventory.includes('bullet')) {
-
-                console.log("i have shot")
                 this.shoot()
                 this.shootAnim.events.on('end', (a) => {
-                    console.log('ended')
                     this.shootAnim.reset()
                     this.graphics.use(Resources.Player.toSprite())
                 })
 
-
-
             } else if (!this.injectionHeld && this.selectedItem === 'injection' && this.inventory.includes('injection')) {
                 this.inject()
             }
-        }
-
-
-
-        this.vel = new Vector(xVel + this.knockbackspeed, this.vel.y)
-
-        if (this.knockbackspeed >= 10) {
-            this.knockbackspeed -= 10
-        } else if (this.knockbackspeed <= -10) {
-            this.knockbackspeed += 10
-        } else {
-            this.knockbackspeed = 0
-        }
-
-        if (this.health <= 0) {
-            this.kill()
-        }
-
-        if (this.graphics.flipHorizontal) {
-            this.injection.pos.x = -Resources.Player.width / 2 - Resources.Injection.width / 6
-            this.injection.graphics.flipHorizontal = true
-        } else {
-            this.injection.pos.x = Resources.Player.width / 2 + Resources.Injection.width / 6
-            this.injection.graphics.flipHorizontal = false
         }
     }
 
@@ -290,7 +323,6 @@ export class Player extends Actor {
     }
 
     setupAnimations() {
-        console.log("animation setup")
         const configGrid = {
             rows: 1,
             columns: 6,
@@ -315,13 +347,15 @@ export class Player extends Actor {
     }
 
     onCollisionStart(event, other) {
-        if (other.owner instanceof Floor) {
-            this.grounded = true
+        if (other.owner instanceof Floor || other.owner.name === 'slope') {
+            this.scene.engine.clock.schedule(() => {
+                this.grounded = true
+            }, 500)
         }
     }
 
     onCollisionEnd(event, other) {
-        if (other.owner instanceof Floor) {
+        if (other.owner instanceof Floor || other.owner.name === 'slope') {
             this.grounded = false
         }
     }

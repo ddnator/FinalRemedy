@@ -2,26 +2,23 @@ import { Actor, Engine, Vector, CollisionType, DegreeOfFreedom, Scene, ParallaxC
 import { Resources, ResourceLoader } from '../../resources.js'
 import { PressE } from "../../objects/prompts/pressE.js"
 import { Player } from '../../objects/player.js'
-import { Quest } from "../../objects/quest.js"
 
-export class Door2 extends Actor {
-
-    locked = true
-    quest
-
-    constructor(player, quest) {
+export class Door1 extends Actor {
+    constructor(x, y) {
         super({
-            width: Resources.Scene1Door2.width,
-            height: Resources.Scene1Door2.height
+            width: Resources.Scene1Door1.width / 2,
+            height: Resources.Scene1Door1.height
         })
-        this.player = player
-        this.quest = quest
 
+        // this.pos = new Vector(15350, 762)
+        this.pos = new Vector(x, y)
     }
 
     onInitialize(engine) {
-        this.pos = new Vector(4800, 741)
+
+
         this.addComponent(new ParallaxComponent(new Vector(0.52, 1)))
+
         this.playerInRange = false
         this.engine = engine
     }
@@ -33,7 +30,7 @@ export class Door2 extends Actor {
         if (collider?.owner instanceof Player) {
             this.playerInRange = true
             if (!this.pressE) {
-                this.pressE = new PressE(0, -180)
+                this.pressE = new PressE(0, -80)
                 this.addChild(this.pressE)
             }
         }
@@ -51,30 +48,9 @@ export class Door2 extends Actor {
     }
 
     onPostUpdate(engine) {
-        if (this.playerInRange && engine.input.keyboard.wasPressed(Keys.E) && this.locked == true) {
-            if (this.quest == 'door2locked') {
-                const entityList = this.scene.world.entityManager.entities
-
-                entityList.forEach(element => {
-                    if (element instanceof Quest) {
-                        this.quest = element
-                    }
-                })
-                this.quest.updateQuest()
-                console.log('door locked')
-            }
-
-        }
         if (this.playerInRange && engine.input.keyboard.wasPressed(Keys.E)) {
-            this.lockChecker()
-
-        }
-
-    }
-    lockChecker() {
-        if (this.player.key == true) {
-            this.locked = false
-            this.scene.engine.goToScene('scenethree')
+            this.scene.engine.goToScene('sceneone')
         }
     }
+
 }
