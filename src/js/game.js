@@ -7,6 +7,7 @@ import { Injection } from './objects/injection.js'
 import { Floor } from './objects/floor.js'
 import { SceneOne } from './scenes/scene1/sceneone.js'
 import { SceneTwo } from './scenes/scene2/scenetwo.js'
+import { SceneThree } from './scenes/scene3/scenethree.js'
 
 
 
@@ -43,6 +44,8 @@ export class Game extends Engine {
         this.goToScene('sceneone')
         const scenetwo = new SceneTwo()
         this.add('scenetwo', SceneTwo)
+        const scenethree = new SceneThree()
+        this.add('scenethree', SceneThree)
 
         // startMusic()
 

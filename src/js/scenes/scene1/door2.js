@@ -68,12 +68,16 @@ export class Door2 extends Actor {
             }
 
         }
-        if (this.playerInRange && engine.input.keyboard.wasPressed(Keys.E) && this.locked) {
-            return
+        if (this.playerInRange && engine.input.keyboard.wasPressed(Keys.E)) {
+            this.lockChecker()
 
-        } else if (!this.locked) {
+        }
+
+    }
+    lockChecker() {
+        if (this.player.key == true) {
+            this.locked = false
             this.scene.engine.goToScene('scenethree')
         }
     }
-
 }
