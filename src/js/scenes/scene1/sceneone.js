@@ -67,7 +67,7 @@ export class SceneOne extends Scene {
 
 
 
-        this.player = new Player(-7800, 850)
+        this.player = new Player(-7800, 800)
         this.add(this.player)
         //pickup items
 
