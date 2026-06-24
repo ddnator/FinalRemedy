@@ -41,7 +41,7 @@ export class InjectionPickup extends Actor {
             this.playerInRange = true
             if (!this.pressE) {
                 this.pressE = new PressE(0, -120)
-                this.pressE.scale = new Vector(1,1)
+                this.pressE.scale = new Vector(1, 1)
                 this.addChild(this.pressE)
             }
         }
@@ -74,7 +74,14 @@ export class InjectionPickup extends Actor {
         if (this.playerInRange && engine.input.keyboard.wasPressed(Keys.E)) {
             this.player.pickUpItem('injection', this)
             this.UI.updateInventory()
-            if (this.quest === 'Injection pickup tutorial') {
+            const entityList = this.scene.world.entityManager.entities
+
+            entityList.forEach(element => {
+                if (element instanceof Quest) {
+                    this.quest = element
+                }
+            })
+            if (this.quest.currentQuest === 'Injection pickup tutorial') {
                 this.quest.updateQuest()
             }
         }
