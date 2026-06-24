@@ -16,14 +16,14 @@ import { Door2 } from "./door2.js"
 export class SceneOne extends Scene {
 
     player
+    music = Resources.track3
 
     onInitialize(engine) {
 
 
 
-        this.music = Resources.track3
-        this.music.loop = true
-        this.music.play()
+
+
 
 
         const floor = new Floor(40000, 100, 540, 1100)
@@ -107,5 +107,12 @@ export class SceneOne extends Scene {
         }
     }
 
+    onActivate() {
+        this.music.loop = true
+        this.music.play()
+    }
 
+    onDeactivate() {
+        this.music.pause()
+    }
 }

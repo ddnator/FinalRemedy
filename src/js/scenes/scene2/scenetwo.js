@@ -16,12 +16,11 @@ import { Wall } from "../../objects/wall.js"
 export class SceneTwo extends Scene {
 
     player
-
+    music = Resources.track2
     onInitialize(engine) {
 
-        this.music = Resources.track2
-        this.music.loop = true
-        this.music.play()
+
+
 
 
         const floor = new Floor(10000, 100, 540, 1100)
@@ -119,6 +118,14 @@ export class SceneTwo extends Scene {
         // }
 
 
+    }
+    onActivate() {
+        this.music.loop = true
+        this.music.play()
+    }
+
+    onDeactivate() {
+        this.music.pause()
     }
 
 
