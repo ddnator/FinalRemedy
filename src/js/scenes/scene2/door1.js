@@ -4,19 +4,19 @@ import { PressE } from "../../objects/prompts/pressE.js"
 import { Player } from '../../objects/player.js'
 
 export class Door1 extends Actor {
-    constructor() {
+    constructor(x, y) {
         super({
-            width: Resources.Scene1Door1.width,
+            width: Resources.Scene1Door1.width / 2,
             height: Resources.Scene1Door1.height
         })
 
-
-
+        // this.pos = new Vector(15350, 762)
+        this.pos = new Vector(x, y)
     }
 
     onInitialize(engine) {
-        this.graphics.use(Resources.Scene1Door1.toSprite())
-        this.pos = new Vector(15350, 762)
+
+
         this.addComponent(new ParallaxComponent(new Vector(0.52, 1)))
 
         this.playerInRange = false
@@ -30,7 +30,7 @@ export class Door1 extends Actor {
         if (collider?.owner instanceof Player) {
             this.playerInRange = true
             if (!this.pressE) {
-                this.pressE = new PressE(0, -180)
+                this.pressE = new PressE(0, -80)
                 this.addChild(this.pressE)
             }
         }
@@ -49,7 +49,7 @@ export class Door1 extends Actor {
 
     onPostUpdate(engine) {
         if (this.playerInRange && engine.input.keyboard.wasPressed(Keys.E)) {
-            this.scene.engine.goToScene('scenetwo')
+            this.scene.engine.goToScene('sceneone')
         }
     }
 
