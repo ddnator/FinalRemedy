@@ -16,8 +16,8 @@ export class KeyPickup extends Actor {
 
     constructor(x, y, quest) {
         super({
-            width: Resources.KeyPickup.width / 2,
-            height: Resources.KeyPickup.height / 2
+            width: Resources.KeyPickup.width,
+            height: Resources.KeyPickup.height
         })
 
         this.body.collisionType = CollisionType.Passive
@@ -25,11 +25,12 @@ export class KeyPickup extends Actor {
         this.x = x
         this.y = y
         this.quest = quest
+        this.scale = new Vector(0.25,0.25)
     }
 
     onInitialize(engine) {
         const sprite = Resources.KeyPickup.toSprite()
-        sprite.scale = new Vector(0.25, 0.25)
+
         this.graphics.use(sprite)
 
         this.pos = new Vector(this.x, this.y)
@@ -42,12 +43,53 @@ export class KeyPickup extends Actor {
         entityList.forEach(element => {
             if (element instanceof Player) {
                 this.player = element
+            }
+        });
+    }
+
+    onCollisionStart(event, other) {
+        const collider = other ?? event.other
+        if (collider?.owner instanceof Player) {
+            this.playerInRange = true
+            if (!this.pressE) {
+                this.pressE = new PressE(0, -120)
+                this.pressE.scale = new Vector(1, 1)
+                this.addChild(this.pressE)
+            }
+        }
+
+        const entityList = this.scene.world.entityManager.entities
+
+        entityList.forEach(element => {
+            if (element instanceof Player) {
+                this.player = element
             } else if (element instanceof Quest) {
                 this.quest = element
             } else if (element instanceof UI) {
                 this.UI = element
             }
         });
+    }
+
+    onCollisionEnd(event, other) {
+        const collider = other ?? event.other
+        if (collider?.owner instanceof Player) {
+            this.playerInRange = false
+            if (this.pressE) {
+                this.removeChild(this.pressE)
+                this.pressE = null
+            }
+        }
+    }
+
+    onPostUpdate(engine) {
+        if (this.playerInRange && engine.input.keyboard.wasPressed(Keys.E)) {
+            this.player.pickUpItem('injection', this)
+            this.UI.updateInventory()
+            if (this.quest === 'Injection pickup tutorial') {
+                this.quest.updateQuest()
+            }
+        }
     }
 
 
