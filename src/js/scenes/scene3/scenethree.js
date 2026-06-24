@@ -9,25 +9,44 @@ import { UI } from "../../objects/ui.js"
 import { InjectionPickup } from "../../objects/injectionpickup.js"
 import { BulletPickup } from "../../objects/bulletpickup.js"
 import { Quest } from '../../objects/quest.js'
+import { Wall } from "../../objects/wall.js"
 
 
 
 export class SceneThree extends Scene {
 
     player
-
+    music = Resources.track2
     onInitialize(engine) {
 
 
-        Resources.track2.play()
-        Resources.track2.loop
+
+
 
         const floor = new Floor(10000, 100, 540, 1100)
         this.add(floor)
 
+        const wall1 = new Wall(330, 2000, -470, 1100)
+        this.add(wall1)
 
+        const wall2 = new Wall(330, 2000, 4000, 1100)
+        this.add(wall2)
+
+        const wall3 = new Wall(500, 700, 2664, 400)
+        this.add(wall3)
 
         //Background
+
+
+        const back = new Actor()
+        back.graphics.use(Resources.Scene2Background.toSprite())
+        back.scale = new Vector(2, 2)
+        back.pos = new Vector(engine.screen.resolution.width / 2, engine.screen.resolution.height / 2)
+        back.addComponent(new ParallaxComponent(new Vector(0.5, 1)))
+        this.add(back)
+
+
+
         const sky = new Actor()
         sky.graphics.use(Resources.Scene2Sky.toSprite())
         sky.scale = new Vector(0.8, 0.8)
@@ -93,6 +112,20 @@ export class SceneThree extends Scene {
         if (cam) {
             cam.pos.x = Math.min(Math.max(cam.pos.x, minX), maxX)
         }
+
+        // if (Resources.track2.getPlaybackPosition) {
+        //     Resources.track2.play()
+        // }
+
+
+    }
+    onActivate() {
+        this.music.loop = true
+        this.music.play()
+    }
+
+    onDeactivate() {
+        this.music.pause()
     }
 
 
