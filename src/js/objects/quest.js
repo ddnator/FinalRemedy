@@ -114,7 +114,7 @@ export class Quest extends ScreenElement {
                 this.currentQuest = 'Keyfinder'
                 this.player.stuck = false
 
-                const key1 = new KeyPickup(4800, 941, 'key1')
+                const key1 = new KeyPickup(5000, 941, 'key1')
 
                 this.scene.add(key1)
 
