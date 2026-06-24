@@ -86,6 +86,7 @@ export class KeyPickup extends Actor {
         if (this.playerInRange && engine.input.keyboard.wasPressed(Keys.E)) {
             this.player.key = true
             this.UI.updateInventory()
+            this.kill()
         }
     }
 
