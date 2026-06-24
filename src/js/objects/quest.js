@@ -6,6 +6,7 @@ import { Zombie } from '../objects/zombie.js'
 import { Player } from '../objects/player.js'
 import { InjectionPickup } from "./injectionpickup.js"
 import { Door2 } from "../scenes/scene1/door2.js"
+import { KeyPickup } from "./keypickup.js"
 
 export class Quest extends ScreenElement {
     label
@@ -112,6 +113,11 @@ export class Quest extends ScreenElement {
                 this.label.text = 'Find the key to the door'
                 this.currentQuest = 'Keyfinder'
                 this.player.stuck = false
+
+                const key1 = new KeyPickup(4800, 941, 'key1')
+
+                this.scene.add(key1)
+
                 break
 
             case "Keyfinder":
