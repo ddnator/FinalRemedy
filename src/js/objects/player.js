@@ -8,7 +8,8 @@ import { BulletPickup } from './bulletpickup.js'
 import { InjectionPickup } from './injectionpickup.js'
 import { Quest } from "./quest.js"
 import { Floor } from './floor.js'
-
+import { Wall } from './wall.js'
+import { PlayerStandHitbox } from './playerstandhitbox.js'
 
 
 
@@ -26,6 +27,8 @@ export class Player extends Actor {
     injection = new Injection()
     stuck = false
     key = false
+    canStandUp = true
+    playerStandHitbox
     UI
     quest
     grounded = false
@@ -93,7 +96,7 @@ export class Player extends Actor {
             this.vel = new Vector(this.vel.x * 0.8, this.vel.y)
         }
 
-        if (engine.input.keyboard.wasPressed(Keys.W) && this.grounded && this.jumpReady && !this.stuck) {
+        if (engine.input.keyboard.wasPressed(Keys.W) && this.grounded && this.jumpReady && !this.stuck && !this.crouched) {
             this.body.applyLinearImpulse(new Vector(0, -yAccel * delta))
             this.jumpReady = false
 
@@ -104,19 +107,29 @@ export class Player extends Actor {
 
         if (engine.input.keyboard.wasPressed(Keys.C) && !this.stuck && !this.crouched) {
             const oldHeight = this.height
-            this.scale = new Vector (2.24, 2.24)
-            const newHeight = this.height
+            const oldWidth = this.width
 
-            this.pos.y += (oldHeight -  newHeight) / 2
+            this.scale = new Vector(2.24, 2.24)
+
+            const newHeight = this.height
+            const newWidth = this.width
+
+            this.playerStandHitbox = new PlayerStandHitbox((oldWidth - newWidth), (oldHeight - newHeight) / 2, 0, -newHeight / 2)
+
+            this.addChild(this.playerStandHitbox)
+
+            this.pos.y += (oldHeight - newHeight) / 2
             this.crouched = true
             //Change Sprite
-        } else if (engine.input.keyboard.wasPressed(Keys.C) && !this.stuck && this.crouched) {
+
+        } else if (engine.input.keyboard.wasPressed(Keys.C) && !this.stuck && this.crouched && this.canStandUp) {
             const oldHeight = this.height
-            this.scale = new Vector (4.5, 4.5)
+            this.scale = new Vector(4.5, 4.5)
+
             this.crouched = false
             const newHeight = this.height
-
-            this.pos.y += (oldHeight -  newHeight) / 2
+            this.removeChild(this.playerStandHitbox)
+            this.pos.y += (oldHeight - newHeight) / 2
             //change sprite
         }
 
