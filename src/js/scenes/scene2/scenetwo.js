@@ -80,8 +80,8 @@ export class SceneTwo extends Scene {
         this.add(this.player)
 
 
-        // const key1 = new KeyPickup(3300, 500, 'key1')
-        const key1 = new KeyPickup(1500, 500, 'key1')
+        const key1 = new KeyPickup(3300, 500, 'key1')
+
         this.add(key1)
         //pickup items
 
