@@ -8,6 +8,7 @@ import { Floor } from './objects/floor.js'
 import { SceneOne } from './scenes/scene1/sceneone.js'
 import { SceneTwo } from './scenes/scene2/scenetwo.js'
 import { SceneThree } from './scenes/scene3/scenethree.js'
+import { Scenefour } from './scenes/scene4/scenefour.js'
 
 
 
@@ -38,7 +39,10 @@ export class Game extends Engine {
         const scenethree = new SceneThree()
         this.add('scenethree', SceneThree)
 
-        this.goToScene('sceneone')
+        const scenefour = new Scenefour()
+        this.add('scenefour', Scenefour)
+
+        this.goToScene('scenethree')
 
 
 

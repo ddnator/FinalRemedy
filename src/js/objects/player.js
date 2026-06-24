@@ -107,7 +107,6 @@ export class Player extends Actor {
 
         if (engine.input.keyboard.wasPressed(Keys.C) && !this.stuck && !this.crouched) {
             const oldHeight = this.height
-
             const oldWidth = this.width
 
             this.scale = new Vector(2.24, 2.24)
@@ -289,7 +288,7 @@ export class Player extends Actor {
             this.bulletReady = true
         }, 500)
 
-        Resources.gunshot.play()
+        Resources.shoot.play()
     }
 
     inject() {
