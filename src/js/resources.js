@@ -15,7 +15,6 @@ const Resources = {
     track1: new Sound('/sounds/music/BeingaMan.mp3'),
     track2: new Sound('/sounds/music/TheFollowing.mp3'),
     track3: new Sound('/sounds/music/TheMission.mp3'),
-    Key: new ImageSource('/images/key_placeholder.png'),
     KeyPickup: new ImageSource('/images/keypickup.png'),
     Zombie: new ImageSource('/images/zombie_placeholder.png'),
     Bullet: new ImageSource('/images/bullet_placeholder.png'),
