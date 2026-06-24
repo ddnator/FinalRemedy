@@ -28,7 +28,8 @@ export class Player extends Actor {
     key = false
     UI
     quest
-    grounded
+    grounded = false
+    jumpReady = true
     x
     y
 
@@ -79,21 +80,30 @@ export class Player extends Actor {
 
     checkMovement(engine, delta) {
         let xAccel = 0;
+        let yAccel = 0;
 
-        if (engine.input.keyboard.isHeld(Keys.A)) {
+        if (engine.input.keyboard.isHeld(Keys.A) && !this.stuck) {
             xAccel = -20; // Use an acceleration value instead of a massive direct velocity
             this.graphics.flipHorizontal = true;
-        } else if (engine.input.keyboard.isHeld(Keys.D)) {
+        } else if (engine.input.keyboard.isHeld(Keys.D) && !this.stuck) {
             xAccel = 20;
             this.graphics.flipHorizontal = false;
-        } else {
+        } else if (this.grounded) {
             this.vel = new Vector(this.vel.x * 0.8, this.vel.y)
+        }
+
+        if (engine.input.keyboard.wasPressed(Keys.W) && this.grounded && this.jumpReady && !this.stuck) {
+            this.body.applyLinearImpulse(new Vector(0, -300 * delta))
+            this.jumpReady = false
+
+            this.scene.engine.clock.schedule(() => {
+                this.jumpReady = true
+            }, 500)
         }
 
         if (xAccel !== 0) {
             if (this.vel.x < 900 && this.vel.x > -900) {
                 this.body.applyLinearImpulse(new Vector(xAccel * delta, 0));
-                console.log(this.vel.x)
             }
         }
     }
@@ -191,16 +201,11 @@ export class Player extends Actor {
     useSelectedItem(engine) {
         if (engine.input.keyboard.wasPressed(Keys.Space)) {
             if (this.bulletReady && this.selectedItem === 'bullet' && this.inventory.includes('bullet')) {
-
-                console.log("i have shot")
                 this.shoot()
                 this.shootAnim.events.on('end', (a) => {
-                    console.log('ended')
                     this.shootAnim.reset()
                     this.graphics.use(Resources.Player.toSprite())
                 })
-
-
 
             } else if (!this.injectionHeld && this.selectedItem === 'injection' && this.inventory.includes('injection')) {
                 this.inject()
@@ -282,7 +287,6 @@ export class Player extends Actor {
     }
 
     setupAnimations() {
-        console.log("animation setup")
         const configGrid = {
             rows: 1,
             columns: 6,
