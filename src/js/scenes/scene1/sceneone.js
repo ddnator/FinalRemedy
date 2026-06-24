@@ -68,8 +68,6 @@ export class SceneOne extends Scene {
 
         this.add(door1)
 
-
-
         this.player = new Player(-7800, 800)
         this.add(this.player)
         //pickup items
