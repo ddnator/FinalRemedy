@@ -24,11 +24,12 @@ export class UI extends ScreenElement {
     }
 
     onInitialize(engine) {
-        this.pos = new Vector(250, 150)
+        this.pos = new Vector(200, 125)
 
 
         this.healthbar = new Actor()
         this.healthbar.pos = new Vector(0, 0)
+        this.healthbar.scale = new Vector(0.75, 0.75)
         this.addChild(this.healthbar)
         this.setupAnimations();
         this.firstUpdate = false;
@@ -39,8 +40,8 @@ export class UI extends ScreenElement {
 
         this.sanitybar = new Actor()
         this.sanitybar.graphics.use(Resources.SanityBar.toSprite())
-        this.sanitybar.scale = new Vector(2.5, 2.5)
-        this.sanitybar.pos = new Vector(0, 200)
+        this.sanitybar.scale = new Vector(2, 2)
+        this.sanitybar.pos = new Vector(0, 165)
         this.addChild(this.sanitybar)
 
         this.sanitybrain = new Actor()
@@ -87,7 +88,7 @@ export class UI extends ScreenElement {
         } else {
             this.healthbar.graphics.use('danger')
         }
-        
+
     }
 
     setupAnimations() {
