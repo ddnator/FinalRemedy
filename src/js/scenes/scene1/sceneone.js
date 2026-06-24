@@ -110,9 +110,38 @@ export class SceneOne extends Scene {
     onActivate() {
         this.music.loop = true
         this.music.play()
+        this.fadeIn()
     }
 
     onDeactivate() {
-        this.music.pause()
+        this.fadeOut().then(() => this.music.pause())
+    }
+
+    fadeIn() {
+        this.music.volume = 0
+        const fade = setInterval(() => {
+            if (this.music.volume < 0.9) {
+                this.music.volume += 0.1
+            } else {
+                this.music.volume = 1
+                clearInterval(fade)
+            }
+        }, 100)
+    }
+
+    fadeOut() {
+        return new Promise(resolve => {
+            const fade = setInterval(() => {
+                if (this.music.volume > 0.1) {
+                    this.music.volume -= 0.1
+                } else {
+                    this.music.volume = 0
+                    clearInterval(fade)
+                    resolve()
+                }
+            }, 100)
+        })
     }
 }
+
+
