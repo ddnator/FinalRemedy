@@ -12,6 +12,8 @@ import { Quest } from '../../objects/quest.js'
 import { Wall } from "../../objects/wall.js"
 import { Door1 } from "./door1.js"
 
+import { KeyPickup } from "../../objects/keypickup.js"
+
 
 
 export class SceneTwo extends Scene {
@@ -74,9 +76,13 @@ export class SceneTwo extends Scene {
         const door1 = new Door1(200, 640)
         this.add(door1)
 
-
         this.player = new Player(200, 700)
         this.add(this.player)
+
+
+        // const key1 = new KeyPickup(3300, 500, 'key1')
+        const key1 = new KeyPickup(1500, 500, 'key1')
+        this.add(key1)
         //pickup items
 
 
