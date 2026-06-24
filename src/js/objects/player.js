@@ -41,7 +41,7 @@ export class Player extends Actor {
         this.body.collisionType = CollisionType.Active
         this.body.bounciness = 0
         this.body.limitDegreeOfFreedom.push(DegreeOfFreedom.Rotation)
-
+        this.body.friction = 100
         this.pos = new Vector(xpos, ypos)
     }
 
@@ -61,29 +61,33 @@ export class Player extends Actor {
 
 
     onPostUpdate(engine, delta) {
-        let yVel = 0
-        let xVel = 0
+        this.checkMovement(engine, delta)
+        //this.checkQuest(engine, delta)
+    }
+
+    checkMovement(engine, delta) {
+        let xAccel = 0;
 
 
-        if (engine.input.keyboard.isHeld(Keys.A) && this.knockbackspeed === 0 && !this.stuck) {
-            xVel = -600
-            this.graphics.flipHorizontal = true
 
+        if (engine.input.keyboard.isHeld(Keys.A)) {
+            xAccel = -20; // Use an acceleration value instead of a massive direct velocity
+            this.graphics.flipHorizontal = true;
+        } else if (engine.input.keyboard.isHeld(Keys.D)) {
+            xAccel = 20;
+            this.graphics.flipHorizontal = false;
+        } else {
+            this.vel = new Vector(this.vel.x * 0.8, this.vel.y)
         }
 
-        if (engine.input.keyboard.isHeld(Keys.D) && this.knockbackspeed === 0 && !this.stuck) {
-            xVel = 1200
-            this.graphics.flipHorizontal = false
-        }
 
-        if (engine.input.keyboard.isHeld(Keys.W) && this.knockbackspeed === 0 && this.grounded && !this.stuck) {
-            this.body.applyLinearImpulse(new Vector(0, -150 * delta))
-        }
 
-        if (engine.input.keyboard.wasPressed(Keys.C) || engine.input.keyboard.wasPressed(Keys.ControlLeft) && !this.stuck) {
-            //Crouch controls
+        if (xAccel !== 0) {
+            this.body.applyLinearImpulse(new Vector(xAccel * delta, 0));
         }
+    }
 
+    checkQuest(engine, delta) {
         if (engine.input.keyboard.wasPressed(Keys.Enter)) {
             const entityList = this.scene.world.entityManager.entities
 
@@ -98,125 +102,118 @@ export class Player extends Actor {
             } else if (this.quest.currentQuest === 'Compliment') {
                 this.quest.updateQuest()
             }
-        }
 
-        if (engine.input.keyboard.wasPressed(Keys.B)) {
-            const entityList = this.scene.world.entityManager.entities
 
-            entityList.forEach(element => {
-                if (element instanceof UI) {
-                    this.UI = element
+
+
+            if (engine.input.keyboard.wasPressed(Keys.B)) {
+                const entityList = this.scene.world.entityManager.entities
+
+                entityList.forEach(element => {
+                    if (element instanceof UI) {
+                        this.UI = element
+                    }
+                });
+                if (!this.inventoryShown) {
+                    this.UI.showInventory()
+                } else {
+                    this.UI.hideInventory()
                 }
-            });
-            if (!this.inventoryShown) {
-                this.UI.showInventory()
-            } else {
-                this.UI.hideInventory()
-            }
-        }
-
-        if (engine.input.keyboard.wasPressed(Keys.KeyB)) {
-            const entityList = this.scene.world.entityManager.entities
-
-            entityList.forEach(element => {
-                if (element instanceof Quest) {
-                    this.quest = element
-                }
-            });
-
-            if (this.quest.currentQuest == 'Inventorian') {
-                this.quest.updateQuest()
-            }
-        }
-
-        if (engine.input.keyboard.wasPressed(Keys.Key1)) {
-            const entityList = this.scene.world.entityManager.entities
-
-            entityList.forEach(element => {
-                if (element instanceof Quest) {
-                    this.quest = element
-                }
-            });
-
-            if (this.quest.currentQuest === 'Pistol tutorial') {
-                this.quest.updateQuest()
             }
 
-            this.selectedItem = 'bullet'
-            console.log(`selected item is ${this.selectedItem}`)
-            this.injectionHeld = false
-            this.removeChild(this.injection)
-        }
+            if (engine.input.keyboard.wasPressed(Keys.KeyB)) {
+                const entityList = this.scene.world.entityManager.entities
 
-        if (engine.input.keyboard.wasPressed(Keys.Key2) && !this.injectionHeld && this.inventory.includes('injection')) {
-            this.selectedItem = 'injection'
-            this.inject()
-            console.log(`selected item is ${this.selectedItem}`)
+                entityList.forEach(element => {
+                    if (element instanceof Quest) {
+                        this.quest = element
+                    }
+                });
 
-
-            const entityList = this.scene.world.entityManager.entities
-
-            entityList.forEach(element => {
-                if (element instanceof Quest) {
-                    this.quest = element
+                if (this.quest.currentQuest == 'Inventorian') {
+                    this.quest.updateQuest()
                 }
-            });
-
-            if (this.quest.currentQuest === 'Cure the zombie') {
-                this.quest.updateQuest()
             }
-        }
 
-        if (engine.input.keyboard.wasPressed(Keys.Key3)) {
-            this.selectedItem = 'key'
-            console.log(`selected item is ${this.selectedItem}`)
-            this.injectionHeld = false
-            this.removeChild(this.injection)
-        }
+            if (engine.input.keyboard.wasPressed(Keys.Key1)) {
+                const entityList = this.scene.world.entityManager.entities
 
-        if (engine.input.keyboard.wasPressed(Keys.Space)) {
-            if (this.bulletReady && this.selectedItem === 'bullet' && this.inventory.includes('bullet')) {
+                entityList.forEach(element => {
+                    if (element instanceof Quest) {
+                        this.quest = element
+                    }
+                });
 
-                console.log("i have shot")
-                this.shoot()
-                this.shootAnim.events.on('end', (a) => {
-                    console.log('ended')
-                    this.shootAnim.reset()
-                    this.graphics.use(Resources.Player.toSprite())
-                })
+                if (this.quest.currentQuest === 'Pistol tutorial') {
+                    this.quest.updateQuest()
+                }
 
+                this.selectedItem = 'bullet'
+                console.log(`selected item is ${this.selectedItem}`)
+                this.injectionHeld = false
+                this.removeChild(this.injection)
+            }
 
-
-            } else if (!this.injectionHeld && this.selectedItem === 'injection' && this.inventory.includes('injection')) {
+            if (engine.input.keyboard.wasPressed(Keys.Key2) && !this.injectionHeld && this.inventory.includes('injection')) {
+                this.selectedItem = 'injection'
                 this.inject()
+                console.log(`selected item is ${this.selectedItem}`)
+
+
+                const entityList = this.scene.world.entityManager.entities
+
+                entityList.forEach(element => {
+                    if (element instanceof Quest) {
+                        this.quest = element
+                    }
+                });
+
+                if (this.quest.currentQuest === 'Cure the zombie') {
+                    this.quest.updateQuest()
+                }
             }
-        }
+
+            if (engine.input.keyboard.wasPressed(Keys.Key3)) {
+                this.selectedItem = 'key'
+                console.log(`selected item is ${this.selectedItem}`)
+                this.injectionHeld = false
+                this.removeChild(this.injection)
+            }
+
+            if (engine.input.keyboard.wasPressed(Keys.Space)) {
+                if (this.bulletReady && this.selectedItem === 'bullet' && this.inventory.includes('bullet')) {
+
+                    console.log("i have shot")
+                    this.shoot()
+                    this.shootAnim.events.on('end', (a) => {
+                        console.log('ended')
+                        this.shootAnim.reset()
+                        this.graphics.use(Resources.Player.toSprite())
+                    })
 
 
 
-        this.vel = new Vector(xVel + this.knockbackspeed, this.vel.y)
+                } else if (!this.injectionHeld && this.selectedItem === 'injection' && this.inventory.includes('injection')) {
+                    this.inject()
+                }
+            }
 
-        if (this.knockbackspeed >= 10) {
-            this.knockbackspeed -= 10
-        } else if (this.knockbackspeed <= -10) {
-            this.knockbackspeed += 10
-        } else {
-            this.knockbackspeed = 0
-        }
 
-        if (this.health <= 0) {
-            this.kill()
-        }
 
-        if (this.graphics.flipHorizontal) {
-            this.injection.pos.x = -Resources.Player.width / 2 - Resources.Injection.width / 6
-            this.injection.graphics.flipHorizontal = true
-        } else {
-            this.injection.pos.x = Resources.Player.width / 2 + Resources.Injection.width / 6
-            this.injection.graphics.flipHorizontal = false
+
+            if (this.health <= 0) {
+                this.kill()
+            }
+
+            if (this.graphics.flipHorizontal) {
+                this.injection.pos.x = -Resources.Player.width / 2 - Resources.Injection.width / 6
+                this.injection.graphics.flipHorizontal = true
+            } else {
+                this.injection.pos.x = Resources.Player.width / 2 + Resources.Injection.width / 6
+                this.injection.graphics.flipHorizontal = false
+            }
         }
     }
-
     shoot() {
         this.graphics.use('shoot')
         let flip

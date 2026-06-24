@@ -9,6 +9,7 @@ import { UI } from "../../objects/ui.js"
 import { InjectionPickup } from "../../objects/injectionpickup.js"
 import { BulletPickup } from "../../objects/bulletpickup.js"
 import { Quest } from '../../objects/quest.js'
+import { Wall } from "../../objects/wall.js"
 
 
 
@@ -25,6 +26,8 @@ export class SceneTwo extends Scene {
         const floor = new Floor(10000, 100, 540, 1100)
         this.add(floor)
 
+        const wall1 = new Wall(330, 2000, 880, 1100)
+        this.add(wall1)
 
 
         //Background

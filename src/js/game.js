@@ -18,36 +18,26 @@ export class Game extends Engine {
             width: 1980,
             height: 1080,
             maxFps: 60,
+            suppressHiDPIScaling: true,
             displayMode: DisplayMode.FitScreen,
             physics: {
                 solver: SolverStrategy.Realistic,
                 gravity: new Vector(0, 800),
             }
         })
-
         this.start(ResourceLoader).then(() => this.startGame())
-
-
     }
 
-
-
-
-
     startGame() {
-
-
-
-
         const sceneOne = new SceneOne()
         this.add('sceneone', SceneOne)
-        this.goToScene('sceneone')
+
         const scenetwo = new SceneTwo()
         this.add('scenetwo', SceneTwo)
         const scenethree = new SceneThree()
         this.add('scenethree', SceneThree)
 
-        // startMusic()
+        this.goToScene('scenetwo')
 
     }
 }
