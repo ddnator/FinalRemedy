@@ -25,7 +25,7 @@ export class KeyPickup extends Actor {
         this.x = x
         this.y = y
         this.quest = quest
-        this.scale = new Vector(0.25,0.25)
+        this.scale = new Vector(0.25, 0.25)
     }
 
     onInitialize(engine) {
@@ -87,6 +87,17 @@ export class KeyPickup extends Actor {
             this.player.key = true
             this.UI.updateInventory()
             this.kill()
+
+            const entityList = this.scene.world.entityManager.entities
+
+            entityList.forEach(element => {
+                if (element instanceof Quest) {
+                    this.quest = element
+                }
+            })
+            if (this.quest.currentQuest === 'Keyfinder') {
+                this.quest.updateQuest()
+            }
         }
     }
 
