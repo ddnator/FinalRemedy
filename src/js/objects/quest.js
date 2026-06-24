@@ -126,6 +126,24 @@ export class Quest extends ScreenElement {
                 this.player.stuck = false
                 break
 
+            case "Doorio":
+                this.label.text = 'Explore'
+                this.currentQuest = 'Climb'
+                this.player.stuck = false
+                break
+
+            case "Climb":
+                this.label.text = 'Survive!'
+                this.currentQuest = 'Survival'
+                this.player.stuck = false
+                break
+
+            case "Survival":
+                this.label.text = 'Explore'
+                this.currentQuest = 'Back on track'
+                this.player.stuck = false
+                break
+
 
 
         }
