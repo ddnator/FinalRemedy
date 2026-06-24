@@ -76,7 +76,7 @@ export class Player extends Actor {
         }
 
         if (engine.input.keyboard.isHeld(Keys.W) && this.knockbackspeed === 0 && this.grounded && !this.stuck) {
-            this.body.applyLinearImpulse(new Vector(0, -300 * delta))
+            this.body.applyLinearImpulse(new Vector(0, -150 * delta))
         }
 
         if (engine.input.keyboard.wasPressed(Keys.C) || engine.input.keyboard.wasPressed(Keys.ControlLeft) && !this.stuck) {
