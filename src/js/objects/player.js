@@ -62,13 +62,23 @@ export class Player extends Actor {
 
     onPostUpdate(engine, delta) {
         this.checkMovement(engine, delta)
+        this.checkInventory(engine)
+        this.switchPickedItem(engine)
+        this.useSelectedItem(engine)
+        this.checkInjectionPosition()
+        this.checkQuest(engine, delta)
+        this.healthChecker()
         //this.checkQuest(engine, delta)
+    }
+
+    healthChecker() {
+        if (this.health <= 0) {
+            this.kill()
+        }
     }
 
     checkMovement(engine, delta) {
         let xAccel = 0;
-
-
 
         if (engine.input.keyboard.isHeld(Keys.A)) {
             xAccel = -20; // Use an acceleration value instead of a massive direct velocity
@@ -79,8 +89,6 @@ export class Player extends Actor {
         } else {
             this.vel = new Vector(this.vel.x * 0.8, this.vel.y)
         }
-
-
 
         if (xAccel !== 0) {
             if (this.vel.x < 900 && this.vel.x > -900) {
@@ -105,118 +113,101 @@ export class Player extends Actor {
             } else if (this.quest.currentQuest === 'Compliment') {
                 this.quest.updateQuest()
             }
+        }
+    }
 
+    checkInjectionPosition() {
+        if (this.graphics.flipHorizontal) {
+            this.injection.pos.x = -Resources.Player.width / 2 - Resources.Injection.width / 6
+            this.injection.graphics.flipHorizontal = true
+        } else {
+            this.injection.pos.x = Resources.Player.width / 2 + Resources.Injection.width / 6
+            this.injection.graphics.flipHorizontal = false
+        }
+    }
 
+    checkInventory(engine) {
+        if (engine.input.keyboard.wasPressed(Keys.KeyB)) {
+            const entityList = this.scene.world.entityManager.entities
 
-
-            if (engine.input.keyboard.wasPressed(Keys.B)) {
-                const entityList = this.scene.world.entityManager.entities
-
-                entityList.forEach(element => {
-                    if (element instanceof UI) {
-                        this.UI = element
-                    }
-                });
-                if (!this.inventoryShown) {
-                    this.UI.showInventory()
-                } else {
-                    this.UI.hideInventory()
+            entityList.forEach(element => {
+                if (element instanceof Quest) {
+                    this.quest = element
+                } else if (element instanceof UI) {
+                    this.UI = element
                 }
-            }
+            });
 
-            if (engine.input.keyboard.wasPressed(Keys.KeyB)) {
-                const entityList = this.scene.world.entityManager.entities
-
-                entityList.forEach(element => {
-                    if (element instanceof Quest) {
-                        this.quest = element
-                    }
-                });
-
-                if (this.quest.currentQuest == 'Inventorian') {
-                    this.quest.updateQuest()
-                }
-            }
-
-            if (engine.input.keyboard.wasPressed(Keys.Key1)) {
-                const entityList = this.scene.world.entityManager.entities
-
-                entityList.forEach(element => {
-                    if (element instanceof Quest) {
-                        this.quest = element
-                    }
-                });
-
-                if (this.quest.currentQuest === 'Pistol tutorial') {
-                    this.quest.updateQuest()
-                }
-
-                this.selectedItem = 'bullet'
-                console.log(`selected item is ${this.selectedItem}`)
-                this.injectionHeld = false
-                this.removeChild(this.injection)
-            }
-
-            if (engine.input.keyboard.wasPressed(Keys.Key2) && !this.injectionHeld && this.inventory.includes('injection')) {
-                this.selectedItem = 'injection'
-                this.inject()
-                console.log(`selected item is ${this.selectedItem}`)
-
-
-                const entityList = this.scene.world.entityManager.entities
-
-                entityList.forEach(element => {
-                    if (element instanceof Quest) {
-                        this.quest = element
-                    }
-                });
-
-                if (this.quest.currentQuest === 'Cure the zombie') {
-                    this.quest.updateQuest()
-                }
-            }
-
-            if (engine.input.keyboard.wasPressed(Keys.Key3)) {
-                this.selectedItem = 'key'
-                console.log(`selected item is ${this.selectedItem}`)
-                this.injectionHeld = false
-                this.removeChild(this.injection)
-            }
-
-            if (engine.input.keyboard.wasPressed(Keys.Space)) {
-                if (this.bulletReady && this.selectedItem === 'bullet' && this.inventory.includes('bullet')) {
-
-                    console.log("i have shot")
-                    this.shoot()
-                    this.shootAnim.events.on('end', (a) => {
-                        console.log('ended')
-                        this.shootAnim.reset()
-                        this.graphics.use(Resources.Player.toSprite())
-                    })
-
-
-
-                } else if (!this.injectionHeld && this.selectedItem === 'injection' && this.inventory.includes('injection')) {
-                    this.inject()
-                }
-            }
-
-
-
-
-            if (this.health <= 0) {
-                this.kill()
-            }
-
-            if (this.graphics.flipHorizontal) {
-                this.injection.pos.x = -Resources.Player.width / 2 - Resources.Injection.width / 6
-                this.injection.graphics.flipHorizontal = true
+            if (!this.inventoryShown) {
+                this.UI.showInventory()
             } else {
-                this.injection.pos.x = Resources.Player.width / 2 + Resources.Injection.width / 6
-                this.injection.graphics.flipHorizontal = false
+                this.UI.hideInventory()
+            }
+
+            if (this.quest.currentQuest == 'Inventorian') {
+                this.quest.updateQuest()
             }
         }
     }
+
+    switchPickedItem(engine) {
+        if (engine.input.keyboard.wasPressed(Keys.Key1)) {
+            const entityList = this.scene.world.entityManager.entities
+
+            entityList.forEach(element => {
+                if (element instanceof Quest) {
+                    this.quest = element
+                }
+            });
+
+            if (this.quest.currentQuest === 'Pistol tutorial') {
+                this.quest.updateQuest()
+            }
+
+            this.selectedItem = 'bullet'
+            console.log(`selected item is ${this.selectedItem}`)
+            this.injectionHeld = false
+            this.removeChild(this.injection)
+        } else if (engine.input.keyboard.wasPressed(Keys.Key2) && !this.injectionHeld && this.inventory.includes('injection')) {
+            this.selectedItem = 'injection'
+            this.inject()
+            console.log(`selected item is ${this.selectedItem}`)
+
+
+            const entityList = this.scene.world.entityManager.entities
+
+            entityList.forEach(element => {
+                if (element instanceof Quest) {
+                    this.quest = element
+                }
+            });
+
+            if (this.quest.currentQuest === 'Cure the zombie') {
+                this.quest.updateQuest()
+            }
+        }
+    }
+
+    useSelectedItem(engine) {
+        if (engine.input.keyboard.wasPressed(Keys.Space)) {
+            if (this.bulletReady && this.selectedItem === 'bullet' && this.inventory.includes('bullet')) {
+
+                console.log("i have shot")
+                this.shoot()
+                this.shootAnim.events.on('end', (a) => {
+                    console.log('ended')
+                    this.shootAnim.reset()
+                    this.graphics.use(Resources.Player.toSprite())
+                })
+
+
+
+            } else if (!this.injectionHeld && this.selectedItem === 'injection' && this.inventory.includes('injection')) {
+                this.inject()
+            }
+        }
+    }
+
     shoot() {
         this.graphics.use('shoot')
         let flip
