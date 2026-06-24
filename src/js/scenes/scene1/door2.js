@@ -22,6 +22,7 @@ export class Door2 extends Actor {
     onInitialize(engine) {
         this.graphics.use(Resources.Scene1Door2.toSprite())
         this.pos = new Vector(4800, 941)
+        this.scale = new Vector(1.1, 1.75)
         this.addComponent(new ParallaxComponent(new Vector(0, 0)))
 
         this.playerInRange = false
@@ -67,12 +68,16 @@ export class Door2 extends Actor {
             }
 
         }
-        if (this.playerInRange && engine.input.keyboard.wasPressed(Keys.E) && this.locked) {
-            return
+        if (this.playerInRange && engine.input.keyboard.wasPressed(Keys.E)) {
+            this.lockChecker()
 
-        } else if (!this.locked) {
+        }
+
+    }
+    lockChecker() {
+        if (this.player.key == true) {
+            this.locked = false
             this.scene.engine.goToScene('scenethree')
         }
     }
-
 }

@@ -25,6 +25,7 @@ export class Player extends Actor {
     spacePressed = false
     injection = new Injection()
     stuck = false
+    key = false
     UI
     quest
     grounded
