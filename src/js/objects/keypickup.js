@@ -6,7 +6,7 @@ import { Quest } from './quest.js'
 import { PressE } from './prompts/pressE.js'
 import { UI } from './ui.js'
 
-export class InjectionPickup extends Actor {
+export class KeyPickup extends Actor {
     x
     y
     quest
