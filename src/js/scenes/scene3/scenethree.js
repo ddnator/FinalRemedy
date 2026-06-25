@@ -119,6 +119,8 @@ export class SceneThree extends Scene {
 
         this.player = engine.player
         this.add(this.player)
+        this.player.pos = new Vector(0, 750)
+
         //pickup items
 
 
@@ -173,6 +175,13 @@ export class SceneThree extends Scene {
     onActivate() {
         this.music.loop = true
         this.music.play()
+
+        const entityList = this.world.entityManager.entities
+        entityList.forEach(element => {
+            if (element instanceof Quest && element.currentQuest === 'Doorio') {
+                element.updateQuest()
+            }
+        })
     }
 
     onDeactivate() {

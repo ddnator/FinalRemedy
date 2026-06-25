@@ -64,17 +64,22 @@ export class Door2 extends Actor {
                 console.log('door locked')
             }
 
+
+
+
         }
         if (this.playerInRange && engine.input.keyboard.wasPressed(Keys.E)) {
-            this.lockChecker()
+            if (this.player.key == true) {
+                this.locked = false
+                this.scene.engine.goToScene('scenethree')
+
+
+            }
 
         }
 
+
     }
-    lockChecker() {
-        if (this.player.key == true) {
-            this.locked = false
-            this.scene.engine.goToScene('scenethree')
-        }
-    }
+
+
 }

@@ -84,10 +84,6 @@ export class KeyPickup extends Actor {
 
     onPostUpdate(engine) {
         if (this.playerInRange && engine.input.keyboard.wasPressed(Keys.E)) {
-            this.player.key = true
-            this.UI.updateInventory()
-            this.kill()
-
             const entityList = this.scene.world.entityManager.entities
 
             entityList.forEach(element => {
@@ -95,9 +91,15 @@ export class KeyPickup extends Actor {
                     this.quest = element
                 }
             })
-            if (this.quest.currentQuest === 'Keyfinder') {
+
+            this.player.key = true
+            this.UI.updateInventory()
+
+            if (this.quest && this.quest.currentQuest === 'Keyfinder') {
                 this.quest.updateQuest()
             }
+
+            this.kill()
         }
     }
 

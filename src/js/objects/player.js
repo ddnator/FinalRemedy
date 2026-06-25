@@ -73,8 +73,11 @@ export class Player extends Actor {
         this.checkInjectionPosition()
         this.checkQuest(engine, delta)
         this.healthChecker()
+        this.questKeyChecker()
         //this.checkQuest(engine, delta)
     }
+
+
 
     healthChecker() {
         if (this.health <= 0) {
@@ -294,6 +297,12 @@ export class Player extends Actor {
     inject() {
         this.injectionHeld = true
         this.addChild(this.injection)
+    }
+
+    questKeyChecker() {
+        if (this.quest && this.quest.currentQuest === 'Keyfinder' && this.key === true) {
+            this.quest.updateQuest()
+        }
     }
 
     hitSomething(e) {
