@@ -74,6 +74,7 @@ export class Door2 extends Actor {
     lockChecker() {
         if (this.player.key == true) {
             this.locked = false
+            this.scene.playerPosition = engine.player.pos
             this.scene.engine.goToScene('scenethree')
         }
     }
