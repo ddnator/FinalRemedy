@@ -13,7 +13,7 @@ import { Wall } from "../../objects/wall.js"
 
 
 export class SceneThree extends Scene {
-    playerPosition = new Vector(0, 800)
+    //  playerPosition = new Vector(0, 800)
     player
     music = Resources.track1
     ui
@@ -104,6 +104,7 @@ export class SceneThree extends Scene {
         ground.scale = new Vector(0.8, 0.8)
         ground.pos = new Vector(engine.screen.resolution.width / 2, engine.screen.resolution.height / 7)
         ground.addComponent(new ParallaxComponent(new Vector(0.5, .9)))
+        ground.z = 1
         this.add(ground)
 
         const objects = new Actor()
@@ -111,16 +112,12 @@ export class SceneThree extends Scene {
         objects.scale = new Vector(0.8, 0.8)
         objects.pos = new Vector(engine.screen.resolution.width / 2, engine.screen.resolution.height / 7)
         objects.addComponent(new ParallaxComponent(new Vector(0.5, .9)))
+        objects.z = 2
         this.add(objects)
         //interactable objects
 
-
-
-
         this.player = engine.player
-        this.player.pos = this.playerPosition
-        this.add(this.player)
-        this.player.pos = new Vector(0, 750)
+        this.player.z = 10
 
         //pickup items
 
@@ -146,25 +143,23 @@ export class SceneThree extends Scene {
         this.add(foreground)
 
         this.ui = engine.ui
+        this.ui.z = 9999
         this.add(this.ui)
 
 
     }
 
     onPostUpdate() {
-        //cam offset 
+        // camera follow player
         const cam = this.currentScene && this.currentScene.camera ? this.currentScene.camera : this.camera
         const offset = 24
-        if (cam && cam.strategy) {
-            cam.pos = cam.pos.add(new Vector(50, -offset))
-        }
-
-        //cam bounds
         const minX = 800
         const maxX = 2700
 
-        if (cam) {
-            cam.pos.x = Math.min(Math.max(cam.pos.x, minX), maxX)
+        if (cam && this.player) {
+            const targetX = Math.min(Math.max(this.player.pos.x + 50, minX), maxX)
+            const targetY = this.player.pos.y - offset
+            cam.pos = new Vector(targetX, targetY)
         }
 
         // if (Resources.track2.getPlaybackPosition) {
@@ -177,13 +172,19 @@ export class SceneThree extends Scene {
         this.music.loop = true
         this.music.play()
 
-        const entityList = this.world.entityManager.entities
-        entityList.forEach(element => {
-            if (element instanceof Quest && element.currentQuest === 'Doorio') {
-                element.updateQuest()
-            }
-        })
-        this.player.pos = this.playerPosition
+        if (this.ui && this.ui.currentquest && this.ui.currentquest.currentQuest === 'Doorio') {
+            this.ui.currentquest.updateQuest()
+        }
+
+        if (this.player) {
+            this.player.graphics.use(Resources.Player.toSprite())
+            this.player.scale = new Vector(4.5, 4.5)
+            this.player.opacity = 1
+            this.player.pos = new Vector(0, 750)
+            this.add(this.player)
+        }
+
+
     }
 
     onDeactivate() {
