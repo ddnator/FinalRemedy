@@ -19,7 +19,7 @@ export class Quest extends ScreenElement {
 
     onInitialize(engine) {
         this.label = new Label({
-            text: 'Press W to jump \nPress A to move left and D to move right\nWalk over the item and press E to pick it up',
+            text: 'Press W to jump and C to crouch \nPress A to move left and D to move right\nWalk over the item and press E to pick it up',
             pos: new Vector(950, -50),
             font: new Font({
                 family: 'impact',

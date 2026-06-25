@@ -107,8 +107,9 @@ export class Scenefour extends Scene {
         buildings.addComponent(new ParallaxComponent(new Vector(.51, .9)))
         this.add(buildings)
 
-        const ui = new UI()
-        this.add(ui)
+        this.ui = engine.ui
+        // this.ui.z = 9999
+        this.add(this.ui)
 
 
     }
