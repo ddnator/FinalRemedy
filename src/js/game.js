@@ -9,6 +9,7 @@ import { SceneOne } from './scenes/scene1/sceneone.js'
 import { SceneTwo } from './scenes/scene2/scenetwo.js'
 import { SceneThree } from './scenes/scene3/scenethree.js'
 import { Scenefour } from './scenes/scene4/scenefour.js'
+import { UI } from './objects/ui.js'
 
 
 
@@ -45,7 +46,7 @@ export class Game extends Engine {
         this.goToScene('sceneone')
 
         this.player = new Player(-7800, 800)
-        
+        this.ui = new UI()
 
 
     }

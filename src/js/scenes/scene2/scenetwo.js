@@ -19,6 +19,7 @@ export class SceneTwo extends Scene {
 
     player
     music = Resources.track2
+    ui
     onInitialize(engine) {
 
 
@@ -99,8 +100,8 @@ export class SceneTwo extends Scene {
         this.add(foreground)
 
 
-        const ui = new UI()
-        this.add(ui)
+        this.ui = engine.ui
+        this.add(this.ui)
 
 
     }

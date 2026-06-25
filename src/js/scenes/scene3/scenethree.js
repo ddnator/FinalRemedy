@@ -16,6 +16,7 @@ export class SceneThree extends Scene {
 
     player
     music = Resources.track1
+    ui
     onInitialize(engine) {
 
 
@@ -116,7 +117,7 @@ export class SceneThree extends Scene {
 
 
 
-        this.player = new Player(-200, 850)
+        this.player = engine.player
         this.add(this.player)
         //pickup items
 
@@ -141,8 +142,8 @@ export class SceneThree extends Scene {
         foreground.addComponent(new ParallaxComponent(new Vector(0.52, 1)))
         this.add(foreground)
 
-        const ui = new UI()
-        this.add(ui)
+        this.ui = engine.ui
+        this.add(this.ui)
 
 
     }

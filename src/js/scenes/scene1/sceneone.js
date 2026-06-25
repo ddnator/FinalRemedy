@@ -83,8 +83,8 @@ export class SceneOne extends Scene {
 
 
 
-        const ui = new UI()
-        this.add(ui)
+        
+        this.add(engine.ui)
 
 
     }
