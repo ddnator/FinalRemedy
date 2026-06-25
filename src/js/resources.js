@@ -15,6 +15,10 @@ const Resources = {
 
     //player sounds
     shoot: new Sound('/sounds/objects/gunshot.mp3'),
+    zombieHeal: new Sound('/sounds/objects/zombieheal.mp3'),
+    zombieHit: new Sound('/sounds/objects/zombiehit.mp3'),
+
+
 
     //music
     track1: new Sound('/sounds/music/BeingaMan.mp3'),

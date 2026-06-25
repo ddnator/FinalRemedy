@@ -1,4 +1,4 @@
-import { Actor, Engine, Vector, CollisionType, DegreeOfFreedom, Scene } from "excalibur"
+import { Actor, Engine, Vector, CollisionType, DegreeOfFreedom, Scene, Sound } from "excalibur"
 import { Resources, ResourceLoader } from '../resources.js'
 import { Player } from "./player.js"
 import { Quest } from "./quest.js"
@@ -85,6 +85,7 @@ export class Zombie extends Actor {
                 this.quest.updateQuest()
             }
             const sprite = Resources.Player.toSprite()
+            Resources.zombieHeal.play()
 
             this.scale = new Vector(4.5, 4.5)
             this.graphics.use(sprite)
@@ -126,6 +127,8 @@ export class Zombie extends Actor {
 
     getHit() {
         this.health = this.health - 50
+        Resources.zombieHit.play()
+
     }
 
     walkToPlayer() {
