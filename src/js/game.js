@@ -39,7 +39,7 @@ export class Game extends Engine {
         this.add('scenethree', SceneThree)
         this.add('scenefour', Scenefour)
 
-        this.goToScene('sceneone')
+        this.goToScene('scenethree')
     }
 }
 
