@@ -94,11 +94,11 @@ export class Player extends Actor {
         let xAccel = 0;
         let yAccel = 400;
 
-        if (engine.input.keyboard.isHeld(Keys.A) && !this.stuck) {
+        if (engine.input.keyboard.isHeld(Keys.A) && !this.stuck && this.graphics._current !== 'shoot') {
             this.graphics.use('walk')
             xAccel = -20; // Use an acceleration value instead of a massive direct velocity
             this.graphics.flipHorizontal = true;
-        } else if (engine.input.keyboard.isHeld(Keys.D) && !this.stuck) {
+        } else if (engine.input.keyboard.isHeld(Keys.D) && !this.stuck && this.graphics._current !== 'shoot') {
             this.graphics.use('walk')
             xAccel = 20;
             this.graphics.flipHorizontal = false;
