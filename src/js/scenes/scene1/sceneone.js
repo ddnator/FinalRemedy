@@ -13,7 +13,7 @@ import { Door2 } from "./door2.js"
 
 
 export class SceneOne extends Scene {
-
+    playerPosition = new Vector(-7800, 800)
     player
     music = Resources.track3
 
@@ -67,8 +67,10 @@ export class SceneOne extends Scene {
 
         this.add(door1)
 
-        this.player = new Player(-7800, 800)
-        this.add(this.player)
+        
+        console.log(engine.player.pos)
+        this.add(engine.player)
+        this.player = engine.player
         //pickup items
         const bulletPickupQuest = new BulletPickup(-7000, 1025, true)
         this.add(bulletPickupQuest)
@@ -81,12 +83,14 @@ export class SceneOne extends Scene {
 
 
 
-        const ui = new UI()
-        this.add(ui)
+        
+        this.add(engine.ui)
 
 
     }
 
+
+    
     onPostUpdate() {
         //cam offset 
         const cam = this.currentScene && this.currentScene.camera ? this.currentScene.camera : this.camera
@@ -108,6 +112,7 @@ export class SceneOne extends Scene {
         this.music.loop = true
         this.music.play()
         this.fadeIn()
+        this.player.pos = this.playerPosition
     }
 
     onDeactivate() {

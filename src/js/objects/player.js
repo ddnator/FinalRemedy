@@ -19,7 +19,7 @@ export class Player extends Actor {
     sanity = 50
     bulletReady = true
     injectionHeld = false
-    inventory = ['bullet', 'bullet', 'bullet', 'bullet', 'bullet', 'bullet', 'bullet']
+    inventory = ['bullet']
     inventoryShown = false
     hitOnCooldown = false
     knockbackspeed = 0
@@ -41,8 +41,8 @@ export class Player extends Actor {
 
     constructor(xpos, ypos) {
         super({
-            width: 73,
-            height: 102,
+            width: Resources.Player.width,
+            height: Resources.Player.height,
         })
         this.body.collisionType = CollisionType.Active
         this.body.bounciness = 0
@@ -54,14 +54,15 @@ export class Player extends Actor {
 
 
     onInitialize(engine) {
+        this.setupAnimations();
         const sprite = Resources.Player.toSprite()
-        this.graphics.use(sprite)
+        this.graphics.use('idle')
         //this.pos = new Vector(engine.drawWidth - 1600, 850)
 
         this.on('collisionstart', (e) => this.hitSomething(e))
         this.scale = new Vector(4.5, 4.5)
         this.injection.pos = new Vector(80, 0)
-        this.setupAnimations();
+        
 
     }
 
@@ -74,8 +75,11 @@ export class Player extends Actor {
         this.checkInjectionPosition()
         this.checkQuest(engine, delta)
         this.healthChecker()
+        this.questKeyChecker()
         //this.checkQuest(engine, delta)
     }
+
+
 
     healthChecker() {
         if (this.health <= 0) {
@@ -138,7 +142,7 @@ export class Player extends Actor {
         }
 
         if (xAccel !== 0) {
-            if (this.vel.x < 900 && this.vel.x > -900) {
+            if (this.vel.x < 5000 && this.vel.x > -5000) {
                 this.body.applyLinearImpulse(new Vector(xAccel * delta, 0));
             }
         }
@@ -240,7 +244,7 @@ export class Player extends Actor {
                 this.shoot()
                 this.shootAnim.events.on('end', (a) => {
                     this.shootAnim.reset()
-                    this.graphics.use(Resources.Player.toSprite())
+                    this.graphics.use('idle')
                 })
 
             } else if (!this.injectionHeld && this.selectedItem === 'injection' && this.inventory.includes('injection')) {
@@ -297,6 +301,12 @@ export class Player extends Actor {
         this.addChild(this.injection)
     }
 
+    questKeyChecker() {
+        if (this.quest && this.quest.currentQuest === 'Keyfinder' && this.key === true) {
+            this.quest.updateQuest()
+        }
+    }
+
     hitSomething(e) {
         if (e.other.owner instanceof Zombie && !this.hitOnCooldown) {
             this.hitOnCooldown = true
@@ -324,10 +334,19 @@ export class Player extends Actor {
         this.knockbackspeed = -300 * direction
     }
 
+/// animations get made
+
     setupAnimations() {
         const configGrid = {
             rows: 1,
             columns: 6,
+            spriteWidth: 73,
+            spriteHeight: 102
+        }
+
+        const configGrid2 = {
+            rows: 1,
+            columns: 16,
             spriteWidth: 73,
             spriteHeight: 102
         }
@@ -339,12 +358,21 @@ export class Player extends Actor {
             grid: configGrid
         });
 
+        const playerIdleSheet = SpriteSheet.fromImageSource({
+            image: Resources.PlayerIdle,
+            grid: configGrid2
+        });
+
 
         this.shootAnim = Animation.fromSpriteSheet(playerShootSheet, range(0, 5), frameSpeed, AnimationStrategy.End);
+        
         this.shootAnim.scale = new Vector(1, 1)
 
+        this.idleAnim = Animation.fromSpriteSheet(playerIdleSheet, range(0, 15), 120, AnimationStrategy.Loop);
+        this.idleAnim.scale = new Vector(1, 1)
 
         this.graphics.add('shoot', this.shootAnim)
+        this.graphics.add('idle', this.idleAnim)
 
     }
 

@@ -33,7 +33,7 @@ export class UI extends ScreenElement {
         this.addChild(this.healthbar)
         this.setupAnimations();
         this.firstUpdate = false;
-        this.player = engine.currentScene.player
+        this.player = engine.player
 
         this.currentquest = new Quest()
         this.addChild(this.currentquest)

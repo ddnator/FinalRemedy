@@ -17,6 +17,7 @@ export class Scenefour extends Scene {
 
     player
     music = Resources.track4
+    ui
     onInitialize(engine) {
 
 
@@ -87,7 +88,7 @@ export class Scenefour extends Scene {
 
 
 
-        this.player = new Player(-200, 850)
+        this.player = engine.player
         this.add(this.player)
         //pickup items
 

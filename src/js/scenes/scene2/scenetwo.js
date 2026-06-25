@@ -16,9 +16,10 @@ import { KeyPickup } from "../../objects/keypickup.js"
 
 
 export class SceneTwo extends Scene {
-
+    playerPosition = new Vector(0,750)
     player
     music = Resources.track2
+    ui
     onInitialize(engine) {
 
 
@@ -75,7 +76,8 @@ export class SceneTwo extends Scene {
         const door1 = new Door1(200, 640)
         this.add(door1)
 
-        this.player = new Player(200, 700)
+        this.player = engine.player
+        this.player.pos = this.playerPosition
         this.add(this.player)
 
 
@@ -98,8 +100,8 @@ export class SceneTwo extends Scene {
         this.add(foreground)
 
 
-        const ui = new UI()
-        this.add(ui)
+        this.ui = engine.ui
+        this.add(this.ui)
 
 
     }
@@ -130,6 +132,7 @@ export class SceneTwo extends Scene {
         this.music.loop = true
         this.music.play()
         this.fadeIn()
+        this.player.pos = this.playerPosition
     }
 
     onDeactivate() {

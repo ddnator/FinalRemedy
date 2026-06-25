@@ -7,6 +7,7 @@ const Resources = {
     //player
     Player: new ImageSource('/images/player_placeholder.png'),
     PlayerShoot: new ImageSource('/images/player_shoot.png'),
+    PlayerIdle: new ImageSource('/images/player_idle.png'),
 
     //zombies
     Zombie: new ImageSource('/images/zombie_placeholder.png'),

@@ -9,11 +9,12 @@ import { SceneOne } from './scenes/scene1/sceneone.js'
 import { SceneTwo } from './scenes/scene2/scenetwo.js'
 import { SceneThree } from './scenes/scene3/scenethree.js'
 import { Scenefour } from './scenes/scene4/scenefour.js'
+import { UI } from './objects/ui.js'
 
 
 
 export class Game extends Engine {
-
+    player
     constructor() {
         super({
             width: 1980,
@@ -30,23 +31,15 @@ export class Game extends Engine {
     }
 
     startGame() {
-        const sceneOne = new SceneOne()
+        this.player = new Player(-7800, 800)
+        this.ui = new UI()
+
         this.add('sceneone', SceneOne)
-
-        const scenetwo = new SceneTwo()
         this.add('scenetwo', SceneTwo)
-
-        const scenethree = new SceneThree()
         this.add('scenethree', SceneThree)
-
-        const scenefour = new Scenefour()
         this.add('scenefour', Scenefour)
 
-        this.goToScene('scenethree')
-
-
-
-
+        this.goToScene('sceneone')
     }
 }
 
