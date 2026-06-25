@@ -53,14 +53,15 @@ export class Player extends Actor {
 
 
     onInitialize(engine) {
+        this.setupAnimations();
         const sprite = Resources.Player.toSprite()
-        this.graphics.use(sprite)
+        this.graphics.use('idle')
         //this.pos = new Vector(engine.drawWidth - 1600, 850)
 
         this.on('collisionstart', (e) => this.hitSomething(e))
         this.scale = new Vector(4.5, 4.5)
         this.injection.pos = new Vector(80, 0)
-        this.setupAnimations();
+        
 
     }
 
@@ -242,7 +243,7 @@ export class Player extends Actor {
                 this.shoot()
                 this.shootAnim.events.on('end', (a) => {
                     this.shootAnim.reset()
-                    this.graphics.use(Resources.Player.toSprite())
+                    this.graphics.use('idle')
                 })
 
             } else if (!this.injectionHeld && this.selectedItem === 'injection' && this.inventory.includes('injection')) {
@@ -330,10 +331,19 @@ export class Player extends Actor {
         this.knockbackspeed = -300 * direction
     }
 
+/// animations get made
+
     setupAnimations() {
         const configGrid = {
             rows: 1,
             columns: 6,
+            spriteWidth: 73,
+            spriteHeight: 102
+        }
+
+        const configGrid2 = {
+            rows: 1,
+            columns: 16,
             spriteWidth: 73,
             spriteHeight: 102
         }
@@ -345,12 +355,21 @@ export class Player extends Actor {
             grid: configGrid
         });
 
+        const playerIdleSheet = SpriteSheet.fromImageSource({
+            image: Resources.PlayerIdle,
+            grid: configGrid2
+        });
+
 
         this.shootAnim = Animation.fromSpriteSheet(playerShootSheet, range(0, 5), frameSpeed, AnimationStrategy.End);
+        
         this.shootAnim.scale = new Vector(1, 1)
 
+        this.idleAnim = Animation.fromSpriteSheet(playerIdleSheet, range(0, 15), 120, AnimationStrategy.Loop);
+        this.idleAnim.scale = new Vector(1, 1)
 
         this.graphics.add('shoot', this.shootAnim)
+        this.graphics.add('idle', this.idleAnim)
 
     }
 
