@@ -14,7 +14,7 @@ import { KillBox } from "../../objects/killbox.js"
 
 
 export class Scenefour extends Scene {
-
+    playerPosition = new Vector(-78, 835)
     player
     music = Resources.track4
     ui
@@ -89,6 +89,7 @@ export class Scenefour extends Scene {
 
 
         this.player = engine.player
+        this.player.pos = this.playerPosition
         this.add(this.player)
         //pickup items
 
