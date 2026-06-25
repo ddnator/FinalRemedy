@@ -67,7 +67,7 @@ export class SceneOne extends Scene {
 
         this.add(door1)
 
-        
+
         console.log(engine.player.pos)
         this.add(engine.player)
         this.player = engine.player
@@ -81,16 +81,17 @@ export class SceneOne extends Scene {
         cam.strategy.elasticToActor(this.player, 0.2, 0.6)
 
 
+        const bulletpickup = new BulletPickup(15000, 1025)
+        this.add(bulletpickup)
 
 
-        
         this.add(engine.ui)
 
 
     }
 
 
-    
+
     onPostUpdate() {
         //cam offset 
         const cam = this.currentScene && this.currentScene.camera ? this.currentScene.camera : this.camera
