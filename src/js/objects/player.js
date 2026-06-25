@@ -10,6 +10,7 @@ import { Quest } from "./quest.js"
 import { Floor } from './floor.js'
 import { Wall } from './wall.js'
 import { PlayerStandHitbox } from './playerstandhitbox.js'
+import { Dialogue } from "./dialogue.js"
 
 
 
@@ -18,7 +19,7 @@ export class Player extends Actor {
     sanity = 50
     bulletReady = true
     injectionHeld = false
-    inventory = ['bullet']
+    inventory = ['bullet', 'bullet', 'bullet', 'bullet']
     inventoryShown = false
     hitOnCooldown = false
     knockbackspeed = 0
@@ -29,6 +30,7 @@ export class Player extends Actor {
     key = false
     canStandUp = true
     playerStandHitbox
+    engine
     UI
     quest
     grounded = false
@@ -36,6 +38,7 @@ export class Player extends Actor {
     crouched = false
     x
     y
+    dialogue = new Dialogue()
 
 
     constructor(xpos, ypos) {
@@ -61,7 +64,7 @@ export class Player extends Actor {
         this.scale = new Vector(4.5, 4.5)
         this.injection.pos = new Vector(80, 0)
         this.setupAnimations();
-
+        this.engine = engine
     }
 
 
@@ -250,10 +253,14 @@ export class Player extends Actor {
 
     shoot() {
         this.graphics.use('shoot')
+
         let flip
         if (this.graphics.flipHorizontal) {
             flip = true
+        } else {
+            flip = false
         }
+
         const bullet = new Bullet(this.pos.x, this.pos.y, flip)
 
         if (flip) {

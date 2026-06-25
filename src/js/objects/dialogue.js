@@ -8,28 +8,49 @@ import { InjectionPickup } from "./injectionpickup.js"
 import { Door2 } from "../scenes/scene1/door2.js"
 import { KeyPickup } from "./keypickup.js"
 
-export class Quest extends ScreenElement {
+export class Dialogue extends ScreenElement {
     label
-    player
-
+    engine
     constructor() {
         super({})
-    }
-
-    onInitialize(engine) {
         this.label = new Label({
-            text: '',
-            pos: new Vector(950, -50),
+            text: 'setup',
+            pos: new Vector(0, 0),
             font: new Font({
                 family: 'impact',
-                size: 24,
+                size: 9,
                 unit: FontUnit.Px,
                 color: Color.White
             })
         })
+
     }
 
-    updateDialogue() {
-        
+    onInitialize(engine) {
+
+    }
+
+    updateDialogue(dialogue, parent) {
+        this.label.pos.y = -parent.height / 8
+
+        switch (dialogue) {
+            case "shoot the zombie":
+                this.label.text = 'Ah a zombie!'
+                break
+            case 'just killed zombie':
+                this.label.text = 'oh no'
+                break
+            case 'just healed zombie':
+                this.label.text = 'oh yes'
+                break
+            case 'just random':
+                this.label.text = 'oh what'
+                break
+        }
+
+        parent.addChild(this.label)
+        parent.engine.clock.schedule(() => {
+            parent.removeChild(this.label)
+        }, 3000)
     }
 }

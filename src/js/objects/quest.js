@@ -12,7 +12,7 @@ export class Quest extends ScreenElement {
     label
     currentQuest = 'WASD tutorial'
     player
-
+    engine
     constructor() {
         super({})
     }
@@ -28,6 +28,8 @@ export class Quest extends ScreenElement {
                 color: Color.White
             })
         })
+
+        this.engine = engine
 
         this.addChild(this.label)
         const entityList = this.scene.world.entityManager.entities
@@ -52,6 +54,8 @@ export class Quest extends ScreenElement {
                 this.player.stuck = false
                 this.label.text = 'Shoot the Zombie by pressing Spacebar'
                 this.currentQuest = 'Shoot the zombie'
+
+                this.engine.player.dialogue.updateDialogue('shoot the zombie', this.engine.player)
 
                 const zombie = new Zombie(this.player, -6000, 850, 'tutorial zombie')
                 this.scene.add(zombie)
