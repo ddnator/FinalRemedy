@@ -137,7 +137,7 @@ export class Player extends Actor {
         }
 
         if (xAccel !== 0) {
-            if (this.vel.x < 900 && this.vel.x > -900) {
+            if (this.vel.x < 1800 && this.vel.x > -900) {
                 this.body.applyLinearImpulse(new Vector(xAccel * delta, 0));
             }
         }

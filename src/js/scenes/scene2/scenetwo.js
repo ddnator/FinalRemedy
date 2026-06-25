@@ -75,7 +75,8 @@ export class SceneTwo extends Scene {
         const door1 = new Door1(200, 640)
         this.add(door1)
 
-        this.player = new Player(200, 700)
+        this.player = engine.player
+        this.player.pos = new Vector(0,750)
         this.add(this.player)
 
 
