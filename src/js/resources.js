@@ -71,6 +71,16 @@ const Resources = {
     Scene3Shadows: new ImageSource('/images/scene3/backgroundImages/S-3-Shadows.png'),
 
 
+    //Scene 4
+    //Background
+    Scene4Sky: new ImageSource('/images/scene4/backgroundImages/S-4-Sky.png'),
+    Scene4Buidings: new ImageSource('/images/scene4/backgroundImages/S-4-Buildings.png'),
+    Scene4Back: new ImageSource('/images/scene4/backgroundImages/S-4-Back.png'),
+    Scene4Buildings1: new ImageSource('/images/scene4/backgroundImages/S-4-Buildings-1.png'),
+    Scene4Buildings2: new ImageSource('/images/scene4/backgroundImages/S-4-Buildings-2.png'),
+
+
+
 }
 
 

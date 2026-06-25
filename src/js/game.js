@@ -42,7 +42,7 @@ export class Game extends Engine {
         const scenefour = new Scenefour()
         this.add('scenefour', Scenefour)
 
-        this.goToScene('sceneone')
+        this.goToScene('scenethree')
 
 
 

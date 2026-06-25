@@ -9,6 +9,7 @@ import { InjectionPickup } from "../../objects/injectionpickup.js"
 import { BulletPickup } from "../../objects/bulletpickup.js"
 import { Quest } from '../../objects/quest.js'
 import { Wall } from "../../objects/wall.js"
+import { Door1 } from "./door1.js"
 
 
 
@@ -113,6 +114,8 @@ export class SceneThree extends Scene {
         this.add(objects)
         //interactable objects
 
+        const door = new Door1(4100, -200)
+        this.add(door)
 
 
 

@@ -10,6 +10,7 @@ import { Quest } from "./quest.js"
 import { Floor } from './floor.js'
 import { Wall } from './wall.js'
 import { PlayerStandHitbox } from './playerstandhitbox.js'
+import { KillBox } from "./killbox.js"
 
 
 
@@ -305,6 +306,8 @@ export class Player extends Actor {
             this.scene.engine.clock.schedule(() => {
                 this.hitOnCooldown = false
             }, 200)
+        } else if (e.other.owner instanceof KillBox) {
+            this.health = 0
         }
     }
 
