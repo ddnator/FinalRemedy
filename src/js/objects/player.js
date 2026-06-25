@@ -40,8 +40,8 @@ export class Player extends Actor {
 
     constructor(xpos, ypos) {
         super({
-            width: 73,
-            height: 102,
+            width: Resources.Player.width,
+            height: Resources.Player.height,
         })
         this.body.collisionType = CollisionType.Active
         this.body.bounciness = 0
@@ -74,8 +74,11 @@ export class Player extends Actor {
         this.checkInjectionPosition()
         this.checkQuest(engine, delta)
         this.healthChecker()
+        this.questKeyChecker()
         //this.checkQuest(engine, delta)
     }
+
+
 
     healthChecker() {
         if (this.health <= 0) {
@@ -138,7 +141,7 @@ export class Player extends Actor {
         }
 
         if (xAccel !== 0) {
-            if (this.vel.x < 1800 && this.vel.x > -900) {
+            if (this.vel.x < 5000 && this.vel.x > -5000) {
                 this.body.applyLinearImpulse(new Vector(xAccel * delta, 0));
             }
         }
@@ -295,6 +298,12 @@ export class Player extends Actor {
     inject() {
         this.injectionHeld = true
         this.addChild(this.injection)
+    }
+
+    questKeyChecker() {
+        if (this.quest && this.quest.currentQuest === 'Keyfinder' && this.key === true) {
+            this.quest.updateQuest()
+        }
     }
 
     hitSomething(e) {
