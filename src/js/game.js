@@ -12,7 +12,7 @@ import { SceneThree } from './scenes/scene3/scenethree.js'
 
 
 export class Game extends Engine {
-
+    player
     constructor() {
         super({
             width: 1980,
@@ -40,8 +40,8 @@ export class Game extends Engine {
 
         this.goToScene('sceneone')
 
-
-
+        this.player = new Player(-7800, 800)
+        
 
 
     }

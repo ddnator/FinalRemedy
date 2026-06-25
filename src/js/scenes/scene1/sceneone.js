@@ -68,8 +68,10 @@ export class SceneOne extends Scene {
 
         this.add(door1)
 
-        this.player = new Player(-7800, 800)
-        this.add(this.player)
+        
+        console.log(engine.player)
+        this.add(engine.player)
+        this.player = engine.player
         //pickup items
         const bulletPickupQuest = new BulletPickup(-7000, 1025, true)
         this.add(bulletPickupQuest)
