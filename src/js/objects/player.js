@@ -20,7 +20,7 @@ export class Player extends Actor {
     sanity = 50
     bulletReady = true
     injectionHeld = false
-    inventory = ['bullet', 'bullet', 'bullet', 'bullet', 'bullet']
+    inventory = ['bullet', 'bullet']
     inventoryShown = false
     hitOnCooldown = false
     knockbackspeed = 0
@@ -92,7 +92,7 @@ export class Player extends Actor {
 
     checkMovement(engine, delta) {
         let xAccel = 0;
-        let yAccel = 400;
+        let yAccel = 300;
 
         if (engine.input.keyboard.isHeld(Keys.A) && !this.stuck && this.graphics._current !== 'shoot') {
             this.graphics.use('walk')
@@ -147,13 +147,13 @@ export class Player extends Actor {
         }
 
         if (xAccel !== 0) {
-            if (this.vel.x < 2000 && this.vel.x > -2000) {
+            if (this.vel.x < 1000 && this.vel.x > -1000) {
                 this.body.applyLinearImpulse(new Vector(xAccel * delta, 0));
             }
-        } else if(xAccel <= 1 && this.graphics._current !== 'shoot') {
+        } else if (xAccel <= 1 && this.graphics._current !== 'shoot') {
             this.graphics.use('idle')
         }
-        
+
     }
 
     checkQuest(engine, delta) {
