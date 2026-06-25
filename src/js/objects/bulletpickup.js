@@ -28,7 +28,7 @@ export class BulletPickup extends Actor {
 
     onInitialize(engine) {
         const sprite = Resources.BulletPickUp.toSprite()
-        this.scale = new Vector(0.2, 0.2)
+        this.scale = new Vector(2, 2)
         this.graphics.use(sprite)
     }
 
@@ -37,8 +37,8 @@ export class BulletPickup extends Actor {
         if (collider?.owner instanceof Player) {
             this.playerInRange = true
             if (!this.pressE) {
-                this.pressE = new PressE(0, -400)
-                this.pressE.scale = new Vector(4, 4)
+                this.pressE = new PressE(0, -200)
+                this.pressE.scale = new Vector(.5, .5)
                 this.addChild(this.pressE)
             }
         }

@@ -16,8 +16,8 @@ export class KeyPickup extends Actor {
 
     constructor(x, y, quest) {
         super({
-            width: Resources.KeyPickup.width,
-            height: Resources.KeyPickup.height
+            width: Resources.KeyPickup.width * 4,
+            height: Resources.KeyPickup.height * 4
         })
 
         this.body.collisionType = CollisionType.Passive
@@ -52,8 +52,8 @@ export class KeyPickup extends Actor {
         if (collider?.owner instanceof Player) {
             this.playerInRange = true
             if (!this.pressE) {
-                this.pressE = new PressE(0, -120)
-                this.pressE.scale = new Vector(1, 1)
+                this.pressE = new PressE(0, -620)
+                this.pressE.scale = new Vector(4, 4)
                 this.addChild(this.pressE)
             }
         }

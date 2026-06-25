@@ -28,7 +28,7 @@ const Resources = {
 
     //items
     KeyPickup: new ImageSource('/images/keypickup.png'),
-    Bullet: new ImageSource('/images/bullet_placeholder.png'),
+    Bullet: new ImageSource('/images/bullet.png'),
     Injection: new ImageSource('/images/injection1.png'),
     BulletPickUp: new ImageSource('images/bulletpickup.png'),
     InjectionPickUp: new ImageSource('images/injectionpickup.png'),

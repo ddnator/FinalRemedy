@@ -62,7 +62,7 @@ export class Player extends Actor {
         this.on('collisionstart', (e) => this.hitSomething(e))
         this.scale = new Vector(4.5, 4.5)
         this.injection.pos = new Vector(80, 0)
-        
+
 
     }
 
@@ -259,7 +259,7 @@ export class Player extends Actor {
         if (this.graphics.flipHorizontal) {
             flip = true
         }
-        const bullet = new Bullet(this.pos.x, this.pos.y, flip)
+        const bullet = new Bullet(this.pos.x, this.pos.y - 80, flip)
 
         if (flip) {
             bullet.graphics.flipHorizontal = true
@@ -334,7 +334,7 @@ export class Player extends Actor {
         this.knockbackspeed = -300 * direction
     }
 
-/// animations get made
+    /// animations get made
 
     setupAnimations() {
         const configGrid = {
@@ -365,7 +365,7 @@ export class Player extends Actor {
 
 
         this.shootAnim = Animation.fromSpriteSheet(playerShootSheet, range(0, 5), frameSpeed, AnimationStrategy.End);
-        
+
         this.shootAnim.scale = new Vector(1, 1)
 
         this.idleAnim = Animation.fromSpriteSheet(playerIdleSheet, range(0, 15), 120, AnimationStrategy.Loop);
