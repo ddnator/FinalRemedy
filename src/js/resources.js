@@ -28,22 +28,22 @@ const Resources = {
     track4: new Sound('/sounds/music/Mood02.mp3'),
 
     //items
-    KeyPickup: new ImageSource('/images/keypickup.png'),
-    Bullet: new ImageSource('/images/bullet_placeholder.png'),
-    Injection: new ImageSource('/images/injection1.png'),
-    BulletPickUp: new ImageSource('images/bulletpickup.png'),
-    InjectionPickUp: new ImageSource('images/injectionpickup.png'),
+    KeyPickup: new ImageSource('/images/items/keypickup.png'),
+    Bullet: new ImageSource('/images/items/bullet.png'),
+    Injection: new ImageSource('/images/items/injection1.png'),
+    BulletPickUp: new ImageSource('images/items/bulletpickup.png'),
+    InjectionPickUp: new ImageSource('images/items/injection1.png'),
 
     //Prompts
     PressE: new ImageSource('images/prompts/PressE.png'),
 
 
     //UI
-    HealthbarFine: new ImageSource('/images/ui_fine_healthbar.png'),
-    HealthbarCaution: new ImageSource('/images/ui_caution_healthbar.png'),
-    HealthbarDanger: new ImageSource('/images/ui_danger_healthbar.png'),
-    SanityBar: new ImageSource('/images/sanity_bar.png'),
-    SanityBrain: new ImageSource('/images/sanity_brain.png'),
+    HealthbarFine: new ImageSource('/images/ui/ui_fine_healthbar.png'),
+    HealthbarCaution: new ImageSource('/images/ui/ui_caution_healthbar.png'),
+    HealthbarDanger: new ImageSource('/images/ui/ui_danger_healthbar.png'),
+    SanityBar: new ImageSource('/images/ui/sanity_bar.png'),
+    SanityBrain: new ImageSource('/images/ui/sanity_brain.png'),
 
 
 

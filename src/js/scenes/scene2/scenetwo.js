@@ -16,10 +16,11 @@ import { KeyPickup } from "../../objects/keypickup.js"
 
 
 export class SceneTwo extends Scene {
-    playerPosition = new Vector(0,750)
+    playerPosition = new Vector(0, 750)
     player
     music = Resources.track2
     ui
+    zombiespawned = false
     onInitialize(engine) {
 
 
@@ -80,6 +81,11 @@ export class SceneTwo extends Scene {
         this.player.pos = this.playerPosition
         this.add(this.player)
 
+        const injection = new InjectionPickup(3600, 650)
+        this.add(injection)
+
+        const bullet = new BulletPickup(-130, 670)
+        this.add(bullet)
 
         const key1 = new KeyPickup(3300, 500, 'key1')
 
@@ -125,10 +131,23 @@ export class SceneTwo extends Scene {
         // if (Resources.track2.getPlaybackPosition) {
         //     Resources.track2.play()
         // }
-
+        this.playerChecker()
 
     }
+
+
+    playerChecker() {
+
+        if (this.player.key == true && this.zombiespawned == false) {
+            const zombie = new Zombie(this.player, 700, 670)
+            this.zombiespawned = true
+            this.add(zombie)
+        }
+    }
+
+
     onActivate() {
+
         this.music.loop = true
         this.music.play()
         this.fadeIn()
