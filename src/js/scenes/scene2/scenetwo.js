@@ -16,7 +16,7 @@ import { KeyPickup } from "../../objects/keypickup.js"
 
 
 export class SceneTwo extends Scene {
-
+    playerPosition = new Vector(0,750)
     player
     music = Resources.track2
     ui
@@ -77,7 +77,7 @@ export class SceneTwo extends Scene {
         this.add(door1)
 
         this.player = engine.player
-        this.player.pos = new Vector(0,750)
+        this.player.pos = this.playerPosition
         this.add(this.player)
 
 
@@ -132,6 +132,7 @@ export class SceneTwo extends Scene {
         this.music.loop = true
         this.music.play()
         this.fadeIn()
+        this.player.pos = this.playerPosition
     }
 
     onDeactivate() {

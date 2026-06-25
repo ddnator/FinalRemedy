@@ -13,7 +13,7 @@ import { Wall } from "../../objects/wall.js"
 
 
 export class SceneThree extends Scene {
-
+    playerPosition
     player
     music = Resources.track1
     ui
