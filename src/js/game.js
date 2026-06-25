@@ -32,16 +32,12 @@ export class Game extends Engine {
     }
 
     startGame() {
-        const sceneOne = new SceneOne()
+        this.player = new Player(-7800, 800)
+        this.ui = new UI()
+
         this.add('sceneone', SceneOne)
-
-        const scenetwo = new SceneTwo()
         this.add('scenetwo', SceneTwo)
-
-        const scenethree = new SceneThree()
         this.add('scenethree', SceneThree)
-
-        const scenefour = new Scenefour()
         this.add('scenefour', Scenefour)
 
         this.goToScene('sceneone')

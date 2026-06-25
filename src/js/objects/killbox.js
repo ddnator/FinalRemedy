@@ -1,7 +1,7 @@
 import { Actor, Engine, Vector, CollisionType, Scene } from "excalibur"
 import { Resources, ResourceLoader } from '../resources.js'
 
-export class Floor extends Actor {
+export class KillBox extends Actor {
     constructor(w, h, x, y) {
         super({
             width: w,
@@ -13,7 +13,7 @@ export class Floor extends Actor {
     }
 
     onCollisionStart(event, other) {
-        // console.log(`i am hit by ${other}`)
+        console.log(`i am hit by ${other}`)
     }
 
 

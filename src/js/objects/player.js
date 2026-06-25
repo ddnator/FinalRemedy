@@ -10,6 +10,7 @@ import { Quest } from "./quest.js"
 import { Floor } from './floor.js'
 import { Wall } from './wall.js'
 import { PlayerStandHitbox } from './playerstandhitbox.js'
+import { KillBox } from "./killbox.js"
 import { Dialogue } from "./dialogue.js"
 
 
@@ -19,7 +20,7 @@ export class Player extends Actor {
     sanity = 50
     bulletReady = true
     injectionHeld = false
-    inventory = ['bullet', 'bullet', 'bullet', 'bullet']
+    inventory = ['bullet', 'bullet', 'bullet', 'bullet', 'bullet']
     inventoryShown = false
     hitOnCooldown = false
     knockbackspeed = 0
@@ -56,14 +57,15 @@ export class Player extends Actor {
 
 
     onInitialize(engine) {
+        this.setupAnimations();
         const sprite = Resources.Player.toSprite()
-        this.graphics.use(sprite)
+        this.graphics.use('idle')
         //this.pos = new Vector(engine.drawWidth - 1600, 850)
 
         this.on('collisionstart', (e) => this.hitSomething(e))
         this.scale = new Vector(4.5, 4.5)
         this.injection.pos = new Vector(80, 0)
-        this.setupAnimations();
+
         this.engine = engine
     }
 
@@ -76,8 +78,11 @@ export class Player extends Actor {
         this.checkInjectionPosition()
         this.checkQuest(engine, delta)
         this.healthChecker()
+        this.questKeyChecker()
         //this.checkQuest(engine, delta)
     }
+
+
 
     healthChecker() {
         if (this.health <= 0) {
@@ -90,9 +95,11 @@ export class Player extends Actor {
         let yAccel = 400;
 
         if (engine.input.keyboard.isHeld(Keys.A) && !this.stuck) {
+            this.graphics.use('walk')
             xAccel = -20; // Use an acceleration value instead of a massive direct velocity
             this.graphics.flipHorizontal = true;
         } else if (engine.input.keyboard.isHeld(Keys.D) && !this.stuck) {
+            this.graphics.use('walk')
             xAccel = 20;
             this.graphics.flipHorizontal = false;
         } else if (this.grounded) {
@@ -140,10 +147,13 @@ export class Player extends Actor {
         }
 
         if (xAccel !== 0) {
-            if (this.vel.x < 5000 && this.vel.x > -5000) {
+            if (this.vel.x < 2000 && this.vel.x > -2000) {
                 this.body.applyLinearImpulse(new Vector(xAccel * delta, 0));
             }
+        } else if(xAccel <= 1 && this.graphics._current !== 'shoot') {
+            this.graphics.use('idle')
         }
+        
     }
 
     checkQuest(engine, delta) {
@@ -238,11 +248,11 @@ export class Player extends Actor {
 
     useSelectedItem(engine) {
         if (engine.input.keyboard.wasPressed(Keys.Space)) {
-            if (this.bulletReady && this.selectedItem === 'bullet' && this.inventory.includes('bullet')) {
+            if (this.bulletReady && this.selectedItem === 'bullet' && this.inventory.includes('bullet') ) {
                 this.shoot()
                 this.shootAnim.events.on('end', (a) => {
                     this.shootAnim.reset()
-                    this.graphics.use(Resources.Player.toSprite())
+                    this.graphics.use('idle')
                 })
 
             } else if (!this.injectionHeld && this.selectedItem === 'injection' && this.inventory.includes('injection')) {
@@ -260,8 +270,7 @@ export class Player extends Actor {
         } else {
             flip = false
         }
-
-        const bullet = new Bullet(this.pos.x, this.pos.y, flip)
+        const bullet = new Bullet(this.pos.x, this.pos.y - 80, flip)
 
         if (flip) {
             bullet.graphics.flipHorizontal = true
@@ -303,6 +312,12 @@ export class Player extends Actor {
         this.addChild(this.injection)
     }
 
+    questKeyChecker() {
+        if (this.quest && this.quest.currentQuest === 'Keyfinder' && this.key === true) {
+            this.quest.updateQuest()
+        }
+    }
+
     hitSomething(e) {
         if (e.other.owner instanceof Zombie && !this.hitOnCooldown) {
             this.hitOnCooldown = true
@@ -312,6 +327,8 @@ export class Player extends Actor {
             this.scene.engine.clock.schedule(() => {
                 this.hitOnCooldown = false
             }, 200)
+        } else if (e.other.owner instanceof KillBox) {
+            this.health = 0
         }
     }
 
@@ -328,10 +345,26 @@ export class Player extends Actor {
         this.knockbackspeed = -300 * direction
     }
 
+    /// animations get made
+
     setupAnimations() {
         const configGrid = {
             rows: 1,
             columns: 6,
+            spriteWidth: 73,
+            spriteHeight: 102
+        }
+
+        const configGrid2 = {
+            rows: 1,
+            columns: 16,
+            spriteWidth: 73,
+            spriteHeight: 102
+        }
+
+        const configGrid3 = {
+            rows: 1,
+            columns: 9,
             spriteWidth: 73,
             spriteHeight: 102
         }
@@ -343,12 +376,30 @@ export class Player extends Actor {
             grid: configGrid
         });
 
+        const playerIdleSheet = SpriteSheet.fromImageSource({
+            image: Resources.PlayerIdle,
+            grid: configGrid2
+        });
+
+        const playerWalkSheet = SpriteSheet.fromImageSource({
+            image: Resources.PlayerWalk,
+            grid: configGrid3
+        });
+
 
         this.shootAnim = Animation.fromSpriteSheet(playerShootSheet, range(0, 5), frameSpeed, AnimationStrategy.End);
+
         this.shootAnim.scale = new Vector(1, 1)
 
+        this.idleAnim = Animation.fromSpriteSheet(playerIdleSheet, range(0, 15), 120, AnimationStrategy.Loop);
+        this.idleAnim.scale = new Vector(1, 1)
+
+        this.walkAnim = Animation.fromSpriteSheet(playerWalkSheet, range(0, 8), 120, AnimationStrategy.Loop);
+        this.walkAnim.scale = new Vector(1, 1)
 
         this.graphics.add('shoot', this.shootAnim)
+        this.graphics.add('idle', this.idleAnim)
+        this.graphics.add('walk', this.walkAnim)
 
     }
 

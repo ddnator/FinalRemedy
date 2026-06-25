@@ -7,6 +7,8 @@ const Resources = {
     //player
     Player: new ImageSource('/images/player_placeholder.png'),
     PlayerShoot: new ImageSource('/images/player_shoot.png'),
+    PlayerIdle: new ImageSource('/images/player_idle.png'),
+    PlayerWalk: new ImageSource('/images/player_walk.png'),
 
     //zombies
     Zombie: new ImageSource('/images/zombie_placeholder.png'),
@@ -14,6 +16,10 @@ const Resources = {
 
     //player sounds
     shoot: new Sound('/sounds/objects/gunshot.mp3'),
+    zombieHeal: new Sound('/sounds/objects/zombieheal.mp3'),
+    zombieHit: new Sound('/sounds/objects/zombiehit.mp3'),
+
+
 
     //music
     track1: new Sound('/sounds/music/BeingaMan.mp3'),
@@ -22,22 +28,22 @@ const Resources = {
     track4: new Sound('/sounds/music/Mood02.mp3'),
 
     //items
-    KeyPickup: new ImageSource('/images/keypickup.png'),
-    Bullet: new ImageSource('/images/bullet_placeholder.png'),
-    Injection: new ImageSource('/images/injection1.png'),
-    BulletPickUp: new ImageSource('images/bulletpickup.png'),
-    InjectionPickUp: new ImageSource('images/injectionpickup.png'),
+    KeyPickup: new ImageSource('/images/items/keypickup.png'),
+    Bullet: new ImageSource('/images/items/bullet.png'),
+    Injection: new ImageSource('/images/items/injection1.png'),
+    BulletPickUp: new ImageSource('images/items/bulletpickup.png'),
+    InjectionPickUp: new ImageSource('images/items/injection1.png'),
 
     //Prompts
     PressE: new ImageSource('images/prompts/PressE.png'),
 
 
     //UI
-    HealthbarFine: new ImageSource('/images/ui_fine_healthbar.png'),
-    HealthbarCaution: new ImageSource('/images/ui_caution_healthbar.png'),
-    HealthbarDanger: new ImageSource('/images/ui_danger_healthbar.png'),
-    SanityBar: new ImageSource('/images/sanity_bar.png'),
-    SanityBrain: new ImageSource('/images/sanity_brain.png'),
+    HealthbarFine: new ImageSource('/images/ui/ui_fine_healthbar.png'),
+    HealthbarCaution: new ImageSource('/images/ui/ui_caution_healthbar.png'),
+    HealthbarDanger: new ImageSource('/images/ui/ui_danger_healthbar.png'),
+    SanityBar: new ImageSource('/images/ui/sanity_bar.png'),
+    SanityBrain: new ImageSource('/images/ui/sanity_brain.png'),
 
 
 
@@ -69,6 +75,16 @@ const Resources = {
     Scene3Floor: new ImageSource('/images/scene3/backgroundImages/S-3-Floor.png'),
     Scene3Objects: new ImageSource('/images/scene3/backgroundImages/S-3-Objects.png'),
     Scene3Shadows: new ImageSource('/images/scene3/backgroundImages/S-3-Shadows.png'),
+
+
+    //Scene 4
+    //Background
+    Scene4Sky: new ImageSource('/images/scene4/backgroundImages/S-4-Sky.png'),
+    Scene4Buidings: new ImageSource('/images/scene4/backgroundImages/S-4-Buildings.png'),
+    Scene4Back: new ImageSource('/images/scene4/backgroundImages/S-4-Back.png'),
+    Scene4Buildings1: new ImageSource('/images/scene4/backgroundImages/S-4-Buildings-1.png'),
+    Scene4Buildings2: new ImageSource('/images/scene4/backgroundImages/S-4-Buildings-2.png'),
+
 
 
 }
