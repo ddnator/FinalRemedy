@@ -27,11 +27,11 @@ const Resources = {
     track4: new Sound('/sounds/music/Mood02.mp3'),
 
     //items
-    KeyPickup: new ImageSource('/images/keypickup.png'),
-    Bullet: new ImageSource('/images/bullet.png'),
-    Injection: new ImageSource('/images/injection1.png'),
-    BulletPickUp: new ImageSource('images/bulletpickup.png'),
-    InjectionPickUp: new ImageSource('images/injectionpickup.png'),
+    KeyPickup: new ImageSource('/images/items/keypickup.png'),
+    Bullet: new ImageSource('/images/items/bullet.png'),
+    Injection: new ImageSource('/images/items/injection1.png'),
+    BulletPickUp: new ImageSource('images/items/bulletpickup.png'),
+    InjectionPickUp: new ImageSource('images/items/injection1.png'),
 
     //Prompts
     PressE: new ImageSource('images/prompts/PressE.png'),
