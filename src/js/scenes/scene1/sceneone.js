@@ -4,7 +4,6 @@ import { Player } from '../../objects/player.js'
 import { Zombie } from '../../objects/zombie.js'
 import { Injection } from '../../objects/injection.js'
 import { Floor } from '../../objects/floor.js'
-import { Background1 } from '../../objects/background1.js'
 import { UI } from "../../objects/ui.js"
 import { InjectionPickup } from "../../objects/injectionpickup.js"
 import { BulletPickup } from "../../objects/bulletpickup.js"
