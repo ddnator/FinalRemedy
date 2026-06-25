@@ -139,6 +139,10 @@ export class Scenefour extends Scene {
     onActivate() {
         this.music.loop = true
         this.music.play()
+
+        if (this.ui && this.ui.currentquest && this.ui.currentquest.currentQuest === 'Climb') {
+            this.ui.currentquest.updateQuest()
+        }
     }
 
     onDeactivate() {
