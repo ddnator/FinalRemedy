@@ -89,7 +89,7 @@ export class SceneThree extends Scene {
         sky.graphics.use(Resources.Scene3Sky.toSprite())
         sky.scale = new Vector(0.8, 0.8)
         sky.pos = new Vector(engine.screen.resolution.width / 2, engine.screen.resolution.height / 7)
-        sky.addComponent(new ParallaxComponent(new Vector(0.5, .9)))
+        sky.addComponent(new ParallaxComponent(new Vector(0.5, .4)))
         this.add(sky)
 
         const wall = new Actor()
@@ -157,7 +157,7 @@ export class SceneThree extends Scene {
     onPostUpdate() {
         // camera follow player
         const cam = this.currentScene && this.currentScene.camera ? this.currentScene.camera : this.camera
-        const offset = 24
+        const offset = 224
         const minX = 800
         const maxX = 2700
 
