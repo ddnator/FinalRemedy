@@ -1,4 +1,4 @@
-import { Actor, Engine, Vector, DisplayMode, ParallaxComponent, SolverStrategy, Scene, CollisionType, EdgeCollider } from "excalibur"
+import { Actor, Engine, Vector, DisplayMode, ParallaxComponent, SolverStrategy, Scene, CollisionType, EdgeCollider, vec } from "excalibur"
 import { Resources, ResourceLoader } from '../../resources.js'
 import { Player } from '../../objects/player.js'
 import { Zombie } from '../../objects/zombie.js'
@@ -13,7 +13,7 @@ import { Wall } from "../../objects/wall.js"
 
 
 export class SceneThree extends Scene {
-    playerPosition
+    playerPosition = new Vector(0, 800)
     player
     music = Resources.track1
     ui
@@ -118,6 +118,7 @@ export class SceneThree extends Scene {
 
 
         this.player = engine.player
+        this.player.pos = this.playerPosition
         this.add(this.player)
         //pickup items
 
@@ -173,6 +174,7 @@ export class SceneThree extends Scene {
     onActivate() {
         this.music.loop = true
         this.music.play()
+        this.player.pos = this.playerPosition
     }
 
     onDeactivate() {

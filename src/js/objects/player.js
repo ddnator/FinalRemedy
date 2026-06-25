@@ -40,8 +40,8 @@ export class Player extends Actor {
 
     constructor(xpos, ypos) {
         super({
-            width: 73,
-            height: 102,
+            width: Resources.Player.width,
+            height: Resources.Player.height,
         })
         this.body.collisionType = CollisionType.Active
         this.body.bounciness = 0

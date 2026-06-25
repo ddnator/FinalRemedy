@@ -66,12 +66,12 @@ export class Door2 extends Actor {
 
         }
         if (this.playerInRange && engine.input.keyboard.wasPressed(Keys.E)) {
-            this.lockChecker()
+            this.lockChecker(engine)
 
         }
 
     }
-    lockChecker() {
+    lockChecker(engine) {
         if (this.player.key == true) {
             this.locked = false
             this.scene.playerPosition = engine.player.pos
