@@ -1,4 +1,4 @@
-import { Label, FontUnit, Font, Color, ScreenElement, Vector } from "excalibur"
+import { Label, FontUnit, Font, Color, ScreenElement, Vector, TextAlign } from "excalibur"
 import { Resources, ResourceLoader } from '../resources.js'
 import { UI } from './ui.js'
 import { SceneOne } from '../scenes/scene1/sceneone.js'
@@ -20,9 +20,10 @@ export class Quest extends ScreenElement {
     onInitialize(engine) {
         this.label = new Label({
             text: 'Press W to jump and C to crouch \nPress A to move left and D to move right\nWalk over the item and press E to pick it up',
-            pos: new Vector(950, -50),
+            pos: new Vector(1750, -50),
             font: new Font({
                 family: 'impact',
+                textAlign: TextAlign.Right,
                 size: 24,
                 unit: FontUnit.Px,
                 color: Color.White
