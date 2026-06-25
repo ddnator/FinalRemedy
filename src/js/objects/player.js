@@ -11,6 +11,7 @@ import { Floor } from './floor.js'
 import { Wall } from './wall.js'
 import { PlayerStandHitbox } from './playerstandhitbox.js'
 import { KillBox } from "./killbox.js"
+import { Dialogue } from "./dialogue.js"
 
 
 
@@ -19,7 +20,7 @@ export class Player extends Actor {
     sanity = 50
     bulletReady = true
     injectionHeld = false
-    inventory = ['bullet']
+    inventory = ['bullet', 'bullet', 'bullet', 'bullet', 'bullet']
     inventoryShown = false
     hitOnCooldown = false
     knockbackspeed = 0
@@ -30,6 +31,7 @@ export class Player extends Actor {
     key = false
     canStandUp = true
     playerStandHitbox
+    engine
     UI
     quest
     grounded = false
@@ -37,6 +39,7 @@ export class Player extends Actor {
     crouched = false
     x
     y
+    dialogue = new Dialogue()
 
 
     constructor(xpos, ypos) {
@@ -63,7 +66,7 @@ export class Player extends Actor {
         this.scale = new Vector(4.5, 4.5)
         this.injection.pos = new Vector(80, 0)
 
-
+        this.engine = engine
     }
 
 
@@ -91,10 +94,12 @@ export class Player extends Actor {
         let xAccel = 0;
         let yAccel = 400;
 
-        if (engine.input.keyboard.isHeld(Keys.A) && !this.stuck) {
+        if (engine.input.keyboard.isHeld(Keys.A) && !this.stuck && this.graphics._current !== 'shoot') {
+            this.graphics.use('walk')
             xAccel = -20; // Use an acceleration value instead of a massive direct velocity
             this.graphics.flipHorizontal = true;
-        } else if (engine.input.keyboard.isHeld(Keys.D) && !this.stuck) {
+        } else if (engine.input.keyboard.isHeld(Keys.D) && !this.stuck && this.graphics._current !== 'shoot') {
+            this.graphics.use('walk')
             xAccel = 20;
             this.graphics.flipHorizontal = false;
         } else if (this.grounded) {
@@ -142,10 +147,13 @@ export class Player extends Actor {
         }
 
         if (xAccel !== 0) {
-            if (this.vel.x < 5000 && this.vel.x > -5000) {
+            if (this.vel.x < 2000 && this.vel.x > -2000) {
                 this.body.applyLinearImpulse(new Vector(xAccel * delta, 0));
             }
+        } else if(xAccel <= 1 && this.graphics._current !== 'shoot') {
+            this.graphics.use('idle')
         }
+        
     }
 
     checkQuest(engine, delta) {
@@ -240,7 +248,7 @@ export class Player extends Actor {
 
     useSelectedItem(engine) {
         if (engine.input.keyboard.wasPressed(Keys.Space)) {
-            if (this.bulletReady && this.selectedItem === 'bullet' && this.inventory.includes('bullet')) {
+            if (this.bulletReady && this.selectedItem === 'bullet' && this.inventory.includes('bullet') && this.vel.x < 5 && this.vel.x > -5) {
                 this.shoot()
                 this.shootAnim.events.on('end', (a) => {
                     this.shootAnim.reset()
@@ -255,6 +263,7 @@ export class Player extends Actor {
 
     shoot() {
         this.graphics.use('shoot')
+
         let flip
         if (this.graphics.flipHorizontal) {
             flip = true
@@ -353,6 +362,13 @@ export class Player extends Actor {
             spriteHeight: 102
         }
 
+        const configGrid3 = {
+            rows: 1,
+            columns: 9,
+            spriteWidth: 73,
+            spriteHeight: 102
+        }
+
         const frameSpeed = 60;
 
         const playerShootSheet = SpriteSheet.fromImageSource({
@@ -365,6 +381,11 @@ export class Player extends Actor {
             grid: configGrid2
         });
 
+        const playerWalkSheet = SpriteSheet.fromImageSource({
+            image: Resources.PlayerWalk,
+            grid: configGrid3
+        });
+
 
         this.shootAnim = Animation.fromSpriteSheet(playerShootSheet, range(0, 5), frameSpeed, AnimationStrategy.End);
 
@@ -373,8 +394,12 @@ export class Player extends Actor {
         this.idleAnim = Animation.fromSpriteSheet(playerIdleSheet, range(0, 15), 120, AnimationStrategy.Loop);
         this.idleAnim.scale = new Vector(1, 1)
 
+        this.walkAnim = Animation.fromSpriteSheet(playerWalkSheet, range(0, 8), 120, AnimationStrategy.Loop);
+        this.walkAnim.scale = new Vector(1, 1)
+
         this.graphics.add('shoot', this.shootAnim)
         this.graphics.add('idle', this.idleAnim)
+        this.graphics.add('walk', this.walkAnim)
 
     }
 

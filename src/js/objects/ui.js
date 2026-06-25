@@ -1,4 +1,4 @@
-import { Actor, Engine, Vector, Keys, DegreeOfFreedom, CollisionType, linear, Label, Font, FontUnit, Color, ScreenElement, Sprite, range, vec, DefaultLoader, SpriteSheet, AnimationStrategy, Animation } from "excalibur"
+import { Actor, Engine, Vector, Keys, DegreeOfFreedom, CollisionType, linear, Label, Font, FontUnit, Color, ScreenElement, Sprite, range, vec, DefaultLoader, SpriteSheet, TextAlign, AnimationStrategy, Animation } from "excalibur"
 import { Resources, ResourceLoader } from '../resources.js'
 import { Bullet } from './bullet.js'
 import { Zombie } from './zombie.js'
@@ -52,10 +52,11 @@ export class UI extends ScreenElement {
 
         this.bulletsLabel = new Label({
             text: '0',
-            pos: new Vector(700, 800),
+            pos: new Vector(820, 800),
             font: new Font({
                 family: 'impact',
                 size: 24,
+                textAlign: TextAlign.center,
                 unit: FontUnit.Px,
                 color: Color.White
             })
@@ -63,9 +64,10 @@ export class UI extends ScreenElement {
 
         this.injectionsLabel = new Label({
             text: '0',
-            pos: new Vector(500, 800),
+            pos: new Vector(550, 800),
             font: new Font({
                 family: 'impact',
+                textAlign: TextAlign.center,
                 size: 24,
                 unit: FontUnit.Px,
                 color: Color.White

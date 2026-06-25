@@ -29,7 +29,7 @@ export class InjectionPickup extends Actor {
 
     onInitialize(engine) {
         const sprite = Resources.InjectionPickUp.toSprite()
-        sprite.scale = new Vector(0.25, 0.25)
+        sprite.scale = new Vector(3, 3)
         this.graphics.use(sprite)
 
         this.pos = new Vector(this.x, this.y)
@@ -40,8 +40,8 @@ export class InjectionPickup extends Actor {
         if (collider?.owner instanceof Player) {
             this.playerInRange = true
             if (!this.pressE) {
-                this.pressE = new PressE(0, -120)
-                this.pressE.scale = new Vector(1, 1)
+                this.pressE = new PressE(0, -200)
+                this.pressE.scale = new Vector(.5, .5)
                 this.addChild(this.pressE)
             }
         }

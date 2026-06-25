@@ -1,4 +1,4 @@
-import { Label, FontUnit, Font, Color, ScreenElement, Vector } from "excalibur"
+import { Label, FontUnit, Font, Color, ScreenElement, Vector, TextAlign } from "excalibur"
 import { Resources, ResourceLoader } from '../resources.js'
 import { UI } from './ui.js'
 import { SceneOne } from '../scenes/scene1/sceneone.js'
@@ -12,7 +12,7 @@ export class Quest extends ScreenElement {
     label
     currentQuest = 'WASD tutorial'
     player
-
+    engine
     constructor() {
         super({})
     }
@@ -20,14 +20,17 @@ export class Quest extends ScreenElement {
     onInitialize(engine) {
         this.label = new Label({
             text: 'Press W to jump and C to crouch \nPress A to move left and D to move right\nWalk over the item and press E to pick it up',
-            pos: new Vector(950, -50),
+            pos: new Vector(1750, -50),
             font: new Font({
                 family: 'impact',
+                textAlign: TextAlign.Right,
                 size: 24,
                 unit: FontUnit.Px,
                 color: Color.White
             })
         })
+
+        this.engine = engine
 
         this.addChild(this.label)
         const entityList = this.scene.world.entityManager.entities
@@ -52,6 +55,8 @@ export class Quest extends ScreenElement {
                 this.player.stuck = false
                 this.label.text = 'Shoot the Zombie by pressing Spacebar'
                 this.currentQuest = 'Shoot the zombie'
+
+                this.engine.player.dialogue.updateDialogue('shoot the zombie', this.engine.player)
 
                 const zombie = new Zombie(this.player, -6000, 850, 'tutorial zombie')
                 this.scene.add(zombie)
