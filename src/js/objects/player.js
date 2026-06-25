@@ -248,10 +248,8 @@ export class Player extends Actor {
 
     useSelectedItem(engine) {
         if (engine.input.keyboard.wasPressed(Keys.Space)) {
-            console.log(this.vel.x)
             if (this.bulletReady && this.selectedItem === 'bullet' && this.inventory.includes('bullet') && this.vel.x < 5 && this.vel.x > -5) {
                 this.shoot()
-                console.log(this.vel.x)
                 this.shootAnim.events.on('end', (a) => {
                     this.shootAnim.reset()
                     this.graphics.use('idle')
