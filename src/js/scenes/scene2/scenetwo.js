@@ -4,7 +4,6 @@ import { Player } from '../../objects/player.js'
 import { Zombie } from '../../objects/zombie.js'
 import { Injection } from '../../objects/injection.js'
 import { Floor } from '../../objects/floor.js'
-import { Background1 } from '../../objects/background1.js'
 import { UI } from "../../objects/ui.js"
 import { InjectionPickup } from "../../objects/injectionpickup.js"
 import { BulletPickup } from "../../objects/bulletpickup.js"
@@ -81,8 +80,8 @@ export class SceneTwo extends Scene {
         this.add(this.player)
 
 
-        // const key1 = new KeyPickup(3300, 500, 'key1')
-        const key1 = new KeyPickup(1500, 500, 'key1')
+        const key1 = new KeyPickup(3300, 500, 'key1')
+
         this.add(key1)
         //pickup items
 

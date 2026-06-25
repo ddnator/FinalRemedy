@@ -8,18 +8,23 @@ const Resources = {
     Player: new ImageSource('/images/player_placeholder.png'),
     PlayerShoot: new ImageSource('/images/player_shoot.png'),
 
+    //zombies
+    Zombie: new ImageSource('/images/zombie_placeholder.png'),
+
+
     //player sounds
-    gunshot: new Sound('/sounds/objects/gunshot.mp3'),
+    shoot: new Sound('/sounds/objects/gunshot.mp3'),
 
     //music
     track1: new Sound('/sounds/music/BeingaMan.mp3'),
     track2: new Sound('/sounds/music/TheFollowing.mp3'),
     track3: new Sound('/sounds/music/TheMission.mp3'),
+    track4: new Sound('/sounds/music/Mood02.mp3'),
+
+    //items
     KeyPickup: new ImageSource('/images/keypickup.png'),
-    Zombie: new ImageSource('/images/zombie_placeholder.png'),
     Bullet: new ImageSource('/images/bullet_placeholder.png'),
     Injection: new ImageSource('/images/injection1.png'),
-    Background1: new ImageSource('/images/background_city_start.png'),
     BulletPickUp: new ImageSource('images/bulletpickup.png'),
     InjectionPickUp: new ImageSource('images/injectionpickup.png'),
 
@@ -60,11 +65,12 @@ const Resources = {
     //Background
     Scene3Sky: new ImageSource('/images/scene3/backgroundImages/S-3-Sky.png'),
     Scene3Foreground: new ImageSource('/images/scene3/backgroundImages/S-3-Foreground.png'),
-    Scene3Wall: new ImageSource('/images/scene3/backgroundImages/S-3-Grafity.png'),
-    Scene3Grafity: new ImageSource('/images/scene3/backgroundImages/S-3-Wall.png'),
+    Scene3Wall: new ImageSource('/images/scene3/backgroundImages/S-3-Wall.png'),
     Scene3Floor: new ImageSource('/images/scene3/backgroundImages/S-3-Floor.png'),
     Scene3Objects: new ImageSource('/images/scene3/backgroundImages/S-3-Objects.png'),
     Scene3Shadows: new ImageSource('/images/scene3/backgroundImages/S-3-Shadows.png'),
+
+
 }
 
 

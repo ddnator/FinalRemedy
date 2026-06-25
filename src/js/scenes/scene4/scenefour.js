@@ -12,10 +12,10 @@ import { Wall } from "../../objects/wall.js"
 
 
 
-export class SceneThree extends Scene {
+export class Scenefour extends Scene {
 
     player
-    music = Resources.track1
+    music = Resources.track4
     onInitialize(engine) {
 
 
