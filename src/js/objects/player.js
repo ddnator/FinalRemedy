@@ -258,6 +258,8 @@ export class Player extends Actor {
         let flip
         if (this.graphics.flipHorizontal) {
             flip = true
+        } else {
+            flip = false
         }
         const bullet = new Bullet(this.pos.x, this.pos.y - 80, flip)
 

@@ -112,6 +112,28 @@ export class Scenefour extends Scene {
         this.add(this.ui)
 
 
+        for (let i = 0; i < 5; i++) {
+            const bullet = new BulletPickup(108, 950)
+            this.add(bullet)
+        }
+
+
+        for (let i = 0; i < 2; i++) {
+            const injection = new InjectionPickup(25, 950)
+            this.add(injection)
+        }
+
+        const zombie1 = new Zombie(this.player, 1020, 840)
+        this.add(zombie1)
+        const zombie2 = new Zombie(this.player, 1200, 860)
+        this.add(zombie2)
+
+        const zombie3 = new Zombie(this.player, 3600, 700)
+        this.add(zombie3)
+
+
+
+
     }
 
     onPostUpdate() {

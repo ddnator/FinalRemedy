@@ -70,7 +70,7 @@ export class BulletPickup extends Actor {
         if (this.playerInRange && engine.input.keyboard.wasPressed(Keys.E)) {
             this.player.pickUpItem('bullet', this)
             this.UI.updateInventory()
-            if (this.quest != null) {
+            if (this.quest.currentQuest == 'WASD tutorial') {
                 this.quest.updateQuest()
             }
         }
