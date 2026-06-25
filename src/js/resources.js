@@ -38,11 +38,11 @@ const Resources = {
 
 
     //UI
-    HealthbarFine: new ImageSource('/images/ui_fine_healthbar.png'),
-    HealthbarCaution: new ImageSource('/images/ui_caution_healthbar.png'),
-    HealthbarDanger: new ImageSource('/images/ui_danger_healthbar.png'),
-    SanityBar: new ImageSource('/images/sanity_bar.png'),
-    SanityBrain: new ImageSource('/images/sanity_brain.png'),
+    HealthbarFine: new ImageSource('/images/ui/ui_fine_healthbar.png'),
+    HealthbarCaution: new ImageSource('/images/ui/ui_caution_healthbar.png'),
+    HealthbarDanger: new ImageSource('/images/ui/ui_danger_healthbar.png'),
+    SanityBar: new ImageSource('/images/ui/sanity_bar.png'),
+    SanityBrain: new ImageSource('/images/ui/sanity_brain.png'),
 
 
 
