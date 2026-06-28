@@ -119,7 +119,7 @@ export class Player extends Actor {
             const oldHeight = this.height
             const oldWidth = this.width
 
-            this.scale = new Vector(2.24, 2.24)
+            this.graphics.use('crouch')
 
             const newHeight = this.height
             const newWidth = this.width
@@ -135,9 +135,10 @@ export class Player extends Actor {
         } else if (engine.input.keyboard.wasPressed(Keys.C) && !this.stuck && this.crouched && this.canStandUp) {
             const oldHeight = this.height
 
-            this.scale = new Vector(4.5, 4.5)
+            this.graphics.use('idle')
 
             this.crouched = false
+            
             const newHeight = this.height
 
 
@@ -150,7 +151,7 @@ export class Player extends Actor {
             if (this.vel.x < 1000 && this.vel.x > -1000) {
                 this.body.applyLinearImpulse(new Vector(xAccel * delta, 0));
             }
-        } else if (xAccel <= 1 && this.graphics._current !== 'shoot') {
+        } else if (xAccel <= 1 && this.graphics._current !== 'shoot' && this.graphics._current !== 'crouch') {
             this.graphics.use('idle')
         }
 
@@ -369,6 +370,13 @@ export class Player extends Actor {
             spriteHeight: 102
         }
 
+        const configGrid4 = {
+            rows: 1,
+            columns: 5,
+            spriteWidth: 73,
+            spriteHeight: 102
+        }
+
         const frameSpeed = 60;
 
         const playerShootSheet = SpriteSheet.fromImageSource({
@@ -386,9 +394,13 @@ export class Player extends Actor {
             grid: configGrid3
         });
 
+        const playerCrouchSheet = SpriteSheet.fromImageSource({
+            image: Resources.PlayerCrouch,
+            grid: configGrid4
+        });
+
 
         this.shootAnim = Animation.fromSpriteSheet(playerShootSheet, range(0, 5), frameSpeed, AnimationStrategy.End);
-
         this.shootAnim.scale = new Vector(1, 1)
 
         this.idleAnim = Animation.fromSpriteSheet(playerIdleSheet, range(0, 15), 120, AnimationStrategy.Loop);
@@ -397,9 +409,13 @@ export class Player extends Actor {
         this.walkAnim = Animation.fromSpriteSheet(playerWalkSheet, range(0, 8), 120, AnimationStrategy.Loop);
         this.walkAnim.scale = new Vector(1, 1)
 
+        this.crouchAnim = Animation.fromSpriteSheet(playerCrouchSheet, range(0, 4), 90, AnimationStrategy.Loop);
+        this.crouchAnim.scale = new Vector(1, 1)
+
         this.graphics.add('shoot', this.shootAnim)
         this.graphics.add('idle', this.idleAnim)
         this.graphics.add('walk', this.walkAnim)
+        this.graphics.add('crouch', this.crouchAnim)
 
     }
 
