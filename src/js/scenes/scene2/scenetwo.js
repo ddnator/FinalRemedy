@@ -84,8 +84,13 @@ export class SceneTwo extends Scene {
         const injection = new InjectionPickup(3600, 650)
         this.add(injection)
 
-        const bullet = new BulletPickup(-130, 670)
-        this.add(bullet)
+        for (let i = 0; i < 2; i++) {
+            const bullet = new BulletPickup(-130, 670)
+            this.add(bullet)
+
+        }
+
+
 
         const key1 = new KeyPickup(3300, 500, 'key1')
 

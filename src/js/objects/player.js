@@ -20,7 +20,7 @@ export class Player extends Actor {
     sanity = 50
     bulletReady = true
     injectionHeld = false
-    inventory = ['bullet', 'bullet', 'bullet', 'bullet', 'bullet']
+    inventory = ['bullet', 'bullet']
     inventoryShown = false
     hitOnCooldown = false
     knockbackspeed = 0
@@ -92,13 +92,13 @@ export class Player extends Actor {
 
     checkMovement(engine, delta) {
         let xAccel = 0;
-        let yAccel = 400;
+        let yAccel = 300;
 
-        if (engine.input.keyboard.isHeld(Keys.A) && !this.stuck) {
+        if (engine.input.keyboard.isHeld(Keys.A) && !this.stuck && this.graphics._current !== 'shoot') {
             this.graphics.use('walk')
             xAccel = -20; // Use an acceleration value instead of a massive direct velocity
             this.graphics.flipHorizontal = true;
-        } else if (engine.input.keyboard.isHeld(Keys.D) && !this.stuck) {
+        } else if (engine.input.keyboard.isHeld(Keys.D) && !this.stuck && this.graphics._current !== 'shoot') {
             this.graphics.use('walk')
             xAccel = 20;
             this.graphics.flipHorizontal = false;
@@ -147,13 +147,13 @@ export class Player extends Actor {
         }
 
         if (xAccel !== 0) {
-            if (this.vel.x < 2000 && this.vel.x > -2000) {
+            if (this.vel.x < 1000 && this.vel.x > -1000) {
                 this.body.applyLinearImpulse(new Vector(xAccel * delta, 0));
             }
-        } else if(xAccel <= 1 && this.graphics._current !== 'shoot') {
+        } else if (xAccel <= 1 && this.graphics._current !== 'shoot') {
             this.graphics.use('idle')
         }
-        
+
     }
 
     checkQuest(engine, delta) {
@@ -248,10 +248,8 @@ export class Player extends Actor {
 
     useSelectedItem(engine) {
         if (engine.input.keyboard.wasPressed(Keys.Space)) {
-            console.log(this.vel.x)
             if (this.bulletReady && this.selectedItem === 'bullet' && this.inventory.includes('bullet') && this.vel.x < 5 && this.vel.x > -5) {
                 this.shoot()
-                console.log(this.vel.x)
                 this.shootAnim.events.on('end', (a) => {
                     this.shootAnim.reset()
                     this.graphics.use('idle')

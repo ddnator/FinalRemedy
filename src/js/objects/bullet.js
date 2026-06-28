@@ -28,6 +28,9 @@ export class Bullet extends Actor {
     onInitialize(engine) {
         const sprite = Resources.Bullet.toSprite()
         this.graphics.use(sprite)
+        // ensure bullet renders above background and objects
+        this.z = 20
+        console.log('Bullet init', { x: this.xPos, y: this.yPos, z: this.z, sprite: !!sprite })
         this.pos = new Vector(this.xPos, this.yPos)
         this.vel = new Vector(this.xSpeed, this.ySpeed)
         this.on('collisionstart', (e) => this.hitSomething(e))

@@ -16,6 +16,7 @@ export class SceneOne extends Scene {
     playerPosition = new Vector(-7800, 800)
     player
     music = Resources.track3
+    zombieSpawned = false
 
     onInitialize(engine) {
 
@@ -81,8 +82,8 @@ export class SceneOne extends Scene {
         cam.strategy.elasticToActor(this.player, 0.2, 0.6)
 
 
-        const bulletpickup = new BulletPickup(15000, 1025)
-        this.add(bulletpickup)
+        const injection = new InjectionPickup(15000, 1025)
+        this.add(injection)
 
 
         this.add(engine.ui)
@@ -114,6 +115,15 @@ export class SceneOne extends Scene {
         this.music.play()
         this.fadeIn()
         this.player.pos = this.playerPosition
+
+
+        if (this.player.key == true && this.zombieSpawned == false) {
+            const zombie1 = new Zombie(this.player, 12000, 1025)
+            this.add(zombie1)
+            const zombie2 = new Zombie(this.player, 7000, 1025)
+            this.add(zombie2)
+            this.zombieSpawned = true
+        }
     }
 
     onDeactivate() {
