@@ -11,6 +11,7 @@ import { KeyPickup } from "./keypickup.js"
 export class Dialogue extends ScreenElement {
     label
     engine
+    wait
     constructor() {
         super({})
         this.label = new Label({
@@ -35,22 +36,32 @@ export class Dialogue extends ScreenElement {
 
         switch (dialogue) {
             case 'shoot the zombie':
+                this.wait = 800
                 this.label.text = 'Ah a zombie!'
+
                 break
             case 'Sanity tutorial':
+                this.wait = 1200
                 this.label.text = '...Guess there is one less to worry about.'
                 break
             case 'Cure the zombie':
+                this.wait = 1200
                 this.label.text = 'Another one bites... the cure? Nevermind-'
                 break
             case 'Key room':
-                this.label.text = 'One day im going to open the wrong door, i just know it'
+                this.wait = 2000
+                this.label.text = 'One day im going to open the wrong door,\n i just know it'
                 break
+            case 'great':
+                this.wait = 1500
+                this.label.text = "I'm already getting to old for this shit"
+                break
+
         }
 
         parent.addChild(this.label)
         parent.engine.clock.schedule(() => {
             parent.removeChild(this.label)
-        }, 1000)
+        }, this.wait)
     }
 }
