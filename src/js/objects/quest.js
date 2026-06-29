@@ -76,7 +76,7 @@ export class Quest extends ScreenElement {
                 this.player.stuck = false
                 this.label.text = 'Walk over to the injection and pick it up by pressing E'
                 this.currentQuest = 'Injection pickup tutorial'
-
+                this.engine.player.dialogue.updateDialogue('Sanity tutorial', this.engine.player)
                 const injection = new InjectionPickup(-6000, 850, 'tutorial injection')
                 this.scene.add(injection)
                 break
@@ -107,6 +107,7 @@ export class Quest extends ScreenElement {
                 this.label.text = 'Press B to check your inventory'
                 this.currentQuest = 'Inventorian'
                 this.player.stuck = true
+                this.engine.player.dialogue.updateDialogue('Cure the zombie', this.engine.player)
                 break
 
             case "Inventorian":
