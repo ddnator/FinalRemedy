@@ -298,8 +298,7 @@ export class Player extends Actor {
 
             const zombie3 = new Zombie(this.player, 180, 825)
             zombie3.vel = new Vector(100, 0)
-            Resources.zombieMoan.play()
-            Resources.footsteps.play()
+
             this.cutsceneStarted = false
         }
     }
