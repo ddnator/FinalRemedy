@@ -130,6 +130,8 @@ export class SceneOne extends Scene {
         this.fadeOut().then(() => this.music.pause())
     }
 
+
+
     fadeIn() {
         this.music.volume = 0
         const fade = setInterval(() => {
