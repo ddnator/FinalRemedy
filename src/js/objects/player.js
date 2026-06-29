@@ -37,6 +37,8 @@ export class Player extends Actor {
     grounded = false
     jumpReady = true
     crouched = false
+    cutscene = false
+    cutsceneStarted = false
     x
     y
     dialogue = new Dialogue()
@@ -268,18 +270,35 @@ export class Player extends Actor {
     }
 
     questChecker() {
+        if (this.cutscene == true) {
 
-        const entityList = this.scene.world.entityManager.entities
 
-        entityList.forEach(element => {
-            if (element instanceof Quest) {
-                this.quest = element
+            if (this.quest.currentQuest == 'Survival') {
+                const entityList = this.scene.world.entityManager.entities
+
+                entityList.forEach(element => {
+                    if (element instanceof Quest) {
+                        this.quest = element
+                    }
+                })
+                this.quest.updateQuest()
+                this.stuck = true
+                this.cutsceneStarted = true
+                this.cutsceneMaker()
             }
-        });
-        if (this.quest.currentQuest === 'Back on track') {
-            this.stuck == true
+        }
+    }
 
+    cutsceneMaker() {
+        if (this.cutsceneStarted == true) {
+            this.vel = new Vector(150, 0)
+            this.pos = new Vector(200, 825)
 
+            const zombie3 = new Zombie(this.player, 180, 825)
+            zombie3.vel = new Vector(100, 0)
+            Resources.zombieMoan.play()
+            Resources.footsteps.play()
+            this.cutsceneStarted = false
         }
     }
 

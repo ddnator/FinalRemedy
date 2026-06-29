@@ -154,17 +154,9 @@ export class Scenefour extends Scene {
 
         if (this.player.pos.x > 5900) {
 
-            if (this.quest == 'Survival') {
-                const entityList = this.scene.world.entityManager.entities
-
-                entityList.forEach(element => {
-                    if (element instanceof Quest) {
-                        this.quest = element
-                    }
-                })
-                this.quest.updateQuest()
-            }
             this.engine.goToScene('sceneone')
+            this.player.cutscene = true
+
         }
         // if (Resources.track2.getPlaybackPosition) {
         //     Resources.track2.play()
