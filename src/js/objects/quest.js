@@ -6,6 +6,7 @@ import { Zombie } from '../objects/zombie.js'
 import { Player } from '../objects/player.js'
 import { InjectionPickup } from "./injectionpickup.js"
 import { Door2 } from "../scenes/scene1/door2.js"
+import { Door1 } from "../scenes/scene1/door1.js"
 import { KeyPickup } from "./keypickup.js"
 
 export class Quest extends ScreenElement {
@@ -117,14 +118,17 @@ export class Quest extends ScreenElement {
 
                 const door2 = new Door2(this.player, 'door2locked')
                 this.scene.add(door2)
+
+
                 break
 
             case "Cityseeking":
                 this.label.text = 'Find the key to the door'
                 this.currentQuest = 'Keyfinder'
                 this.player.stuck = false
-
-
+                const door1 = new Door1()
+                this.scene.add(door1)
+                this.engine.player.dialogue.updateDialogue('Key room', this.engine.player)
 
                 break
 
@@ -132,12 +136,15 @@ export class Quest extends ScreenElement {
                 this.label.text = 'Open the door'
                 this.currentQuest = 'Doorio'
                 this.player.stuck = false
+
+
                 break
 
             case "Doorio":
                 this.label.text = 'Explore'
                 this.currentQuest = 'Climb'
                 this.player.stuck = false
+                this.engine.player.dialogue.updateDialogue('great', this.engine.player)
                 break
 
             case "Climb":

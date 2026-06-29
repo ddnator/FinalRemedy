@@ -12,6 +12,7 @@ import { Wall } from './wall.js'
 import { PlayerStandHitbox } from './playerstandhitbox.js'
 import { KillBox } from "./killbox.js"
 import { Dialogue } from "./dialogue.js"
+import { GameOver } from "../gameover.js"
 
 
 
@@ -43,6 +44,7 @@ export class Player extends Actor {
     x
     y
     dialogue = new Dialogue()
+
 
 
     constructor(xpos, ypos) {
@@ -80,7 +82,7 @@ export class Player extends Actor {
         this.useSelectedItem(engine)
         this.checkInjectionPosition()
         this.checkQuest(engine, delta)
-        this.healthChecker()
+        this.healthChecker(engine)
         this.questKeyChecker()
         this.questChecker(engine)
 
@@ -88,9 +90,12 @@ export class Player extends Actor {
 
 
 
-    healthChecker() {
+    healthChecker(engine) {
         if (this.health <= 0) {
             this.kill()
+
+            this.engine.add('gameover', GameOver)
+            this.engine.goToScene('gameover')
         }
     }
 
@@ -390,7 +395,7 @@ export class Player extends Actor {
             flashes--;
 
             if (flashes > 0) {
-                this.scene.engine.clock.schedule(flash, 50);
+                this.scene.engine.clock.schedule(flash, 10);
             } else {
                 this.graphics.current.tint = Color.White;
             }

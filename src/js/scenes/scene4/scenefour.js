@@ -113,7 +113,7 @@ export class Scenefour extends Scene {
         this.add(this.ui)
 
 
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 3; i++) {
             const bullet = new BulletPickup(108, 950)
             this.add(bullet)
         }
