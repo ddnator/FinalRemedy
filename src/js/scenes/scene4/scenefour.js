@@ -10,6 +10,7 @@ import { Quest } from '../../objects/quest.js'
 import { Wall } from "../../objects/wall.js"
 import { Floor } from "../../objects/floor.js"
 import { KillBox } from "../../objects/killbox.js"
+import { SceneOne } from "../scene1/sceneone.js"
 
 
 
@@ -18,9 +19,9 @@ export class Scenefour extends Scene {
     player
     music = Resources.track4
     ui
+
+
     onInitialize(engine) {
-
-
 
 
 
@@ -123,14 +124,13 @@ export class Scenefour extends Scene {
             this.add(injection)
         }
 
-        const zombie1 = new Zombie(this.player, 1020, 840)
-        this.add(zombie1)
-        const zombie2 = new Zombie(this.player, 1200, 860)
-        this.add(zombie2)
+        // const zombie1 = new Zombie(this.player, 1020, 840)
+        // this.add(zombie1)
+        // const zombie2 = new Zombie(this.player, 1200, 860)
+        // this.add(zombie2)
 
-        const zombie3 = new Zombie(this.player, 3600, 700)
-        this.add(zombie3)
-
+        // const zombie3 = new Zombie(this.player, 3600, 700)
+        // this.add(zombie3)
 
 
 
@@ -152,12 +152,21 @@ export class Scenefour extends Scene {
             cam.pos.x = Math.min(Math.max(cam.pos.x, minX), maxX)
         }
 
+        if (this.player.pos.x > 5900) {
+
+            this.engine.goToScene('sceneone')
+            this.player.cutscene = true
+
+        }
         // if (Resources.track2.getPlaybackPosition) {
         //     Resources.track2.play()
         // }
 
 
     }
+
+
+
     onActivate() {
         this.music.loop = true
         this.music.play()

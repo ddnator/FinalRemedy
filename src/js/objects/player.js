@@ -37,6 +37,8 @@ export class Player extends Actor {
     grounded = false
     jumpReady = true
     crouched = false
+    cutscene = false
+    cutsceneStarted = false
     x
     y
     dialogue = new Dialogue()
@@ -79,6 +81,7 @@ export class Player extends Actor {
         this.checkQuest(engine, delta)
         this.healthChecker()
         this.questKeyChecker()
+        this.questChecker(engine)
         //this.checkQuest(engine, delta)
     }
 
@@ -92,15 +95,19 @@ export class Player extends Actor {
 
     checkMovement(engine, delta) {
         let xAccel = 0;
-        let yAccel = 300;
+        let yAccel = 400;
 
         if (engine.input.keyboard.isHeld(Keys.A) && !this.stuck && this.graphics._current !== 'shoot') {
-            this.graphics.use('walk')
+            if (this.graphics._current !== 'crouch') {
+                this.graphics.use('walk')
+            }
             xAccel = -20; // Use an acceleration value instead of a massive direct velocity
             this.graphics.flipHorizontal = true;
             this.graphics.current.tint = Color.White
         } else if (engine.input.keyboard.isHeld(Keys.D) && !this.stuck && this.graphics._current !== 'shoot') {
-            this.graphics.use('walk')
+            if (this.graphics._current !== 'crouch') {
+                this.graphics.use('walk')
+            }
             xAccel = 20;
             this.graphics.flipHorizontal = false;
             this.graphics.current.tint = Color.White
@@ -121,25 +128,26 @@ export class Player extends Actor {
             const oldHeight = this.height
             const oldWidth = this.width
 
-            this.scale = new Vector(2.24, 2.24)
+            this.graphics.use('crouch')
 
             const newHeight = this.height
             const newWidth = this.width
 
             this.playerStandHitbox = new PlayerStandHitbox((oldWidth - newWidth), (oldHeight - newHeight) / 2, 0, -newHeight / 2)
 
+            // this.height = 200
             this.addChild(this.playerStandHitbox)
 
             this.pos.y += (oldHeight - newHeight) / 2
             this.crouched = true
-            //Change Sprite
 
         } else if (engine.input.keyboard.wasPressed(Keys.C) && !this.stuck && this.crouched && this.canStandUp) {
             const oldHeight = this.height
 
-            this.scale = new Vector(4.5, 4.5)
+            this.graphics.use('idle')
 
             this.crouched = false
+
             const newHeight = this.height
 
 
@@ -149,10 +157,10 @@ export class Player extends Actor {
         }
 
         if (xAccel !== 0) {
-            if (this.vel.x < 1000 && this.vel.x > -1000) {
+            if (this.vel.x < 10000 && this.vel.x > -1000) {
                 this.body.applyLinearImpulse(new Vector(xAccel * delta, 0));
             }
-        } else if (xAccel <= 1 && this.graphics._current !== 'shoot') {
+        } else if (xAccel <= 1 && this.graphics._current !== 'shoot' && this.graphics._current !== 'crouch') {
             this.graphics.use('idle')
         }
 
@@ -263,6 +271,39 @@ export class Player extends Actor {
         }
     }
 
+    questChecker() {
+        if (this.cutscene == true) {
+
+
+            if (this.quest.currentQuest == 'Survival') {
+                const entityList = this.scene.world.entityManager.entities
+
+                entityList.forEach(element => {
+                    if (element instanceof Quest) {
+                        this.quest = element
+                    }
+                })
+                this.quest.updateQuest()
+                this.stuck = true
+                this.cutsceneStarted = true
+                this.cutsceneMaker()
+            }
+        }
+    }
+
+    cutsceneMaker() {
+        if (this.cutsceneStarted == true) {
+            this.vel = new Vector(150, 0)
+            this.pos = new Vector(200, 825)
+
+            const zombie3 = new Zombie(this.player, 180, 825)
+            zombie3.vel = new Vector(100, 0)
+            Resources.zombieMoan.play()
+            Resources.footsteps.play()
+            this.cutsceneStarted = false
+        }
+    }
+
     shoot() {
         this.graphics.use('shoot')
 
@@ -284,9 +325,9 @@ export class Player extends Actor {
             this.knockback(1)
         }
 
-        bullet.events.on("exitviewport", (e) => bullet.kill())
-        this.scene.add(bullet)
 
+        this.scene.add(bullet)
+        console.log(this.scene)
         const bulletIndex = this.inventory.indexOf("bullet")
         this.inventory.splice(bulletIndex, 1)
 
@@ -395,6 +436,13 @@ export class Player extends Actor {
             spriteHeight: 102
         }
 
+        const configGrid4 = {
+            rows: 1,
+            columns: 5,
+            spriteWidth: 73,
+            spriteHeight: 102
+        }
+
         const frameSpeed = 60;
 
         const playerShootSheet = SpriteSheet.fromImageSource({
@@ -412,9 +460,13 @@ export class Player extends Actor {
             grid: configGrid3
         });
 
+        const playerCrouchSheet = SpriteSheet.fromImageSource({
+            image: Resources.PlayerCrouch,
+            grid: configGrid4
+        });
+
 
         this.shootAnim = Animation.fromSpriteSheet(playerShootSheet, range(0, 5), frameSpeed, AnimationStrategy.End);
-
         this.shootAnim.scale = new Vector(1, 1)
 
         this.idleAnim = Animation.fromSpriteSheet(playerIdleSheet, range(0, 15), 120, AnimationStrategy.Loop);
@@ -423,9 +475,13 @@ export class Player extends Actor {
         this.walkAnim = Animation.fromSpriteSheet(playerWalkSheet, range(0, 8), 120, AnimationStrategy.Loop);
         this.walkAnim.scale = new Vector(1, 1)
 
+        this.crouchAnim = Animation.fromSpriteSheet(playerCrouchSheet, range(0, 4), 90, AnimationStrategy.Loop);
+        this.crouchAnim.scale = new Vector(1, 1)
+
         this.graphics.add('shoot', this.shootAnim)
         this.graphics.add('idle', this.idleAnim)
         this.graphics.add('walk', this.walkAnim)
+        this.graphics.add('crouch', this.crouchAnim)
 
     }
 

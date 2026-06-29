@@ -10,7 +10,7 @@ import { BulletPickup } from "../../objects/bulletpickup.js"
 import { Quest } from '../../objects/quest.js'
 import { Wall } from "../../objects/wall.js"
 import { Door1 } from "./door1.js"
-
+import { PlayerHitboxChecker } from "../../objects/playerhitboxchecker.js"
 import { KeyPickup } from "../../objects/keypickup.js"
 
 
@@ -37,7 +37,11 @@ export class SceneTwo extends Scene {
         this.add(wall2)
 
         const wall3 = new Wall(500, 700, 2664, 400)
+        wall3.isFence = true
         this.add(wall3)
+        const wall3PlayerChecker = new PlayerHitboxChecker(500, 400, 2664, 800)
+        this.add(wall3PlayerChecker)
+
 
         //Background
 
@@ -79,7 +83,7 @@ export class SceneTwo extends Scene {
 
         this.player = engine.player
         this.player.pos = this.playerPosition
-        this.add(this.player)
+        
 
         const injection = new InjectionPickup(3600, 650)
         this.add(injection)
@@ -152,7 +156,7 @@ export class SceneTwo extends Scene {
 
 
     onActivate() {
-
+        this.add(this.player)
         this.music.loop = true
         this.music.play()
         this.fadeIn()
@@ -161,6 +165,7 @@ export class SceneTwo extends Scene {
 
     onDeactivate() {
         this.fadeOut().then(() => this.music.pause())
+        this.player.kill()
     }
 
     fadeIn() {

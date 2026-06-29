@@ -68,10 +68,9 @@ export class SceneOne extends Scene {
 
         this.add(door1)
 
-
-        console.log(engine.player.pos)
-        this.add(engine.player)
         this.player = engine.player
+        
+        
         //pickup items
         const bulletPickupQuest = new BulletPickup(-7000, 1025, true)
         this.add(bulletPickupQuest)
@@ -111,11 +110,12 @@ export class SceneOne extends Scene {
     }
 
     onActivate() {
+        this.add(this.player)
         this.music.loop = true
         this.music.play()
         this.fadeIn()
         this.player.pos = this.playerPosition
-
+        console.log(this.engine.player)
 
         if (this.player.key == true && this.zombieSpawned == false) {
             const zombie1 = new Zombie(this.player, 12000, 1025)
@@ -128,7 +128,10 @@ export class SceneOne extends Scene {
 
     onDeactivate() {
         this.fadeOut().then(() => this.music.pause())
+        this.player.kill()
     }
+
+
 
     fadeIn() {
         this.music.volume = 0
