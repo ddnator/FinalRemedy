@@ -92,7 +92,7 @@ export class Player extends Actor {
 
     checkMovement(engine, delta) {
         let xAccel = 0;
-        let yAccel = 300;
+        let yAccel = 400;
 
         if (engine.input.keyboard.isHeld(Keys.A) && !this.stuck && this.graphics._current !== 'shoot') {
             this.graphics.use('walk')
@@ -138,7 +138,7 @@ export class Player extends Actor {
             this.graphics.use('idle')
 
             this.crouched = false
-            
+
             const newHeight = this.height
 
 
@@ -435,5 +435,5 @@ export class Player extends Actor {
 
 
 
-    
+
 }
