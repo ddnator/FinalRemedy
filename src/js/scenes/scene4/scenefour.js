@@ -155,7 +155,7 @@ export class Scenefour extends Scene {
         if (this.player.pos.x > 5900) {
 
             this.engine.goToScene('sceneone')
-            this.player.cutscene = true
+            
 
         }
         // if (Resources.track2.getPlaybackPosition) {
@@ -172,7 +172,7 @@ export class Scenefour extends Scene {
         this.music.play()
 
         if (this.ui && this.ui.currentquest && this.ui.currentquest.currentQuest === 'Climb') {
-            this.ui.currentquest.updateQuest()
+            // this.ui.currentquest.updateQuest()
         }
     }
 

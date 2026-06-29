@@ -152,8 +152,21 @@ export class Quest extends ScreenElement {
                 this.player.stuck = false
                 break
 
+            case 'Back on track':
+                this.currentQuest = 'finished'
+                this.engine.player.dialogue.updateDialogue('cutscene', this.engine.player)
 
+                this.scene.engine.clock.schedule(() => {
+                    if (this.player.sanity > 50) {
+                        Resources.zombieHeal.play()
+                    } else {
+                        Resources.PlayerShoot.play()
+                    }
+                }, 2000)
 
+                this.scene.engine.clock.schedule(() => {
+                    window.location.reload()
+                }, 4000)
         }
     }
 }

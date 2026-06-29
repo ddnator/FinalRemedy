@@ -17,6 +17,7 @@ export class SceneOne extends Scene {
     player
     music = Resources.track3
     zombieSpawned = false
+    ui
 
     onInitialize(engine) {
 
@@ -86,7 +87,7 @@ export class SceneOne extends Scene {
 
 
         this.add(engine.ui)
-
+        this.ui = engine.ui
 
     }
 
@@ -114,7 +115,13 @@ export class SceneOne extends Scene {
         this.music.loop = true
         this.music.play()
         this.fadeIn()
-        this.player.pos = this.playerPosition
+        if (this.ui.currentquest.currentQuest === 'Climb') {
+                this.ui.currentquest.updateQuest()
+            }
+        if(!this.player.cutsceneStarted){
+            this.player.pos = this.playerPosition
+        }
+
         console.log(this.engine.player)
 
         if (this.player.key == true && this.zombieSpawned == false) {

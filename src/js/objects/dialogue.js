@@ -32,7 +32,6 @@ export class Dialogue extends ScreenElement {
 
     updateDialogue(dialogue, parent) {
         this.label.pos.y = -parent.height / 8
-
         switch (dialogue) {
             case 'shoot the zombie':
                 this.label.text = 'Ah a zombie!'
@@ -46,11 +45,13 @@ export class Dialogue extends ScreenElement {
             case 'just random':
                 this.label.text = 'oh what'
                 break
+                case 'cutscene':
+                    this.label.text= "Shit, I can't move my like"
         }
 
         parent.addChild(this.label)
         parent.engine.clock.schedule(() => {
             parent.removeChild(this.label)
-        }, 3000)
+        }, 1000)
     }
 }
