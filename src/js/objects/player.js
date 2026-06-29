@@ -63,7 +63,7 @@ export class Player extends Actor {
         //this.pos = new Vector(engine.drawWidth - 1600, 850)
 
         this.on('collisionstart', (e) => this.hitSomething(e))
-        this.scale = new Vector(4.5, 4.5)
+        this.scale = new Vector(5, 5)
         this.injection.pos = new Vector(80, 0)
 
         this.engine = engine
@@ -393,7 +393,7 @@ export class Player extends Actor {
 
         const configGrid4 = {
             rows: 1,
-            columns: 5,
+            columns: 6,
             spriteWidth: 73,
             spriteHeight: 102
         }
@@ -430,7 +430,7 @@ export class Player extends Actor {
         this.walkAnim = Animation.fromSpriteSheet(playerWalkSheet, range(0, 8), 120, AnimationStrategy.Loop);
         this.walkAnim.scale = new Vector(1, 1)
 
-        this.crouchAnim = Animation.fromSpriteSheet(playerCrouchSheet, range(0, 4), 90, AnimationStrategy.Loop);
+        this.crouchAnim = Animation.fromSpriteSheet(playerCrouchSheet, range(0, 5), 90, AnimationStrategy.Loop);
         this.crouchAnim.scale = new Vector(1, 1)
 
         this.graphics.add('shoot', this.shootAnim)
