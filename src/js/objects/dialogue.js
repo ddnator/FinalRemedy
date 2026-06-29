@@ -51,6 +51,6 @@ export class Dialogue extends ScreenElement {
         parent.addChild(this.label)
         parent.engine.clock.schedule(() => {
             parent.removeChild(this.label)
-        }, 1000)
+        }, 2000)
     }
 }
