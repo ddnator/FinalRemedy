@@ -150,8 +150,9 @@ export class Zombie extends Actor {
     }
 
     walkToPlayer() {
-        if (!this.player) {
-            return
+        if (!this.player || this.animBusy) {
+            this.vel = Vector.Zero;
+            return;
         }
 
         const direction = this.player.pos.sub(this.pos).normalize()
