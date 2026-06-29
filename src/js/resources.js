@@ -12,14 +12,15 @@ const Resources = {
     PlayerCrouch: new ImageSource('images/player_crouch.png'),
 
     //zombies
-    Zombie: new ImageSource('images/zombie_placeholder.png'),
+    ZombieWalk: new ImageSource('/images/zomboi_walk.png'),
 
 
     //player sounds
     shoot: new Sound('sounds/objects/gunshot.mp3'),
     zombieHeal: new Sound('sounds/objects/zombieheal.mp3'),
     zombieHit: new Sound('sounds/objects/zombiehit.mp3'),
-
+    zombieMoan: new Sound('sounds/objects/zombiemoan.mp3'),
+    footsteps: new Sound('sounds/objects/footsteps.mp3'),
 
 
     //music

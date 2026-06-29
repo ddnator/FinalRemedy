@@ -1,4 +1,4 @@
-import { Actor, Engine, Vector, CollisionType, DegreeOfFreedom, Scene, Sound } from "excalibur"
+import { Actor, Engine, Vector, CollisionType, DegreeOfFreedom, Scene, Sound, SpriteSheet, Sprite, range, AnimationStrategy, Animation } from "excalibur"
 import { Resources, ResourceLoader } from '../resources.js'
 import { Player } from "./player.js"
 import { Quest } from "./quest.js"
@@ -13,8 +13,8 @@ export class Zombie extends Actor {
 
     constructor(player, x, y, quest) {
         super({
-            width: Resources.Zombie.width,
-            height: Resources.Zombie.height
+            width: 35,
+            height: Resources.ZombieWalk.height
         })
         this.player = player
         this.body.collisionType = CollisionType.Active
@@ -24,14 +24,18 @@ export class Zombie extends Actor {
 
         this.quest = quest
 
-        const sprite = Resources.Zombie.toSprite()
+
         this.scale = new Vector(0.9, 0.9)
 
-        this.graphics.use(sprite)
+
     }
 
     onInitialize(engine) {
 
+        this.setupAnimations();
+
+        this.graphics.use('walk')
+        this.scale = new Vector(4.5, 4.5)
         this.pos = new Vector(this.x, this.y)
     }
 
@@ -145,8 +149,32 @@ export class Zombie extends Actor {
         } else if (direction.x > 0) {
             this.graphics.flipHorizontal = false
         }
+
+
+
     }
 
+    setupAnimations() {
+        const configGrid = {
+            rows: 1,
+            columns: 6,
+            spriteWidth: 73,
+            spriteHeight: 102
+        };
+
+        const ZombieWalkSheet = SpriteSheet.fromImageSource({
+            image: Resources.ZombieWalk,
+            grid: configGrid
+        });
+
+
+
+        this.walkAnim = Animation.fromSpriteSheet(ZombieWalkSheet, range(0, 5), 120, AnimationStrategy.Loop);
+        this.walkAnim.scale = new Vector(1, 1)
+
+        this.graphics.add('walk', this.walkAnim)
+
+    }
 
 
 

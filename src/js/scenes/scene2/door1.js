@@ -50,6 +50,7 @@ export class Door1 extends Actor {
     onPostUpdate(engine) {
         if (this.playerInRange && engine.input.keyboard.wasPressed(Keys.E)) {
             this.scene.playerPosition = engine.player.pos
+            console.log(this.scene)
             this.scene.engine.goToScene('sceneone')
         }
     }

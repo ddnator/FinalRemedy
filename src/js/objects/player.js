@@ -1,4 +1,4 @@
-import { Actor, Engine, Vector, Keys, EdgeCollider, DegreeOfFreedom, CollisionType, linear, ParallaxComponent, SpriteSheet, Sprite, range, AnimationStrategy, Animation } from "excalibur"
+import { Actor, Engine, Vector, Keys, EdgeCollider, DegreeOfFreedom, CollisionType, linear, ParallaxComponent, SpriteSheet, Sprite, range, AnimationStrategy, Animation, Color } from "excalibur"
 import { Resources, ResourceLoader } from '../resources.js'
 import { Bullet } from './bullet.js'
 import { Zombie } from './zombie.js'
@@ -37,6 +37,8 @@ export class Player extends Actor {
     grounded = false
     jumpReady = true
     crouched = false
+    cutscene = false
+    cutsceneStarted = false
     x
     y
     dialogue = new Dialogue()
@@ -101,12 +103,14 @@ export class Player extends Actor {
             }
             xAccel = -20; // Use an acceleration value instead of a massive direct velocity
             this.graphics.flipHorizontal = true;
+            this.graphics.current.tint = Color.White
         } else if (engine.input.keyboard.isHeld(Keys.D) && !this.stuck && this.graphics._current !== 'shoot') {
             if (this.graphics._current !== 'crouch') {
                 this.graphics.use('walk')
             }
             xAccel = 20;
             this.graphics.flipHorizontal = false;
+            this.graphics.current.tint = Color.White
         } else if (this.grounded) {
             this.vel = new Vector(this.vel.x * 0.8, this.vel.y)
         }
@@ -153,7 +157,7 @@ export class Player extends Actor {
         }
 
         if (xAccel !== 0) {
-            if (this.vel.x < 1000 && this.vel.x > -1000) {
+            if (this.vel.x < 10000 && this.vel.x > -1000) {
                 this.body.applyLinearImpulse(new Vector(xAccel * delta, 0));
             }
         } else if (xAccel <= 1 && this.graphics._current !== 'shoot' && this.graphics._current !== 'crouch') {
@@ -268,18 +272,35 @@ export class Player extends Actor {
     }
 
     questChecker() {
+        if (this.cutscene == true) {
 
-        const entityList = this.scene.world.entityManager.entities
 
-        entityList.forEach(element => {
-            if (element instanceof Quest) {
-                this.quest = element
+            if (this.quest.currentQuest == 'Survival') {
+                const entityList = this.scene.world.entityManager.entities
+
+                entityList.forEach(element => {
+                    if (element instanceof Quest) {
+                        this.quest = element
+                    }
+                })
+                this.quest.updateQuest()
+                this.stuck = true
+                this.cutsceneStarted = true
+                this.cutsceneMaker()
             }
-        });
-        if (this.quest.currentQuest === 'Back on track') {
-            this.stuck == true
+        }
+    }
 
+    cutsceneMaker() {
+        if (this.cutsceneStarted == true) {
+            this.vel = new Vector(150, 0)
+            this.pos = new Vector(200, 825)
 
+            const zombie3 = new Zombie(this.player, 180, 825)
+            zombie3.vel = new Vector(100, 0)
+            Resources.zombieMoan.play()
+            Resources.footsteps.play()
+            this.cutsceneStarted = false
         }
     }
 
@@ -304,9 +325,9 @@ export class Player extends Actor {
             this.knockback(1)
         }
 
-        bullet.events.on("exitviewport", (e) => bullet.kill())
-        this.scene.add(bullet)
 
+        this.scene.add(bullet)
+        console.log(this.scene)
         const bulletIndex = this.inventory.indexOf("bullet")
         this.inventory.splice(bulletIndex, 1)
 
@@ -340,9 +361,33 @@ export class Player extends Actor {
         }
     }
 
+
+    flashRed() {
+        let flashes = 6;
+
+        const flash = () => {
+            this.graphics.current.tint =
+                flashes % 2 === 0 ? Color.Red : Color.White;
+
+            flashes--;
+
+            if (flashes > 0) {
+                this.scene.engine.clock.schedule(flash, 50);
+            } else {
+                this.graphics.current.tint = Color.White;
+            }
+        };
+
+        flash();
+    }
+
+
     hitSomething(e) {
         if (e.other.owner instanceof Zombie && !this.hitOnCooldown) {
             this.hitOnCooldown = true
+
+            this.flashRed();
+
             const direction = e.other.owner.pos.sub(this.pos).normalize().x
             this.knockback(direction)
 
