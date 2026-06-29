@@ -151,12 +151,15 @@ export class SceneThree extends Scene {
         this.ui.z = 9999
         this.add(this.ui)
 
-        for (let i = 0; i < 2; i++) {
+        for (let i = 0; i < 1; i++) {
             const injection = new InjectionPickup(2300, 800)
             this.add(injection)
         }
 
-
+        if (this.ui && this.ui.currentquest && this.ui.currentquest.currentQuest === 'Doorio') {
+            this.ui.currentquest.updateQuest()
+            console.log(this.ui.currentquest.currentQuest)
+        }
 
 
     }
@@ -184,17 +187,11 @@ export class SceneThree extends Scene {
         this.music.loop = true
         this.music.play()
 
-        if (this.ui && this.ui.currentquest && this.ui.currentquest.currentQuest === 'Doorio') {
-            this.ui.currentquest.updateQuest()
-        }
 
-        if (this.player) {
-            this.player.graphics.use(Resources.Player.toSprite())
             this.player.scale = new Vector(4.5, 4.5)
-            this.player.opacity = 1
-            this.player.pos = new Vector(0, 750)
+
+            this.player.pos = new Vector(0, 700)
             this.add(this.player)
-        }
 
 
     }

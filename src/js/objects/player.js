@@ -12,6 +12,7 @@ import { Wall } from './wall.js'
 import { PlayerStandHitbox } from './playerstandhitbox.js'
 import { KillBox } from "./killbox.js"
 import { Dialogue } from "./dialogue.js"
+import { GameOver } from "../gameover.js"
 
 
 
@@ -39,9 +40,11 @@ export class Player extends Actor {
     crouched = false
     cutscene = false
     cutsceneStarted = false
+    cutscenePart = '1'
     x
     y
     dialogue = new Dialogue()
+
 
 
     constructor(xpos, ypos) {
@@ -79,17 +82,20 @@ export class Player extends Actor {
         this.useSelectedItem(engine)
         this.checkInjectionPosition()
         this.checkQuest(engine, delta)
-        this.healthChecker()
+        this.healthChecker(engine)
         this.questKeyChecker()
         this.questChecker(engine)
-        //this.checkQuest(engine, delta)
+
     }
 
 
 
-    healthChecker() {
+    healthChecker(engine) {
         if (this.health <= 0) {
             this.kill()
+
+            this.engine.add('gameover', GameOver)
+            this.engine.goToScene('gameover')
         }
     }
 
@@ -97,25 +103,25 @@ export class Player extends Actor {
         let xAccel = 0;
         let yAccel = 400;
 
-        if (engine.input.keyboard.isHeld(Keys.A) && !this.stuck && this.graphics._current !== 'shoot') {
+        if (engine.input.keyboard.isHeld(Keys.A) && !this.stuck && this.graphics._current !== 'shoot' && !this.cutsceneStarted) {
             if (this.graphics._current !== 'crouch') {
                 this.graphics.use('walk')
             }
             xAccel = -20; // Use an acceleration value instead of a massive direct velocity
             this.graphics.flipHorizontal = true;
             this.graphics.current.tint = Color.White
-        } else if (engine.input.keyboard.isHeld(Keys.D) && !this.stuck && this.graphics._current !== 'shoot') {
+        } else if (engine.input.keyboard.isHeld(Keys.D) && !this.stuck && this.graphics._current !== 'shoot' && !this.cutsceneStarted) {
             if (this.graphics._current !== 'crouch') {
                 this.graphics.use('walk')
             }
             xAccel = 20;
             this.graphics.flipHorizontal = false;
             this.graphics.current.tint = Color.White
-        } else if (this.grounded) {
+        } else if (this.grounded && !this.cutsceneStarted) {
             this.vel = new Vector(this.vel.x * 0.8, this.vel.y)
         }
 
-        if (engine.input.keyboard.wasPressed(Keys.W) && this.grounded && this.jumpReady && !this.stuck && !this.crouched) {
+        if (engine.input.keyboard.wasPressed(Keys.W) && this.grounded && this.jumpReady && !this.stuck && !this.crouched && !this.cutsceneStarted) {
             this.body.applyLinearImpulse(new Vector(0, -yAccel * delta))
             this.jumpReady = false
 
@@ -124,7 +130,7 @@ export class Player extends Actor {
             }, 500)
         }
 
-        if (engine.input.keyboard.wasPressed(Keys.C) && !this.stuck && !this.crouched) {
+        if (engine.input.keyboard.wasPressed(Keys.C) && !this.stuck && !this.crouched && !this.cutsceneStarted) {
             const oldHeight = this.height
             const oldWidth = this.width
 
@@ -141,7 +147,7 @@ export class Player extends Actor {
             this.pos.y += (oldHeight - newHeight) / 2
             this.crouched = true
 
-        } else if (engine.input.keyboard.wasPressed(Keys.C) && !this.stuck && this.crouched && this.canStandUp) {
+        } else if (engine.input.keyboard.wasPressed(Keys.C) && !this.stuck && this.crouched && this.canStandUp && !this.cutsceneStarted) {
             const oldHeight = this.height
 
             this.graphics.use('idle')
@@ -156,11 +162,11 @@ export class Player extends Actor {
             //change sprite
         }
 
-        if (xAccel !== 0) {
-            if (this.vel.x < 10000 && this.vel.x > -1000) {
+        if (xAccel !== 0 && !this.cutsceneStarted) {
+            if (this.vel.x < 10000 && this.vel.x > -10000 && !this.cutsceneStarted) {
                 this.body.applyLinearImpulse(new Vector(xAccel * delta, 0));
             }
-        } else if (xAccel <= 1 && this.graphics._current !== 'shoot' && this.graphics._current !== 'crouch') {
+        } else if (xAccel <= 1 && this.graphics._current !== 'shoot' && this.graphics._current !== 'crouch' && !this.cutsceneStarted) {
             this.graphics.use('idle')
         }
 
@@ -272,35 +278,52 @@ export class Player extends Actor {
     }
 
     questChecker() {
-        if (this.cutscene == true) {
+        if (this.cutsceneStarted == false) {
 
+            const entityList = this.scene.world.entityManager.entities
+
+            entityList.forEach(element => {
+                if (element instanceof Quest) {
+                    this.quest = element
+                }
+            })
 
             if (this.quest.currentQuest == 'Survival') {
-                const entityList = this.scene.world.entityManager.entities
-
-                entityList.forEach(element => {
-                    if (element instanceof Quest) {
-                        this.quest = element
-                    }
-                })
                 this.quest.updateQuest()
                 this.stuck = true
                 this.cutsceneStarted = true
                 this.cutsceneMaker()
+                this.pos = new Vector(4612, 801)
             }
+        } else {
+            this.vel = new Vector(0,0)
+            this.graphics.flipHorizontal = false
         }
     }
 
     cutsceneMaker() {
-        if (this.cutsceneStarted == true) {
-            this.vel = new Vector(150, 0)
-            this.pos = new Vector(200, 825)
 
-            const zombie3 = new Zombie(this.player, 180, 825)
-            zombie3.vel = new Vector(100, 0)
-            Resources.zombieMoan.play()
-            Resources.footsteps.play()
-            this.cutsceneStarted = false
+        const entityList = this.scene.world.entityManager.entities
+
+        entityList.forEach(element => {
+            if (element instanceof Quest) {
+                this.quest = element
+            }
+        })
+
+        if (this.quest.currentQuest == 'Back on track') {
+            this.quest.updateQuest()
+            this.stuck = true
+            this.cutsceneStarted = true
+            console.log('he')
+
+            const zombie3 = new Zombie(this.player, 4400, 801)
+            this.scene.engine.clock.schedule(() => {
+                this.scene.add(zombie3)
+                console.log(this.scene)
+                console.log('spawned zombie')
+            }, 500)
+            this.cutsceneStarted = true
         }
     }
 
@@ -372,7 +395,7 @@ export class Player extends Actor {
             flashes--;
 
             if (flashes > 0) {
-                this.scene.engine.clock.schedule(flash, 50);
+                this.scene.engine.clock.schedule(flash, 10);
             } else {
                 this.graphics.current.tint = Color.White;
             }

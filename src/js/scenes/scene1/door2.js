@@ -64,13 +64,15 @@ export class Door2 extends Actor {
                 console.log('door locked')
             }
 
-
+console.log(this.quest.currentQuest)
 
 
         }
         if (this.playerInRange && engine.input.keyboard.wasPressed(Keys.E)) {
             if (this.player.key == true) {
                 this.locked = false
+                
+                
                 this.scene.engine.goToScene('scenethree')
 
 

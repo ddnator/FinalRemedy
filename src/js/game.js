@@ -11,6 +11,7 @@ import { SceneThree } from './scenes/scene3/scenethree.js'
 import { Scenefour } from './scenes/scene4/scenefour.js'
 import { UI } from './objects/ui.js'
 import { Dialogue } from './objects/dialogue.js'
+import { GameOver } from './gameover.js'
 
 
 
