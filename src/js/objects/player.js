@@ -153,7 +153,7 @@ export class Player extends Actor {
         }
 
         if (xAccel !== 0) {
-            if (this.vel.x < 1000 && this.vel.x > -1000) {
+            if (this.vel.x < 10000 && this.vel.x > -1000) {
                 this.body.applyLinearImpulse(new Vector(xAccel * delta, 0));
             }
         } else if (xAccel <= 1 && this.graphics._current !== 'shoot' && this.graphics._current !== 'crouch') {
@@ -304,9 +304,9 @@ export class Player extends Actor {
             this.knockback(1)
         }
 
-        bullet.events.on("exitviewport", (e) => bullet.kill())
-        this.scene.add(bullet)
 
+        this.scene.add(bullet)
+        console.log(this.scene)
         const bulletIndex = this.inventory.indexOf("bullet")
         this.inventory.splice(bulletIndex, 1)
 

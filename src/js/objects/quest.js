@@ -32,14 +32,18 @@ export class Quest extends ScreenElement {
 
         this.engine = engine
 
-        this.addChild(this.label)
-        const entityList = this.scene.world.entityManager.entities
+        this.scene.engine.clock.schedule(() => {
+            const entityList = this.scene.world.entityManager.entities
 
-        entityList.forEach(element => {
-            if (element instanceof Player) {
-                this.player = element
-            }
-        })
+            entityList.forEach(element => {
+                if (element instanceof Player) {
+                    this.player = element
+
+                }
+            })
+        }, 500)
+
+        this.addChild(this.label)
 
     }
 
