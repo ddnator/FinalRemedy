@@ -34,14 +34,14 @@ export class Dialogue extends ScreenElement {
         this.label.pos.y = -parent.height / 8
 
         switch (dialogue) {
-            case "shoot the zombie":
+            case 'shoot the zombie':
                 this.label.text = 'Ah a zombie!'
                 break
-            case 'just killed zombie':
-                this.label.text = 'oh no'
+            case 'Sanity tutorial':
+                this.label.text = '...Guess there is one less to worry about.'
                 break
-            case 'just healed zombie':
-                this.label.text = 'oh yes'
+            case 'Cure the zombie':
+                this.label.text = 'Another one bites... the cure? Nevermind-'
                 break
             case 'just random':
                 this.label.text = 'oh what'
