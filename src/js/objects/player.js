@@ -1,4 +1,4 @@
-import { Actor, Engine, Vector, Keys, EdgeCollider, DegreeOfFreedom, CollisionType, linear, ParallaxComponent, SpriteSheet, Sprite, range, AnimationStrategy, Animation } from "excalibur"
+import { Actor, Engine, Vector, Keys, EdgeCollider, DegreeOfFreedom, CollisionType, linear, ParallaxComponent, SpriteSheet, Sprite, range, AnimationStrategy, Animation, Color } from "excalibur"
 import { Resources, ResourceLoader } from '../resources.js'
 import { Bullet } from './bullet.js'
 import { Zombie } from './zombie.js'
@@ -98,10 +98,12 @@ export class Player extends Actor {
             this.graphics.use('walk')
             xAccel = -20; // Use an acceleration value instead of a massive direct velocity
             this.graphics.flipHorizontal = true;
+            this.graphics.current.tint = Color.White
         } else if (engine.input.keyboard.isHeld(Keys.D) && !this.stuck && this.graphics._current !== 'shoot') {
             this.graphics.use('walk')
             xAccel = 20;
             this.graphics.flipHorizontal = false;
+            this.graphics.current.tint = Color.White
         } else if (this.grounded) {
             this.vel = new Vector(this.vel.x * 0.8, this.vel.y)
         }
@@ -318,9 +320,33 @@ export class Player extends Actor {
         }
     }
 
+
+    flashRed() {
+        let flashes = 6;
+
+        const flash = () => {
+            this.graphics.current.tint =
+                flashes % 2 === 0 ? Color.Red : Color.White;
+
+            flashes--;
+
+            if (flashes > 0) {
+                this.scene.engine.clock.schedule(flash, 50);
+            } else {
+                this.graphics.current.tint = Color.White;
+            }
+        };
+
+        flash();
+    }
+
+
     hitSomething(e) {
         if (e.other.owner instanceof Zombie && !this.hitOnCooldown) {
             this.hitOnCooldown = true
+
+            this.flashRed();
+
             const direction = e.other.owner.pos.sub(this.pos).normalize().x
             this.knockback(direction)
 

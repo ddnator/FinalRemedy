@@ -11,7 +11,7 @@ const Resources = {
     PlayerWalk: new ImageSource('/images/player_walk.png'),
 
     //zombies
-    Zombie: new ImageSource('/images/zombie_placeholder.png'),
+    ZombieWalk: new ImageSource('/images/zomboi_walk.png'),
 
 
     //player sounds
