@@ -83,7 +83,7 @@ export class SceneTwo extends Scene {
 
         this.player = engine.player
         this.player.pos = this.playerPosition
-        this.add(this.player)
+        
 
         const injection = new InjectionPickup(3600, 650)
         this.add(injection)
@@ -156,7 +156,7 @@ export class SceneTwo extends Scene {
 
 
     onActivate() {
-
+        this.add(this.player)
         this.music.loop = true
         this.music.play()
         this.fadeIn()
@@ -165,6 +165,7 @@ export class SceneTwo extends Scene {
 
     onDeactivate() {
         this.fadeOut().then(() => this.music.pause())
+        this.player.kill()
     }
 
     fadeIn() {
