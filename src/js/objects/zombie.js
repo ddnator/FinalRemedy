@@ -3,6 +3,7 @@ import { Resources, ResourceLoader } from '../resources.js'
 import { Player } from "./player.js"
 import { Quest } from "./quest.js"
 import { UI } from './ui.js'
+import { Bullet } from "./bullet.js"
 
 export class Zombie extends Actor {
     health = 100
@@ -10,6 +11,7 @@ export class Zombie extends Actor {
     x
     y
     quest
+    animBusy
 
     constructor(player, x, y, quest) {
         super({
@@ -40,7 +42,7 @@ export class Zombie extends Actor {
     }
 
     onPostUpdate(engine) {
-        if (this.health <= 0) {
+        if (this.health <= 0 && this.animBusy == false) {
             this.kill()
             this.lowerSanity()
 
@@ -119,6 +121,15 @@ export class Zombie extends Actor {
     onCollisionStart(event, other) {
         if (other.owner instanceof Player) {
             this.attackPlayer()
+        } else if (other.owner instanceof Bullet) {
+            this.hitAnim.reset();
+            this.graphics.use("hit");
+            this.animBusy = true
+            this.hitAnim.events.once("end", () => {
+                console.log("Hit animation ended");
+                this.graphics.use("walk");
+                this.animBusy = false
+            });
         }
     }
 
@@ -130,12 +141,12 @@ export class Zombie extends Actor {
     }
 
     getHit() {
-        this.health = this.health - 50
-        Resources.zombieHit.play()
-        this.hitAnim.events.on('end', (a) => {
-            this.hitAnim.reset()
-            this.graphics.use('walk')
-        })
+
+
+        this.health -= 50;
+        Resources.zombieHit.play();
+
+
     }
 
     walkToPlayer() {
@@ -186,7 +197,7 @@ export class Zombie extends Actor {
         this.walkAnim = Animation.fromSpriteSheet(ZombieWalkSheet, range(0, 5), 120, AnimationStrategy.Loop);
         this.walkAnim.scale = new Vector(1, 1)
 
-        this.hitAnim = Animation.fromSpriteSheet(ZombieHitSheet, range(0, 2), 120, AnimationStrategy.Loop);
+        this.hitAnim = Animation.fromSpriteSheet(ZombieHitSheet, range(0, 2), 120, AnimationStrategy.End);
         this.hitAnim.scale = new Vector(1, 1)
 
         this.graphics.add('hit', this.hitAnim)
