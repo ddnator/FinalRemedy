@@ -79,6 +79,7 @@ export class Player extends Actor {
         this.checkQuest(engine, delta)
         this.healthChecker()
         this.questKeyChecker()
+        this.questChecker(engine)
         //this.checkQuest(engine, delta)
     }
 
@@ -95,13 +96,13 @@ export class Player extends Actor {
         let yAccel = 400;
 
         if (engine.input.keyboard.isHeld(Keys.A) && !this.stuck && this.graphics._current !== 'shoot') {
-            if(this.graphics._current !== 'crouch') {
+            if (this.graphics._current !== 'crouch') {
                 this.graphics.use('walk')
             }
             xAccel = -20; // Use an acceleration value instead of a massive direct velocity
             this.graphics.flipHorizontal = true;
         } else if (engine.input.keyboard.isHeld(Keys.D) && !this.stuck && this.graphics._current !== 'shoot') {
-            if(this.graphics._current !== 'crouch') {
+            if (this.graphics._current !== 'crouch') {
                 this.graphics.use('walk')
             }
             xAccel = 20;
@@ -129,7 +130,7 @@ export class Player extends Actor {
             const newWidth = this.width
 
             this.playerStandHitbox = new PlayerStandHitbox((oldWidth - newWidth), (oldHeight - newHeight) / 2, 0, -newHeight / 2)
-            
+
             // this.height = 200
             this.addChild(this.playerStandHitbox)
 
@@ -263,6 +264,22 @@ export class Player extends Actor {
             } else if (!this.injectionHeld && this.selectedItem === 'injection' && this.inventory.includes('injection')) {
                 this.inject()
             }
+        }
+    }
+
+    questChecker() {
+
+        const entityList = this.scene.world.entityManager.entities
+
+        entityList.forEach(element => {
+            if (element instanceof Quest) {
+                this.quest = element
+            }
+        });
+        if (this.quest.currentQuest === 'Back on track') {
+            this.stuck == true
+
+
         }
     }
 
