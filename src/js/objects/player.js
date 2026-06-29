@@ -366,31 +366,31 @@ export class Player extends Actor {
     }
 
 
-    // flashRed() {
-    //     let flashes = 6;
+    flashRed() {
+        let flashes = 6;
 
-    //     const flash = () => {
-    //         this.graphics.current.tint =
-    //             flashes % 2 === 0 ? Color.Red : Color.White;
+        const flash = () => {
+            this.graphics.current.tint =
+                flashes % 2 === 0 ? Color.Red : Color.White;
 
-    //         flashes--;
+            flashes--;
 
-    //         if (flashes > 0) {
-    //             this.scene.engine.clock.schedule(flash, 50);
-    //         } else {
-    //             this.graphics.current.tint = Color.White;
-    //         }
-    //     };
+            if (flashes > 0) {
+                this.scene.engine.clock.schedule(flash, 10);
+            } else {
+                this.graphics.current.tint = Color.White;
+            }
+        };
 
-    //     flash();
-    // }
+        flash();
+    }
 
 
     hitSomething(e) {
         if (e.other.owner instanceof Zombie && !this.hitOnCooldown) {
             this.hitOnCooldown = true
 
-            // this.flashRed();
+            this.flashRed();
 
             const direction = e.other.owner.pos.sub(this.pos).normalize().x
             this.knockback(direction)
