@@ -44,6 +44,7 @@ export class Player extends Actor {
     dialogue = new Dialogue()
 
 
+
     constructor(xpos, ypos) {
         super({
             width: Resources.Player.width,

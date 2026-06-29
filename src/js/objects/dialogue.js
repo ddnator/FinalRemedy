@@ -43,8 +43,8 @@ export class Dialogue extends ScreenElement {
             case 'Cure the zombie':
                 this.label.text = 'Another one bites... the cure? Nevermind-'
                 break
-            case 'just random':
-                this.label.text = 'oh what'
+            case 'Key room':
+                this.label.text = 'One day im going to open the wrong door, i just know it'
                 break
         }
 

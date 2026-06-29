@@ -16,6 +16,7 @@ export class SceneOne extends Scene {
     playerPosition = new Vector(-7800, 800)
     player
     music = Resources.track3
+    camPos
     zombieSpawned = false
 
     onInitialize(engine) {
@@ -66,11 +67,11 @@ export class SceneOne extends Scene {
         //interactable door
         const door1 = new Door1()
 
-        this.add(door1)
+        // this.add(door1)
 
         this.player = engine.player
-        
-        
+
+
         //pickup items
         const bulletPickupQuest = new BulletPickup(-7000, 1025, true)
         this.add(bulletPickupQuest)
@@ -96,6 +97,10 @@ export class SceneOne extends Scene {
         //cam offset 
         const cam = this.currentScene && this.currentScene.camera ? this.currentScene.camera : this.camera
         const offset = 24
+
+
+
+
         if (cam && cam.strategy) {
             cam.pos = cam.pos.add(new Vector(50, -offset))
         }
