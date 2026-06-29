@@ -132,7 +132,7 @@ export class Zombie extends Actor {
     getHit() {
         this.health = this.health - 50
         Resources.zombieHit.play()
-
+        this.graphics.use('hit')
     }
 
     walkToPlayer() {
@@ -155,23 +155,38 @@ export class Zombie extends Actor {
     }
 
     setupAnimations() {
-        const configGrid = {
+        const configGrid1 = {
             rows: 1,
             columns: 6,
             spriteWidth: 73,
             spriteHeight: 102
         };
 
+        const configGrid2 = {
+            rows: 1,
+            columns: 3,
+            spriteWidth: 73,
+            spriteHeight: 102
+        };
+
         const ZombieWalkSheet = SpriteSheet.fromImageSource({
             image: Resources.ZombieWalk,
-            grid: configGrid
+            grid: configGrid1
         });
 
+        const ZombieHitSheet = SpriteSheet.fromImageSource({
+            image: Resources.ZombieHit,
+            grid: configGrid2
+        });
 
 
         this.walkAnim = Animation.fromSpriteSheet(ZombieWalkSheet, range(0, 5), 120, AnimationStrategy.Loop);
         this.walkAnim.scale = new Vector(1, 1)
 
+        this.hitAnim = Animation.fromSpriteSheet(ZombieHitSheet, range(0, 2), 120, AnimationStrategy.Loop);
+        this.hitAnim.scale = new Vector(1, 1)
+
+        this.graphics.add('hit', this.hitAnim)
         this.graphics.add('walk', this.walkAnim)
 
     }
