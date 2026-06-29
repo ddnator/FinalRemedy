@@ -144,6 +144,7 @@ export class Quest extends ScreenElement {
                 this.label.text = 'Explore'
                 this.currentQuest = 'Climb'
                 this.player.stuck = false
+                this.engine.player.dialogue.updateDialogue('great', this.engine.player)
                 break
 
             case "Climb":
