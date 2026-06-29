@@ -129,6 +129,8 @@ export class SceneOne extends Scene {
             this.add(zombie2)
             this.zombieSpawned = true
         }
+
+        this.engine.removeScene('gameover');
     }
 
     onDeactivate() {

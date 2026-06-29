@@ -151,7 +151,7 @@ export class SceneThree extends Scene {
         this.ui.z = 9999
         this.add(this.ui)
 
-        for (let i = 0; i < 2; i++) {
+        for (let i = 0; i < 1; i++) {
             const injection = new InjectionPickup(2300, 800)
             this.add(injection)
         }
