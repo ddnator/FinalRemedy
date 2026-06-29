@@ -36,16 +36,16 @@ export class Dialogue extends ScreenElement {
 
         switch (dialogue) {
             case 'shoot the zombie':
-                this.wait = 800
+                this.wait = 1000
                 this.label.text = 'Ah a zombie!'
 
                 break
             case 'Sanity tutorial':
-                this.wait = 1200
+                this.wait = 1500
                 this.label.text = '...Guess there is one less to worry about.'
                 break
             case 'Cure the zombie':
-                this.wait = 1200
+                this.wait = 1500
                 this.label.text = 'Another one bites... the cure? Nevermind-'
                 break
             case 'Key room':
