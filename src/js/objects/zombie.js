@@ -132,7 +132,10 @@ export class Zombie extends Actor {
     getHit() {
         this.health = this.health - 50
         Resources.zombieHit.play()
-        this.graphics.use('hit')
+        this.hitAnim.events.on('end', (a) => {
+            this.hitAnim.reset()
+            this.graphics.use('walk')
+        })
     }
 
     walkToPlayer() {
