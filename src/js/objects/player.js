@@ -54,6 +54,7 @@ export class Player extends Actor {
         })
         this.body.collisionType = CollisionType.Active
         this.body.bounciness = 0
+
         this.body.limitDegreeOfFreedom.push(DegreeOfFreedom.Rotation)
         this.body.friction = 100
         this.pos = new Vector(xpos, ypos)
@@ -163,7 +164,7 @@ export class Player extends Actor {
         }
 
         if (xAccel !== 0 && !this.cutsceneStarted) {
-            if (this.vel.x < 10000 && this.vel.x > -10000 && !this.cutsceneStarted) {
+            if (this.vel.x < 1000 && this.vel.x > -1000 && !this.cutsceneStarted) {
                 this.body.applyLinearImpulse(new Vector(xAccel * delta, 0));
             }
         } else if (xAccel <= 1 && this.graphics._current !== 'shoot' && this.graphics._current !== 'crouch' && !this.cutsceneStarted) {
@@ -296,7 +297,7 @@ export class Player extends Actor {
                 this.pos = new Vector(4612, 801)
             }
         } else {
-            this.vel = new Vector(0,0)
+            this.vel = new Vector(0, 0)
             this.graphics.flipHorizontal = false
         }
     }
@@ -385,31 +386,31 @@ export class Player extends Actor {
     }
 
 
-    flashRed() {
-        let flashes = 6;
+    // flashRed() {
+    //     let flashes = 6;
 
-        const flash = () => {
-            this.graphics.current.tint =
-                flashes % 2 === 0 ? Color.Red : Color.White;
+    //     const flash = () => {
+    //         this.graphics.current.tint =
+    //             flashes % 2 === 0 ? Color.Red : Color.White;
 
-            flashes--;
+    //         flashes--;
 
-            if (flashes > 0) {
-                this.scene.engine.clock.schedule(flash, 10);
-            } else {
-                this.graphics.current.tint = Color.White;
-            }
-        };
+    //         if (flashes > 0) {
+    //             this.scene.engine.clock.schedule(flash, 10);
+    //         } else {
+    //             this.graphics.current.tint = Color.White;
+    //         }
+    //     };
 
-        flash();
-    }
+    //     flash();
+    // }
 
 
     hitSomething(e) {
         if (e.other.owner instanceof Zombie && !this.hitOnCooldown) {
             this.hitOnCooldown = true
 
-            this.flashRed();
+            // this.flashRed();
 
             const direction = e.other.owner.pos.sub(this.pos).normalize().x
             this.knockback(direction)
@@ -432,7 +433,7 @@ export class Player extends Actor {
     }
 
     knockback(direction) {
-        this.knockbackspeed = -300 * direction
+        this.knockbackspeed = -500 * direction
     }
 
     /// animations get made

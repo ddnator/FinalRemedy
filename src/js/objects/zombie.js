@@ -90,11 +90,12 @@ export class Zombie extends Actor {
                 })
                 this.quest.updateQuest()
             }
-            const sprite = Resources.Player.toSprite()
+            // const sprite = Resources.Player.toSprite()
+            this.graphics.use('cure')
             Resources.zombieHeal.play()
 
             this.scale = new Vector(4.5, 4.5)
-            this.graphics.use(sprite)
+            // this.graphics.use(sprite)
             this.body.collisionType = CollisionType.PreventCollision
 
             this.walkAway()
@@ -109,10 +110,12 @@ export class Zombie extends Actor {
         if (this.player.pos.x > this.pos.x) {
             this.vel = new Vector(-700, 0)
             this.graphics.flipHorizontal = true
+
         } else {
 
             this.vel = new Vector(700, 0)
             this.graphics.flipHorizontal = false
+
         }
 
 
@@ -194,6 +197,10 @@ export class Zombie extends Actor {
             grid: configGrid2
         });
 
+        const ZombieCureSheet = SpriteSheet.fromImageSource({
+            image: Resources.ZombieCured,
+            grid: configGrid1
+        });
 
         this.walkAnim = Animation.fromSpriteSheet(ZombieWalkSheet, range(0, 5), 120, AnimationStrategy.Loop);
         this.walkAnim.scale = new Vector(1, 1)
@@ -201,8 +208,12 @@ export class Zombie extends Actor {
         this.hitAnim = Animation.fromSpriteSheet(ZombieHitSheet, range(0, 2), 120, AnimationStrategy.End);
         this.hitAnim.scale = new Vector(1, 1)
 
+        this.cureAnim = Animation.fromSpriteSheet(ZombieCureSheet, range(0, 5), 120, AnimationStrategy.Loop);
+        this.cureAnim.scale = new Vector(1, 1)
+
         this.graphics.add('hit', this.hitAnim)
         this.graphics.add('walk', this.walkAnim)
+        this.graphics.add('cure', this.cureAnim)
 
     }
 
