@@ -18,7 +18,7 @@ import { GameOver } from "../gameover.js"
 
 export class Player extends Actor {
     health = 100
-    sanity = 50
+    sanity = -50
     bulletReady = true
     injectionHeld = false
     inventory = ['bullet', 'bullet']

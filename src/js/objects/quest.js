@@ -1,4 +1,4 @@
-import { Label, FontUnit, Font, Color, ScreenElement, Vector, TextAlign } from "excalibur"
+import { Label, FontUnit, Font, Color, ScreenElement, Vector, Actor, TextAlign } from "excalibur"
 import { Resources, ResourceLoader } from '../resources.js'
 import { UI } from './ui.js'
 import { SceneOne } from '../scenes/scene1/sceneone.js'
@@ -166,9 +166,19 @@ export class Quest extends ScreenElement {
                 this.scene.engine.clock.schedule(() => {
                     if (this.player.sanity > 50) {
                         Resources.zombieHeal.play()
+                        console.log('zombie heal')
                     } else {
-                        Resources.PlayerShoot.play()
+                        Resources.shoot.play()
+                        console.log('gun')
                     }
+                    const blackScreen = new Actor()
+                    blackScreen.graphics.use(Resources.BlackScreen.toSprite())
+                    blackScreen.pos = new Vector (this.player.pos.x, this.player.pos.y)
+                    blackScreen.scale = new Vector(5, 5)
+                    // blackScreen.pos.z = 10
+                    this.player.scene.add(blackScreen)
+                    this.player.kill()
+                    console.log(this.player.scene)
                 }, 2000)
 
                 this.scene.engine.clock.schedule(() => {
