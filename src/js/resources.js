@@ -51,6 +51,7 @@ const Resources = {
 
     //Scene 1
     //Background
+    BlackScreen: new ImageSource('images/scene1/blackscreen.png'),
     Scene1Sky: new ImageSource('images/scene1/backgroundImages/S-1-Sky.png'),
     Scene1Back: new ImageSource('images/scene1/backgroundImages/S-1-backBuildings.png'),
     Scene1Buildings2: new ImageSource('images/scene1/backgroundImages/S-1-Buildings-2.png'),

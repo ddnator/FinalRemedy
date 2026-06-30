@@ -19,9 +19,15 @@ export class Scenefour extends Scene {
     player
     music = Resources.track4
     ui
+    initialized = false
 
 
     onInitialize(engine) {
+        if (this.initialized) {
+            return
+        }
+
+        this.initialized = true
 
 
 
@@ -124,14 +130,15 @@ export class Scenefour extends Scene {
             this.add(injection)
         }
 
-        const zombie1 = new Zombie(this.player, 1020, 800)
+        const zombie1 = new Zombie(this.player, 1020, 600)
         this.add(zombie1)
-        const zombie2 = new Zombie(this.player, 1200, 800)
+        console.log('spawned zombie1')
+        const zombie2 = new Zombie(this.player, 1200, 600)
         this.add(zombie2)
-
-        const zombie3 = new Zombie(this.player, 3600, 700)
+        console.log('spawned zombie2')
+        const zombie3 = new Zombie(this.player, 3600, 650)
         this.add(zombie3)
-
+        console.log('spawned zombie3')
 
 
     }

@@ -53,7 +53,7 @@ export class Player extends Actor {
             height: Resources.Player.height,
         })
         this.body.collisionType = CollisionType.Active
-        this.body.bounciness = 1
+        this.body.bounciness = 0
 
         this.body.limitDegreeOfFreedom.push(DegreeOfFreedom.Rotation)
         this.body.friction = 100
@@ -164,7 +164,7 @@ export class Player extends Actor {
         }
 
         if (xAccel !== 0 && !this.cutsceneStarted) {
-            if (this.vel.x < 10000 && this.vel.x > -10000 && !this.cutsceneStarted) {
+            if (this.vel.x < 1000 && this.vel.x > -1000 && !this.cutsceneStarted) {
                 this.body.applyLinearImpulse(new Vector(xAccel * delta, 0));
             }
         } else if (xAccel <= 1 && this.graphics._current !== 'shoot' && this.graphics._current !== 'crouch' && !this.cutsceneStarted) {
@@ -318,9 +318,9 @@ export class Player extends Actor {
             this.cutsceneStarted = true
             console.log('he')
 
-            const zombie3 = new Zombie(this.player, 4400, 801)
+            const zombie5 = new Zombie(this.player, 4400, 801)
             this.scene.engine.clock.schedule(() => {
-                this.scene.add(zombie3)
+                this.scene.add(zombie5)
                 console.log(this.scene)
                 console.log('spawned zombie')
             }, 500)
