@@ -92,7 +92,6 @@ export class Zombie extends Actor {
             }
             // const sprite = Resources.Player.toSprite()
             this.graphics.use('cure')
-            Resources.zombieHeal.play()
 
             this.scale = new Vector(4.5, 4.5)
             // this.graphics.use(sprite)
