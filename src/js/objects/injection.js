@@ -38,6 +38,8 @@ export class Injection extends Actor {
 
     onCollisionStart(event, other) {
         if (other.owner instanceof Zombie && !other.owner.healed) {
+            Resources.zombieHeal.play()
+
             other.owner.healed = true
             this.kill()
             const injectionIndex = this.player.inventory.indexOf("injection")
