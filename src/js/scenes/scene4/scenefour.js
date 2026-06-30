@@ -182,6 +182,7 @@ export class Scenefour extends Scene {
         if (this.ui && this.ui.currentquest && this.ui.currentquest.currentQuest === 'Climb') {
             // this.ui.currentquest.updateQuest()
         }
+        this.engine.player.dialogue.updateDialogue('scene4', this.engine.player)
     }
 
     onDeactivate() {
