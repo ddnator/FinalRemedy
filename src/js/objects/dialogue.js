@@ -55,8 +55,8 @@ export class Dialogue extends ScreenElement {
                 this.wait = 1500
                 this.label.text = "I'm already getting to old for this shit"
                 break
-                case 'cutscene':
-                    this.label.text= "Shit, I can't move my like"
+            case 'cutscene':
+                this.label.text = "Shit, I can't move my leg"
         }
 
         parent.addChild(this.label)
