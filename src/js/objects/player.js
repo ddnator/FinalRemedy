@@ -18,7 +18,7 @@ import { GameOver } from "../gameover.js"
 
 export class Player extends Actor {
     health = 100
-    sanity = -50
+    sanity = 50
     bulletReady = true
     injectionHeld = false
     inventory = ['bullet', 'bullet']
@@ -53,7 +53,7 @@ export class Player extends Actor {
             height: Resources.Player.height,
         })
         this.body.collisionType = CollisionType.Active
-        this.body.bounciness = 1
+        this.body.bounciness = 0
 
         this.body.limitDegreeOfFreedom.push(DegreeOfFreedom.Rotation)
         this.body.friction = 100
