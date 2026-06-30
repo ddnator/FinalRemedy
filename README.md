@@ -1,14 +1,23 @@
-# Excalibur Startproject 2026
+# Final Remedy
 
-- Ga naar [https://github.com/HR-CMGT/prg4-startproject-2026](https://github.com/HR-CMGT/prg4-startproject-2026)
-- Klik op ***USE THIS TEMPLATE > CREATE A NEW REPOSITORY***. Dit kopieert het project naar jouw eigen github.
-- Vanaf je *eigen github* kopieer je de `git url` (onder de "code" button).
-- Open VS Code. Klik op "file" > "clone repository" > plak hier je url.
-- Typ `npm install` en `npm run dev` in de terminal in VS Code. Dit start de development omgeving van Vite.
-- In `game.js` kies je de resolutie van de game.
-- Installeer de [Chrome Excalibur Debugger](https://chromewebstore.google.com/detail/excalibur-dev-tools/dinddaeielhddflijbbcmpefamfffekc)
-- [Bekijk het instructie filmpje!](https://youtu.be/UIVpe4L5_P4)
-- Vervang deze readme file met een beschrijving van jouw game.
+Lucia, a brave nurse, has arrived in Rockville, a destroyed city infested with zombies. <br>
+She will have to make choices to survive. <br>
+Killing or healing zombies, there is no avoiding either. <br>
+Will she be capable of staying sane in this dystopian place? <br>
+
+### Lucia
+<img width="76px" src="./public/images/stillImages/still_player.png"><br>
+
+### Killing
+Bullets are found throughout the city, but how will Lucia use them? <br>
+Will you, as the player, choose to kill all the zombies? <br>
+<img width="140" src="./public/images/stillImages/still_shoot.png">
+<img width="24px" src="./public/images/stillImages/still_bullet.png"><br>
+
+### Curing
+Injection are also everywhere, so if given the choice Lucia could heal the zombies. <br>
+Can Lucia find enough injection to heal everyone? Or will she have to kill many zombies? <br>
+<img width="56" src="./public/images/stillImages/still_npc.png"><img width="80" src="./public/images/stillImages/still_injection.png"><img width="140" src="./public/images/stillImages/still_shoot.png">
 
 <br><br><br>
 
