@@ -318,9 +318,9 @@ export class Player extends Actor {
             this.cutsceneStarted = true
             console.log('he')
 
-            const zombie3 = new Zombie(this.player, 4400, 801)
+            const zombie5 = new Zombie(this.player, 4400, 801)
             this.scene.engine.clock.schedule(() => {
-                this.scene.add(zombie3)
+                this.scene.add(zombie5)
                 console.log(this.scene)
                 console.log('spawned zombie')
             }, 500)
