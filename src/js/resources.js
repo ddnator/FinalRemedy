@@ -12,7 +12,7 @@ const Resources = {
     PlayerCrouch: new ImageSource('images/player_crouch.png'),
 
     //zombies
-    ZombieWalk: new ImageSource('/images/zomboi_walk.png'),
+    ZombieWalk: new ImageSource('images/zomboi_walk.png'),
     ZombieHit: new ImageSource('images/zomboi_hit.png'),
     ZombieCured: new ImageSource('images/no_zomboi_walk.png'),
 
