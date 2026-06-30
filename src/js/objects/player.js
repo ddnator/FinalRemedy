@@ -71,7 +71,7 @@ export class Player extends Actor {
         this.on('collisionstart', (e) => this.hitSomething(e))
         this.scale = new Vector(5, 5)
         this.injection.pos = new Vector(80, 0)
-
+        this.events.on("exitviewport", (e) => this.engine.goToScene('gameover'))
         this.engine = engine
     }
 
