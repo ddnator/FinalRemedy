@@ -55,7 +55,7 @@ export class UI extends ScreenElement {
             pos: new Vector(820, 800),
             font: new Font({
                 family: 'impact',
-                size: 24,
+                size: 28,
                 textAlign: TextAlign.center,
                 unit: FontUnit.Px,
                 color: Color.White
@@ -68,7 +68,7 @@ export class UI extends ScreenElement {
             font: new Font({
                 family: 'impact',
                 textAlign: TextAlign.center,
-                size: 24,
+                size: 28,
                 unit: FontUnit.Px,
                 color: Color.White
             })
