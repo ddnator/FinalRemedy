@@ -21,7 +21,7 @@ export class Player extends Actor {
     sanity = 50
     bulletReady = true
     injectionHeld = false
-    inventory = ['bullet', 'bullet']
+    inventory = ['bullet', 'bullet', 'injection']
     inventoryShown = false
     hitOnCooldown = false
     knockbackspeed = 0

@@ -25,7 +25,7 @@ export class Quest extends ScreenElement {
             font: new Font({
                 family: 'impact',
                 textAlign: TextAlign.Right,
-                size: 24,
+                size: 30,
                 unit: FontUnit.Px,
                 color: Color.White
             })
@@ -126,6 +126,10 @@ export class Quest extends ScreenElement {
                 this.label.text = 'Find the key to the door'
                 this.currentQuest = 'Keyfinder'
                 this.player.stuck = false
+
+                const zombie3 = new Zombie(this.player, 9000, 850)
+                this.scene.add(zombie3)
+
                 const door1 = new Door1()
                 this.scene.add(door1)
                 this.engine.player.dialogue.updateDialogue('Key room', this.engine.player)
@@ -173,7 +177,7 @@ export class Quest extends ScreenElement {
                     }
                     const blackScreen = new Actor()
                     blackScreen.graphics.use(Resources.BlackScreen.toSprite())
-                    blackScreen.pos = new Vector (this.player.pos.x, this.player.pos.y)
+                    blackScreen.pos = new Vector(this.player.pos.x, this.player.pos.y)
                     blackScreen.scale = new Vector(5, 5)
                     // blackScreen.pos.z = 10
                     this.player.scene.add(blackScreen)

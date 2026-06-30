@@ -86,6 +86,13 @@ export class SceneOne extends Scene {
         const injection = new InjectionPickup(15000, 1025)
         this.add(injection)
 
+        for (let i = 0; i < 2; i++) {
+            const bullet2 = new BulletPickup(6550, 1025)
+            this.add(bullet2)
+        }
+
+
+
 
         this.add(engine.ui)
         this.ui = engine.ui
@@ -121,9 +128,9 @@ export class SceneOne extends Scene {
         this.music.play()
         this.fadeIn()
         if (this.ui.currentquest.currentQuest === 'Climb') {
-                this.ui.currentquest.updateQuest()
-            }
-        if(!this.player.cutsceneStarted){
+            this.ui.currentquest.updateQuest()
+        }
+        if (!this.player.cutsceneStarted) {
             this.player.pos = this.playerPosition
         }
 
