@@ -95,6 +95,7 @@ export class Zombie extends Actor {
 
             this.scale = new Vector(4.5, 4.5)
             this.graphics.use(sprite)
+
             this.body.collisionType = CollisionType.PreventCollision
 
             this.walkAway()
@@ -109,10 +110,12 @@ export class Zombie extends Actor {
         if (this.player.pos.x > this.pos.x) {
             this.vel = new Vector(-700, 0)
             this.graphics.flipHorizontal = true
+
         } else {
 
             this.vel = new Vector(700, 0)
             this.graphics.flipHorizontal = false
+
         }
 
 
