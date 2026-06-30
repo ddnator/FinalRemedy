@@ -141,6 +141,7 @@ export class Scenefour extends Scene {
         console.log('spawned zombie3')
 
 
+
     }
 
     onPostUpdate() {
