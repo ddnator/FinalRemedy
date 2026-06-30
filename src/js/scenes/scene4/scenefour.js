@@ -124,13 +124,13 @@ export class Scenefour extends Scene {
             this.add(injection)
         }
 
-        // const zombie1 = new Zombie(this.player, 1020, 840)
-        // this.add(zombie1)
-        // const zombie2 = new Zombie(this.player, 1200, 860)
-        // this.add(zombie2)
+        const zombie1 = new Zombie(this.player, 1020, 800)
+        this.add(zombie1)
+        const zombie2 = new Zombie(this.player, 1200, 800)
+        this.add(zombie2)
 
-        // const zombie3 = new Zombie(this.player, 3600, 700)
-        // this.add(zombie3)
+        const zombie3 = new Zombie(this.player, 3600, 700)
+        this.add(zombie3)
 
 
 
@@ -155,7 +155,7 @@ export class Scenefour extends Scene {
         if (this.player.pos.x > 5900) {
 
             this.engine.goToScene('sceneone')
-            
+
 
         }
         // if (Resources.track2.getPlaybackPosition) {
